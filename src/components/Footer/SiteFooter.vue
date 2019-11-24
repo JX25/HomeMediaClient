@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: 'footer',
+    name: 'SiteFooter',
 }
 </script>
 
@@ -18,7 +18,8 @@ footer{
     position: fixed;
     bottom: 0;
     text-align: justify;
-    padding: 10px;
+    padding: 25px;
+    width: 100%;
     color: #fff;
     background-color: #5bc0de;
 }

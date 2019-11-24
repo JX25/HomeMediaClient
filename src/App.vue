@@ -1,38 +1,47 @@
 <template>
   <div id="app">
-    <Menu />
-    <View />
-    <Footer />
+    <SiteMenu />
+    <SiteView />
+    <SiteFooter />
+
   </div>
 </template>
 
+
 <script>
-
-import View from './components/View.vue'
-import Menu from './components/Menu/Menu.vue'
-import Footer from './components/Footer/Footer.vue'
-
+import SiteView from './components/SiteView.vue'
+import SiteMenu from './components/Menu/SiteMenu.vue'
+import SiteFooter from './components/Footer/SiteFooter.vue'
 export default {
   name: 'app',
   components: {
-    View,
-    Menu,
-    Footer
+    SiteView,
+    SiteMenu,
+    SiteFooter
   }
 }
 </script>
 
-<style>
+
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
-html,body {
-    margin:0;
-    padding:0;
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>
