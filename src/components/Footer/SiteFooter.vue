@@ -14,8 +14,8 @@ export default {
 
 <style>
 footer{
+    height: 80px;
     margin: 0;
-    position: fixed;
     bottom: 0;
     text-align: justify;
     padding: 25px;

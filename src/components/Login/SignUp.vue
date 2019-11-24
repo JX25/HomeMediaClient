@@ -4,7 +4,7 @@
     <v-form v-model="valid">
       <v-container>
         <v-row>
-          <v-col cols="8" md="8">
+          <v-col cols="12" md="12">
             <v-text-field
               v-model="firstname"
               :rules="nameRules"
@@ -13,11 +13,12 @@
               required
             ></v-text-field>
           </v-col>
-          <v-col cols="8" md="8">
+          <v-col cols="12" md="12">
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
           </v-col>
-          <v-col cols="8" md="8">
+          <v-col cols="12" md="12">
             <v-text-field
+              :type="password"
               v-model="password1"
               :rules="passwordRules"
               :counter="10"
@@ -25,8 +26,9 @@
               required
             ></v-text-field>
           </v-col>
-          <v-col cols="8" md="8">
+          <v-col cols="12" md="12">
             <v-text-field
+              :type="password"
               v-model="password2"
               :rules="passwordRules"
               :counter="10"
@@ -34,16 +36,26 @@
               required
             ></v-text-field>
           </v-col>
-          <v-col cols="8" md="8">
-            <v-text-field
-              v-model="birthDate"
-              label="Birth Date"
-              required
-            ></v-text-field>
+          <v-col cols="12" md="12">
+          Data urodzenia: <br/>
+            <v-date-picker
+              v-model="picker"
+              :landscape="landscape"
+              :reactive="reactive"
+              :full-width="fullWidth"
+              :show-current="showCurrent"
+              :type="month ? 'month' : 'date'"
+              :multiple="multiple"
+              :events="enableEvents ? functionEvents : null"
+            ></v-date-picker>
           </v-col>
         </v-row>
       </v-container>
-      <v-btn primary>Załóż konto</v-btn>
+      <v-row>
+        <v-col>
+          <v-btn primary cols="12" md="12">Załóż konto</v-btn>
+        </v-col>
+      </v-row>
     </v-form>
   </div>
 </template>
