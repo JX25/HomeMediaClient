@@ -1,51 +1,55 @@
 <template>
-  <div class="menu-box">
-    <v-toolbar>
-      <v-toolbar-title class="text-uppercase grey--text">
-        <v-icon>tv</v-icon>HomeMediaCenter - Admin
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-        <router-link to="/">
-          <v-btn text>
-            <v-icon>home</v-icon>Start
-          </v-btn>
-        </router-link>
-        <router-link to="/admin/movie/">
-          <v-btn text>
-            <v-icon>movie</v-icon>Filmy
-          </v-btn>
-        </router-link>
-        <router-link to="/admin/photo/">
-          <v-btn text>
-            <v-icon>photo</v-icon>Zdjęcia
-          </v-btn>
-        </router-link>
-        <router-link to="/admin/music/">
-          <v-btn text>
-            <v-icon>music_note</v-icon>Muzyka
-          </v-btn>
-        </router-link>
-        <router-link to="/admin/users/">
-          <v-btn text>
-            <v-icon>people</v-icon>
-          </v-btn>
-        </router-link>
-        <router-link to="/admin/admins/">
-          <v-btn text>
-            <v-icon>supervised_user_circle</v-icon>
-          </v-btn>
-        </router-link>    
-        <router-link to="/admin/settings/">
-          <v-btn text>
-            <v-icon>settings</v-icon>
-          </v-btn>
-        </router-link>     
-      <router-link to="/logout">
-        <v-btn text>
-          <v-icon>power_settings_new</v-icon>
-        </v-btn>
-      </router-link>
-    </v-toolbar>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="danger">
+      <b-navbar-brand href="#">HomeMedia-Admin</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown text="Filmy" right>
+            <b-dropdown-item href="#">
+              <router-link to="/admin/movie">Przeglądaj</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link to="/admin/add/movie/">Dodaj film</router-link>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Muzyka" right>
+             <b-dropdown-item href="#">
+              <router-link to="/admin/music/">Przeglądaj</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link to="/admin/add/music/">Dodaj muzykę</router-link>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Zdjęcia" right>
+            <b-dropdown-item href="#">
+              <router-link to="/admin/photo">Przeglądaj</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link to="/admin/add/photo/">Dodaj zdjęcia</router-link>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item>
+              <router-link to="/admin/users">Użytkownicy</router-link>              
+          </b-nav-item>
+          <b-nav-item>
+              <router-link to="/admin/admins">Administratorzy</router-link>              
+          </b-nav-item>
+            <b-nav-item>
+              <router-link to="/admin/server">Serwer</router-link>              
+          </b-nav-item>
+          <b-nav-item>
+              <router-link to="/myaccount">Konto</router-link>              
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/logout">Wylogowanie</router-link>
+          </b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
   </div>
 </template>
 <script>

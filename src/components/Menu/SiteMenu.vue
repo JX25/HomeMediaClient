@@ -3,8 +3,8 @@
         <GuestMenu v-if="accountType" /> <!-- v-if="this.accountType === user" />
         <UserMenu v-else-if="this.accountType === admin" />
         <GuestMenu  v-else />-->
-        <UserMenu v-else-if="accountType=='XD'"/>
-        <AdminMenu v-else/>
+        <AdminMenu v-else-if="accountType=='XD'"/>
+        <UserMenu v-else/>
     </div>
 </template>
 

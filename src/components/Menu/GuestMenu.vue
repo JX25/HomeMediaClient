@@ -1,34 +1,45 @@
 <template>
-    <div class="menu-box">
-    <v-toolbar>
-         <router-link to="/home"><v-toolbar-title><v-icon>tv</v-icon>HomeMediaCenter</v-toolbar-title></router-link>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">
+        <router-link to="/home">MediaCenter</router-link>
+      </b-navbar-brand>
 
-        <v-spacer></v-spacer>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <v-toolbar-items>
-            <router-link to="/"><v-btn text><v-icon>home</v-icon>Start</v-btn></router-link>
-             <router-link to="/sign_in"><v-btn text><v-icon>account_box</v-icon>Logowanie</v-btn></router-link>
-             <router-link to="/sign_up"><v-btn text><v-icon>person_add</v-icon>Rejestracja</v-btn></router-link>
-            <router-link to="/about"><v-btn text><v-icon>web_asset</v-icon>O projekcie</v-btn></router-link>
-        </v-toolbar-items>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item>
+            <router-link to="/sign_in">Logowanie</router-link>
+          </b-nav-item>
 
-    </v-toolbar>     
-    </div>
+          <b-nav-item>
+            <router-link to="/sign_up">Rejestracja</router-link>
+          </b-nav-item>
+
+          <b-nav-item >
+            <router-link to="/about">O projekcie</router-link>
+          </b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 <script>
 export default {
-    name: 'GuestMenu',
-    components: {
-    }
-}
+  name: "GuestMenu",
+  components: {}
+};
 </script>
 <style scoped>
-a { 
-     text-decoration: none;
-     }
-.menu-box{
-    height: 120px;
-    top: 0;
-    width: 100%;
+i{
+  color: white;
+}
+button href{
+	text-decoration: none;
+  color: white;
+}
+a{
+    text-decoration: none;
 }
 </style>

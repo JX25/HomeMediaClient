@@ -1,41 +1,41 @@
 <template>
-  <div class="menu-box">
-    <v-toolbar>
-      <v-toolbar-title class="text-uppercase grey--text">
-        <v-icon>tv</v-icon>HomeMediaCenter
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-        <router-link to="/">
-          <v-btn text>
-            <v-icon>home</v-icon>Start
-          </v-btn>
-        </router-link>
-        <router-link to="/movie/">
-          <v-btn text>
-            <v-icon>movie</v-icon>Filmy
-          </v-btn>
-        </router-link>
-        <router-link to="/photo/">
-          <v-btn text>
-            <v-icon>photo</v-icon>Zdjęcia
-          </v-btn>
-        </router-link>
-        <router-link to="/music/">
-          <v-btn text>
-            <v-icon>music_note</v-icon>Muzyka
-          </v-btn>
-        </router-link>
-        <router-link to="/settings/">
-          <v-btn text>
-            <v-icon>settings</v-icon>
-          </v-btn>
-        </router-link>     
-      <router-link to="/logout">
-        <v-btn text>
-          <v-icon>power_settings_new</v-icon>
-        </v-btn>
-      </router-link>
-    </v-toolbar>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">HomeMedia</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item>
+            <router-link to="/movie">Filmy</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/music">Muzyka</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/photo">Zdjęcia</router-link>
+          </b-nav-item>
+
+          <b-nav-item-dropdown text="Ustawienia" right>
+            <b-dropdown-item href="#">
+              <router-link to="/user/edit">Edycja konto</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link to="/user/">---</router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <router-link to="/user/delete">Usuń konto</router-link>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item>
+            <router-link to="/logout">Wylogowanie</router-link>
+          </b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
   </div>
 </template>
 <script>
