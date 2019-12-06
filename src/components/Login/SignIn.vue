@@ -1,37 +1,60 @@
 <template>
   <div>
     <h1>Zaloguj się</h1>
-    <form v-if="!submitted" class="">
-      <div class="form-box col span-4">
-        <div class="form-group col-md-4 form-inline">
-          <label>Nick:</label>
-          <input type="text" class="form-control" v-model="nickname" />
-        </div>
-        <div class="form-group col-md-4 form-inline">
-          <label>haslo:</label>
-          <input type="password" class="form-control" v-model="password1" />
-        </div>
-
-        <div class="form-group col-md-4 form-inline">
-          <button @click.prevent="submitted = true" class="btn flat btn-primary">Zaloguj się</button>
-        </div>
+    <div v-if="this.error">{{this.errorContent}}</div>
+    <div v-if="this.success">{{this.successContent}}</div>
+    <form>
+      <div>
+        <label>Login</label>
+        <input v-model="nickname" type="text" />
+      </div>
+      <div>
+        <label>Hasło</label>
+        <input v-model="password" type="password" />
+      </div>
+      <div>
+        <button v-on:click.prevent="login()">Zaloguj się</button>
       </div>
     </form>
   </div>
 </template>
 <script>
 export default {
-    name: 'SignIn',
-    data() {
-      return {
-        nickname: '',
-        password1: '',
-        submitted: false
-      }
-    },
-}
+  name: "SignIn",
+  data: () => {
+    return {
+      nickname: "",
+      password: "",
+      success: false,
+      successContent: "",
+      error: false,
+      errorContent: ""
+    };
+  },
+  methods: {
+    login: function() {
+      this.$store
+        .dispatch("login", {
+          nickname: this.nickname,
+          password: this.password
+        })
+        .then(result => {
+          console.log("XD", result)
+          this.success = true
+          this.successContent = result.message
+          setTimeout( () => {
+            this.$router.push('Home')
+          }, 1500)
+
+        })
+        .catch(error => {
+          this.error = true
+          this.errorContent = error
+        })
+    }
+  }
+};
 </script>
 
 <style>
-
 </style>
