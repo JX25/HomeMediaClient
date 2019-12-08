@@ -53,6 +53,7 @@
             <th scope="col">#</th>
             <th scope="col">Nazwa filmu</th>
             <th scope="col">Rok</th>
+            <th scope="col">Język</th>
             <th scope="col">Gatunek</th>
             <th scope="col">Długość (min)</th>
             <th scope="col">Podgląd</th>
@@ -61,22 +62,23 @@
           </tr>
         </thead>
         <tbody>
-        <tr v-for="movie in movies" :key="movie.id">
-          <td>THUMBNAIL</td>
-          <td>{{movie.title.toUpperCase()}}</td>
-          <td>{{movie.year}}</td>
-          <td>{{movie.genre.toUpperCase()}}</td>
-          <td>{{movie.length}}</td>
-          <td>
-            <button type="button" class="btn btn-warning">Podgląd</button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary">Edycja</button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger" @click="deleteMovie(movie.slug)">Usuń</button>
-          </td>
-        </tr>
+          <tr v-for="movie in movies" :key="movie.id">
+            <td>THUMBNAIL</td>
+            <td>{{movie.title.toUpperCase()}}</td>
+            <td>{{movie.year}}</td>
+            <td>{{movie.language}}</td>
+            <td>{{movie.genre.toUpperCase()}}</td>
+            <td>{{movie.length}}</td>
+            <td>
+              <button type="button" class="btn btn-warning">Podgląd</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary">Edycja</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" @click="deleteMovie(movie.slug)">Usuń</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -84,13 +86,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MovieList",
   data() {
     return {
-      movies: [],
+      movies2: [],
       moviesTmp: []
     };
   },
@@ -99,15 +101,18 @@ export default {
     deleteMovie: function(movieSlug) {
       return movieSlug;
     },
-    filterMovies: function(filters){
-        filters*2
+    filterMovies: function(filters) {
+      filters * 2;
     }
   },
   created() {
     this.allMovies().then(result => {
-      this.movies = result.data.response
-      this.moveisTmp = this.movies
+      this.movies2 = this.movies;
+      this.moveisTmp = result; //this.movies
     });
+  },
+  computed: {
+    ...mapGetters("movie", ["movies"])
   }
 };
 </script>

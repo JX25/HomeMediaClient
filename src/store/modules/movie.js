@@ -18,8 +18,8 @@ export default {
             return new Promise( (res, rej) => {
                 movieApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        console.log(result)
-                        commit('movies', result)
+                        console.log(result.data.response)
+                        commit('setMovies', result.data.response)
                         res(result)
 
                     })
