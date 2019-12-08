@@ -34,12 +34,11 @@ export default {
   methods: {
     login: function() {
       this.$store
-        .dispatch("login", {
+        .dispatch("user/login", {
           nickname: this.nickname,
           password: this.password
         })
         .then(result => {
-          console.log("XD", result)
           this.success = true
           this.successContent = result.message
           setTimeout( () => {

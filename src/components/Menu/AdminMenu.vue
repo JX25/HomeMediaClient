@@ -45,7 +45,7 @@
               <router-link to="/myaccount">Konto</router-link>              
           </b-nav-item>
           <b-nav-item>
-            <router-link to="/logout">Wylogowanie</router-link>
+            <b @click="logout">Wylogowanie</b>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -55,7 +55,15 @@
 <script>
 export default {
   name: "AdminMenu",
-  components: {}
+  components: {},
+  props: ['accountType'],
+  methods: {
+    logout: function() {
+      localStorage.clear()
+      this.$store.dispatch('user/clear')
+      this.$router.push('/home')
+    }
+  },
 };
 </script>
 <style scoped>

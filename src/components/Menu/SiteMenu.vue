@@ -1,10 +1,8 @@
 <template>
     <div>
-        <GuestMenu v-if="accountType" /> <!-- v-if="this.accountType === user" />
-        <UserMenu v-else-if="this.accountType === admin" />
-        <GuestMenu  v-else />-->
-        <AdminMenu v-else-if="accountType=='XD'"/>
-        <UserMenu v-else/>
+        <AdminMenu v-if="this.$store.state.user.type===true"/> 
+        <UserMenu v-else-if="this.$store.state.user.type===false"/>
+        <GuestMenu v-else/>
     </div>
 </template>
 
@@ -15,16 +13,11 @@ import GuestMenu from "./GuestMenu.vue";
 
 export default {
     name: 'SiteMenu',
-    data() {
-        return {
-            accountType : 'admin'
-        }
-    },
     components:{
         AdminMenu,
         UserMenu,
         GuestMenu,
-    }
+    },
 }
 </script>
 
