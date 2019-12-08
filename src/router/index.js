@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import SignIn from '../components/Login/SignIn.vue'
 import SignUp from '../components/Login/SignUp.vue'
-import Movie from '../components/Movie/Movie.vue'
+import MovieList from '../components/Movie/MovieList.vue'
 import Music from '../components/Music/Music.vue'
 import Photo from '../components/Photo/Photo.vue'
 import UserSettings from '../components/User/UserSettings.vue'
@@ -34,9 +34,9 @@ const routes = [
     component: About
   },
   {
-    path: '/movie',
-    name: 'Movie',
-    component: Movie
+    path: '/admin/movie',
+    name: 'MovieList',
+    component: MovieList
   },
   {
     path: '/music',
