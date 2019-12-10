@@ -1,13 +1,77 @@
 <template>
-  <h1>MOVIE</h1>
+  <div width="800px">
+    <b-modal id="MovieDetail" title="Szczegóły filmu">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Id</th>
+            <td>{{this.movie._id}}</td>
+          </tr>
+          <tr>
+            <th>Tytuł</th>
+            <td>{{movie.title}}</td>
+          </tr>
+          <tr>
+            <th>Rok powstania</th>
+            <td>{{movie.year}}</td>
+          </tr>
+          <tr>
+            <td>
+              <img
+                src="https://cdn3.iconfinder.com/data/icons/ui-03-basic-2/100/Basic__54-512.png"
+                alt="miniatura filmu"
+                width="150"
+                height="150"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>Opis</th>
+            <td>{{movie.description}}</td>
+          </tr>
+          <tr>
+            <th>Gatunek</th>
+            <td>{{movie.genre}}</td>
+          </tr>
+          <tr>
+            <th>Język</th>
+            <td>{{movie.language}}</td>
+          </tr>
+          <tr>
+            <th>Czas trwania (min)</th>
+            <td>{{movie.length}}</td>
+          </tr>
+          <tr>
+            <th>Reżyser</th>
+            <td><p v-for="director in this.movie.director" :key="director">{{director}}</p></td>
+          </tr>
+          <tr>
+            <th>Aktorzy</th>
+            <td><p v-for="actor in this.movie.actors" :key="actor">{{actor}}</p></td>
+          </tr>
+          <tr>
+            <th>Słowa kluczowe</th>
+            <td><p v-for="tag in this.movie.tags" :key="tag">{{tag}}</p></td>
+          </tr>
+        </tbody>
+      </table>
+    </b-modal>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Movie'
-}
+  name: "Movie",
+  props: ["movie"],
+  created() {
+    console.log("XD", this.movie);
+  }
+};
 </script>
 
 <style>
+  .modal-dialog {
+    max-width: auto !important;
 
+  }
 </style>

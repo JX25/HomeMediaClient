@@ -13,7 +13,7 @@
               <router-link to="/admin/movie">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/add/movie/">Dodaj film</router-link>
+              <router-link to="/admin/movie/add">Dodaj film</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Muzyka" right>

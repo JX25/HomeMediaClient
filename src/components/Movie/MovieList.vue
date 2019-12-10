@@ -56,9 +56,9 @@
             <th scope="col">Język</th>
             <th scope="col">Gatunek</th>
             <th scope="col">Długość (min)</th>
-            <th scope="col">Podgląd</th>
-            <th scope="col">Edycja</th>
-            <th scope="col">Usuń</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@
             <td>{{movie.genre.toUpperCase()}}</td>
             <td>{{movie.length}}</td>
             <td>
-              <button type="button" class="btn btn-warning">Podgląd</button>
+              <b-button v-b-modal.MovieDetail @click="setTargetMovie(movie)">Podgląd</b-button>
             </td>
             <td>
               <button type="button" class="btn btn-primary">Edycja</button>
@@ -81,19 +81,30 @@
           </tr>
         </tbody>
       </table>
+      <MovieDetail :movie="this.targetMovie" />
     </div>
+    <router-link to="movie/add">
+      <button type="button" class="btn btn-success btn-circle btn-md">
+        <h1>+</h1>
+      </button>
+    </router-link>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import MovieDetail from "./Movie";
 
 export default {
   name: "MovieList",
+  components: {
+    MovieDetail
+  },
   data() {
     return {
       movies2: [],
-      moviesTmp: []
+      moviesTmp: [],
+      targetMovie: {}
     };
   },
   methods: {
@@ -103,6 +114,10 @@ export default {
     },
     filterMovies: function(filters) {
       filters * 2;
+    },
+    setTargetMovie: function(movie) {
+      //console.log(movie)
+      this.targetMovie = movie;
     }
   },
   created() {
@@ -118,4 +133,15 @@ export default {
 </script>
 
 <style>
+.btn-circle.btn-md {
+  position: absolute;
+  bottom: 110px;
+  right: 10px;
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 12px;
+  text-align: center;
+}
 </style>

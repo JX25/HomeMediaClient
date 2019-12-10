@@ -7,13 +7,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import BootstrapVue from 'bootstrap-vue'
 import VueLocalStorage from 'vue-localstorage'
-
+import VModal from 'vue-js-modal'
 
 require('dotenv').config('.env')
 
 Vue.use(BootstrapVue)
 Vue.use(VueLocalStorage)
-
+Vue.use(VModal)
 
 Vue.config.productionTip = false
 

@@ -8,7 +8,7 @@ import MovieList from '../components/Movie/MovieList.vue'
 import Music from '../components/Music/Music.vue'
 import Photo from '../components/Photo/Photo.vue'
 import UserSettings from '../components/User/UserSettings.vue'
-
+import AddMovie from '../components/Movie/AddMovie'
 
 Vue.use(VueRouter)
 
@@ -52,6 +52,11 @@ const routes = [
     path: '/settings',
     name: 'UserSettings',
     component: UserSettings
+  },
+  {
+    path: '/admin/movie/add',
+    name: 'AddMovie',
+    component: AddMovie
   },
 
 ]
