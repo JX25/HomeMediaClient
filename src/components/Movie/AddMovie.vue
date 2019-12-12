@@ -1,73 +1,219 @@
 <template>
   <div>
     <h3>Dodanie nowego filmu do bazy</h3>
-    <div id="errorbox"></div>
-    <div id="successbox"></div>
-    <form action="uploadMovie">
+    <div id="errorbox" v-if="isError">{{this.error}}</div>
+    <div id="successbox" v-if="isSuccess">{{this.success}}</div>
+    <form action="uploadMovie" @submit.prevent="validateAndSend">
       <table class="table">
         <tbody>
           <tr>
             <th>Tytuł</th>
-            <td>123</td>
+            <td>
+              <input type="text" v-model="title" />
+            </td>
           </tr>
           <tr>
             <th>Opis filmu</th>
-            <td>123</td>
+            <td>
+              <textarea name="description" id cols="30" rows="1" v-model="description"></textarea>
+            </td>
           </tr>
           <tr>
             <th>Rok produkcji</th>
-            <td>123</td>
+            <td>
+              <input type="number" :max="currentYear" :min="1900" v-model="year" />
+            </td>
           </tr>
           <tr>
             <th>Gatunek</th>
-            <td>123</td>
+            <td>
+              <input type="text" v-model="genre" />
+            </td>
           </tr>
           <tr>
             <th>Miniatura</th>
-            <td>123</td>
+            <td>
+              <input
+                type="file"
+                id="thumbnail"
+                accept="image/jpeg image/png"
+                @change="handleThumbnailFile"
+                ref="thumbnail"
+              />
+            </td>
           </tr>
           <tr>
             <th>Plik</th>
-            <td>  <div class="custom-file">
-    <input type="file" class="custom-file-input" accept=".mp4, .x-m4v, video/*" id="inputGroupFile01"
-      aria-describedby="inputGroupFileAddon01">
-    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-  </div></td>
+            <td>
+              <input
+                type="file"
+                accept=".mp4, .x-m4v, video/*"
+                @change="handleMovieFile"
+                id="file"
+                ref="file"
+              />
+            </td>
           </tr>
           <tr>
             <th>Wiek (PEGI)</th>
-            <td>123</td>
+            <td>
+              <select name="pegi" id="pg" v-model="pegi">
+                <option value="0">Familijny</option>
+                <option value="1">Wiek &#x3c;16</option>
+                <option value="2">Wiek 16+</option>
+              </select>
+            </td>
           </tr>
           <tr>
             <th>Długość</th>
-            <td>123</td>
+            <td>
+              <input type="text" disabled v-model="length" />
+            </td>
           </tr>
           <tr>
             <th>Język</th>
-            <td>123</td>
+            <td>
+              <input type="text" v-model="language" />
+            </td>
           </tr>
           <tr>
-            <th>Reżyser/Reżyserzy</th>
-            <td>123</td>
+            <th>
+              Reżyser/Reżyserzy
+              <sub>a,b</sub>
+            </th>
+            <td>
+              <input type="text" v-model="directors" />
+            </td>
           </tr>
           <tr>
-            <th>Aktorzy</th>
-            <td>123</td>
+            <th>
+              Aktorzy
+              <sub>a,b</sub>
+            </th>
+            <td>
+              <input type="text" v-model="actors" />
+            </td>
           </tr>
           <tr>
-            <th>Słowa kluczowe</th>
-            <td>123</td>
+            <th>
+              Słowa kluczowe
+              <sub>a,b</sub>
+            </th>
+            <td>
+              <input type="text" v-model="tags" />
+            </td>
           </tr>
         </tbody>
       </table>
-      <b-button variant="primary">Dodaj film</b-button>
+      <b-button variant="primary" type="submit">Dodaj film</b-button>
     </form>
   </div>
 </template>
 
 <script>
+import getBlobDuration from "get-blob-duration";
+
 export default {
-  name: "AddMovie"
+  name: "AddMovie",
+  data() {
+    return {
+      currentYear: "",
+      title: "",
+      description: "",
+      year: 0,
+      genre: "",
+      thumbnail: "",
+      file: "",
+      pegi: "",
+      length: "",
+      language: "",
+      directors: "",
+      actors: "",
+      tags: "",
+      tmpURL: "",
+      isError: false,
+      isSuccess: false,
+      error: "",
+      success: "",
+    };
+  },
+  methods: {
+    validateAndSend: function() {
+      console.log("ABC");
+      //validation
+      this.actors = this.actors.split(",");
+      this.directors = this.directors.split(",");
+      this.tags = this.tags.split(",");
+      let lengthInSeconds = this.length.split(" ");
+      for (let index in lengthInSeconds) {
+        lengthInSeconds[index] = lengthInSeconds[index].match(/\d+/)[0];
+      }
+      lengthInSeconds =
+        Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
+      this.$store
+        .dispatch("movie/uploadMetaData", {
+          title: this.title,
+          description: this.description,
+          year: this.year,
+          genre: this.genre,
+          tags: this.tags,
+          language: this.language,
+          length: lengthInSeconds,
+          age_rate: this.pegi,
+          director: this.directors,
+          actors: this.actors
+        })
+        .then(result => {
+          console.log(result);
+          const slug = result.slg;
+          this.$store
+            .dispatch("movie/uploadThumbnail", {
+              slug: slug,
+              thumbnail: this.thumbnail
+            })
+            .then(result2 => {
+              console.log("2", result2);
+              this.$store
+                .dispatch("movie/uploadMovie", { slug: slug, file: this.file })
+                .then(finalResult => {
+                  this.isSuccess = true
+                  this.success = "dssadads"
+                  console.log("3", finalResult);
+
+                })
+                .finally(res => {
+                  this.isSuccess = false
+                  console.log("4", res)
+
+                })
+            });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    handleMovieFile: function() {
+      this.file = this.$refs.file.files[0];
+      let fileURL = URL.createObjectURL(this.file);
+      getBlobDuration(fileURL).then(duration => {
+        console.log(duration);
+        let minutes = Math.floor(duration / 60);
+        let seconds = Math.floor(duration - minutes * 60);
+        this.length = minutes + "min " + seconds + "s";
+      });
+    },
+    handleThumbnailFile: function() {
+      this.thumbnail = this.$refs.thumbnail.files[0];
+    },
+    loaded: function() {
+      console.log("XD");
+      console.log(this.tmpURL);
+    }
+  },
+  created() {
+    this.currentYear = new Date().getFullYear();
+    this.year = this.currentYear;
+  }
 };
 </script>
 

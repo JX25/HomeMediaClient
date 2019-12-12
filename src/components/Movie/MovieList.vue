@@ -63,7 +63,7 @@
         </thead>
         <tbody>
           <tr v-for="movie in movies" :key="movie.id">
-            <td>THUMBNAIL</td>
+            <td><img :src="image(movie.slug)" width=100 height=100 alt="brak"></td>
             <td>{{movie.title.toUpperCase()}}</td>
             <td>{{movie.year}}</td>
             <td>{{movie.language}}</td>
@@ -118,6 +118,9 @@ export default {
     setTargetMovie: function(movie) {
       //console.log(movie)
       this.targetMovie = movie;
+    },
+    image: function(slug){
+      return 'http://localhost:8000/api/v1/movie/stream-thumbnail/' + slug
     }
   },
   created() {
