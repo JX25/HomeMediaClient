@@ -9,6 +9,7 @@ import Music from '../components/Music/Music.vue'
 import Photo from '../components/Photo/Photo.vue'
 import UserSettings from '../components/User/UserSettings.vue'
 import AddMovie from '../components/Movie/AddMovie'
+import EditMovie from '../components/Movie/EditMovie'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,11 @@ const routes = [
     name: 'AddMovie',
     component: AddMovie
   },
+  {
+    path: '/admin/movie/edit/:slug',
+    name: 'EditMovie',
+    component: EditMovie
+  }
 
 ]
 

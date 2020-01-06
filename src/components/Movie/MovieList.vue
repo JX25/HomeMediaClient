@@ -59,21 +59,27 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="movie in movies" :key="movie.id">
-            <td><img :src="image(movie.slug)" width=100 height=100 alt="brak"></td>
+            <td>
+              <img :src="image(movie.slug)" width="100" height="100" alt="brak" />
+            </td>
             <td>{{movie.title.toUpperCase()}}</td>
             <td>{{movie.year}}</td>
             <td>{{movie.language}}</td>
             <td>{{movie.genre.toUpperCase()}}</td>
             <td>{{movie.length}}</td>
             <td>
+              <button type="button" class="btn btn-success" @click="runPlayer(movie.slug)">Oglądaj</button>
+            </td>
+            <td>
               <b-button v-b-modal.MovieDetail @click="setTargetMovie(movie)">Podgląd</b-button>
             </td>
             <td>
-              <button type="button" class="btn btn-primary">Edycja</button>
+              <button type="button" class="btn btn-primary" @click="editMovie(movie)">Edycja</button>
             </td>
             <td>
               <button type="button" class="btn btn-danger" @click="deleteMovie(movie.slug)">Usuń</button>
@@ -81,6 +87,7 @@
           </tr>
         </tbody>
       </table>
+      <MoviePlayer :show="this.player.show" :src="this.player.src" />
       <MovieDetail :movie="this.targetMovie" />
     </div>
     <router-link to="movie/add">
@@ -94,23 +101,39 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
+import MoviePlayer from "./MoviePlayer";
 
 export default {
   name: "MovieList",
   components: {
-    MovieDetail
+    MovieDetail,
+    MoviePlayer
   },
   data() {
     return {
       movies2: [],
       moviesTmp: [],
-      targetMovie: {}
+      targetMovie: {},
+      player: {
+        src: "",
+        show: false
+      }
     };
   },
   methods: {
     ...mapActions("movie", ["allMovies"]),
+    ...mapActions("movie", ["movieToEdit"]),
     deleteMovie: function(movieSlug) {
-      return movieSlug;
+      if (confirm("Czy na pewno chcesz usunąć ten film?")) {
+        this.$store
+          .dispatch("movie/deleteMovie", movieSlug)
+          .then(result => {
+            console.log(result);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     },
     filterMovies: function(filters) {
       filters * 2;
@@ -119,14 +142,24 @@ export default {
       //console.log(movie)
       this.targetMovie = movie;
     },
-    image: function(slug){
-      return 'http://localhost:8000/api/v1/movie/stream-thumbnail/' + slug
+    image: function(slug) {
+      return "http://localhost:8000/api/v1/movie/stream-thumbnail/" + slug;
+    },
+    srcStream: function(slug) {
+      return "http://localhost:8000/api/v1/movie/stream/" + slug;
+    },
+    editMovie: function(movie) {
+      this.movieToEdit(movie);
+      this.$router.push("/admin/movie/edit/" + movie.slug);
+    },
+    runPlayer: function(slug) {
+      this.player.src = this.srcStream(slug);
+      this.player.show = true;
     }
   },
   created() {
     this.allMovies().then(result => {
-      this.movies2 = this.movies;
-      this.moveisTmp = result; //this.movies
+      this.moviesTmp = result; //this.movies
     });
   },
   computed: {
@@ -138,8 +171,8 @@ export default {
 <style>
 .btn-circle.btn-md {
   position: absolute;
-  bottom: 110px;
-  right: 10px;
+  bottom: 120px;
+  right: 50px;
   width: 70px;
   height: 70px;
   padding: 10px;

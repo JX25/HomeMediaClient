@@ -3,7 +3,7 @@
     <h3>Dodanie nowego filmu do bazy</h3>
     <div id="errorbox" v-if="isError">{{this.error}}</div>
     <div id="successbox" v-if="isSuccess">{{this.success}}</div>
-    <form action="uploadMovie" @submit.prevent="validateAndSend">
+    <form @submit.prevent="validateAndSend">
       <table class="table">
         <tbody>
           <tr>
@@ -15,6 +15,7 @@
           <tr>
             <th>Opis filmu</th>
             <td>
+               <v-icon name="beer"></v-icon>
               <textarea name="description" id cols="30" rows="1" v-model="description"></textarea>
             </td>
           </tr>
@@ -139,11 +140,10 @@ export default {
   },
   methods: {
     validateAndSend: function() {
-      console.log("ABC");
       //validation
-      this.actors = this.actors.split(",");
-      this.directors = this.directors.split(",");
-      this.tags = this.tags.split(",");
+      this.actors = this.actors.split(",").map(x => x.trim());
+      this.directors = this.directors.split(",").map(x => x.trim());
+      this.tags = this.tags.split(",").map(x => x.trim());
       let lengthInSeconds = this.length.split(" ");
       for (let index in lengthInSeconds) {
         lengthInSeconds[index] = lengthInSeconds[index].match(/\d+/)[0];

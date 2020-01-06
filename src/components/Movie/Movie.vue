@@ -1,5 +1,5 @@
 <template>
-  <div width="800px">
+  <div width="1000px">
     <b-modal id="MovieDetail" title="Szczegóły filmu">
       <table class="table">
         <tbody>
@@ -17,12 +17,7 @@
           </tr>
           <tr>
             <td>
-              <img
-                src="https://cdn3.iconfinder.com/data/icons/ui-03-basic-2/100/Basic__54-512.png"
-                alt="miniatura filmu"
-                width="150"
-                height="150"
-              />
+              <img :src="image(movie.slug)" alt="miniatura filmu" width="150" height="150" />
             </td>
           </tr>
           <tr>
@@ -43,15 +38,21 @@
           </tr>
           <tr>
             <th>Reżyser</th>
-            <td><p v-for="director in this.movie.director" :key="director">{{director}}</p></td>
+            <td>
+              <p v-for="director in this.movie.director" :key="director">{{director}}</p>
+            </td>
           </tr>
           <tr>
             <th>Aktorzy</th>
-            <td><p v-for="actor in this.movie.actors" :key="actor">{{actor}}</p></td>
+            <td>
+              <p v-for="actor in this.movie.actors" :key="actor">{{actor}}</p>
+            </td>
           </tr>
           <tr>
             <th>Słowa kluczowe</th>
-            <td><p v-for="tag in this.movie.tags" :key="tag">{{tag}}</p></td>
+            <td>
+              <p v-for="tag in this.movie.tags" :key="tag">{{tag}}</p>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -64,14 +65,18 @@ export default {
   name: "Movie",
   props: ["movie"],
   created() {
-    console.log("XD", this.movie);
+    console.log(this.movie);
+  },
+  methods: {
+    image: function(slug) {
+      return "http://localhost:8000/api/v1/movie/stream-thumbnail/" + slug;
+    }
   }
 };
 </script>
 
 <style>
-  .modal-dialog {
-    max-width: auto !important;
-
-  }
+.modal-dialog {
+  max-width: auto !important;
+}
 </style>

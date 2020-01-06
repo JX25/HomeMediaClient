@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-css-only/css/bootstrap.min.css'; 
+import 'mdbvue/build/css/mdb.css';
 import BootstrapVue from 'bootstrap-vue'
 import VueLocalStorage from 'vue-localstorage'
 import VModal from 'vue-js-modal'
-
 require('dotenv').config('.env')
 
 Vue.use(BootstrapVue)

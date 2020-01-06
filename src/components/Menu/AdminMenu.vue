@@ -7,13 +7,13 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="auto">
           <b-nav-item-dropdown text="Filmy" right>
             <b-dropdown-item href="#">
               <router-link to="/admin/movie">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/movie/add">Dodaj film</router-link>
+              <router-link to="/admin/movie/add">Dodaj film <mdb-icon icon="film" /></router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Muzyka" right>
