@@ -1,7 +1,7 @@
 <template>
   <div width="1000px">
     <b-modal id="MovieDetail" title="Szczegóły filmu">
-      <table class="table table-border">
+      <table class="table table-border table-responsive">
         <tbody>
           <tr class="noborder">
             <td rowspan=1 class="noborder">

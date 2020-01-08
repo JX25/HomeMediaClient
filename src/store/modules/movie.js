@@ -8,7 +8,11 @@ export default {
         movieToEdit: {},
         uploadMovie: '',
         uploadMovieThumbnail: '',
-        uploadMetaData: {}
+        uploadMetaData: {},
+        moviePlayer: {
+            src: '',
+            show: false
+        }
     },
     mutations:{
         setMovies(state, movies){
@@ -35,7 +39,16 @@ export default {
             state.movieToEdit = data
         },
         removeMovie(state, slug){
-            state.movies.remove(x => x.slug === slug)
+            state.movies.filter(x => x.slug != slug)
+        },
+        showMoviePlayer(state){
+            state.moviePlayer.show = true
+        },
+        hideMoviePlayer(state){
+            state.moviePlayer.show = false
+        },
+        setMoviePlayerSrc(state, src){
+            state.moviePlayer.src = src
         }
     },
     getters:{
@@ -46,6 +59,7 @@ export default {
         uploadMovie: state => {return state.uploadMovie},
         uploadThumbnail: state => {return state.uploadMovieThumbnail},
         uploadMetaData: state => {return state.uploadMetaData},
+        moviePlayer: state => {return state.moviePlayer},
     },
     actions:{
         movieToEdit: ({commit}, movie) => {
@@ -92,7 +106,7 @@ export default {
         },
         updateMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                movieApi.put(payload.slug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                movieApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
                         console.log(result)
                         commit('setMovieMetaData', result)

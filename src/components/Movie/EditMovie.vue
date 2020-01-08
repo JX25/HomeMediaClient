@@ -110,23 +110,24 @@ export default {
       //validate();
       //if(!validate) {}
       let metadata = {}
+      console.log("XDDD", this.movie)
+      console.log(this.$route.params.slug)
       metadata.actors = this.actors.split(",").map(obj => obj.trim())
       metadata.director = this.directors.split(",").map(obj => obj.trim())
       metadata.tags = this.tags.split(",").map(obj => obj.trim())
-      console.log(this.actors, this.director, this.tags)      
-      console.log(metadata.actors, metadata.director, metadata.tags)
+      //console.log(this.actors, this.director, this.tags)      
+      //console.log(metadata.actors, metadata.director, metadata.tags)
       metadata.title = this.movie.title;
       metadata.description = this.movie.description;
       metadata.year = this.movie.year;
       metadata.genre = this.movie.genre;
       metadata.language = this.movie.language;
       metadata.age_rate = this.movie.age_rate;
-      metadata.slug = this.title + "_" + this.year
       // files
       let files = {}
       files.file = this.$refs.video.files[0];
       files.thumbnail = this.$refs.thumbnail.files[0];
-      files.slug = metadata.title + "_" + metadata.year  
+      files.slug = this.movie.title + "_" + this.movie.year  
       this.updateMovie(metadata, files)    
     },
     setMovie: async function() {
@@ -138,7 +139,8 @@ export default {
       this.tags = this.movie.tags.join(", ");
     },
     updateMovie: function(meta, files){
-      console.log("XD", meta)
+      meta.slug = meta.title + '_' + meta.year
+      meta.OLDslug = this.slug
       this.$store.dispatch("movie/updateMetaData", meta)
       .then(result =>{
         console.log("01", result)

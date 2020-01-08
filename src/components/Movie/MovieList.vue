@@ -54,7 +54,7 @@
         />
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies()">Wyszukaj</button>
       </form>
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped" v-if=listLoaded>
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
@@ -70,7 +70,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="movie in movies" :key="movie.id">
+          <tr v-for="movie in movieList" :key="movie.id">
             <td>
               <img :src="image(movie.slug)" width="100" height="100" alt="brak" />
             </td>
@@ -99,7 +99,7 @@
         </tbody>
       </table>
       <MoviePlayer :show="this.player.show" :src="this.player.src" />
-      <MovieDetail :name="this.componentInfo" :movie="this.targetMovie" />
+      <MovieDetail :movie="this.targetMovie" />
     </div>
     <router-link to="movie/add">
       <button type="button" class="btn btn-success btn-circle btn-md">
@@ -123,8 +123,8 @@ export default {
   },
   data() {
     return {
-      movies2: [],
-      moviesTmp: [],
+      movieList: [],
+      listLoaded: false,
       targetMovie: {},
       params: {
         title: "",
@@ -139,7 +139,6 @@ export default {
         src: "",
         show: false
       },
-      componentInfo: "movie-detail"
     };
   },
   methods: {
@@ -150,7 +149,8 @@ export default {
         this.$store
           .dispatch("movie/deleteMovie", movieSlug)
           .then(result => {
-            console.log(result);
+            this.movieList = this.movieList.filter(x=> x.slug != movieSlug)
+            console.log(movieSlug, this.movieList,result);
           })
           .catch(error => {
             console.log(error);
@@ -159,10 +159,8 @@ export default {
     },
     filterMovies: function() {
       //WALIDACJA
-      console.log(this.movies);
-      console.log("filters", this.params);
       let filteredMovies = filterMovieList(this.movies, this.params);
-      console.log('result', filteredMovies);
+      this.movieList = filteredMovies
     },
     movieInfo: function(movie) {
       this.targetMovie = movie;
@@ -184,7 +182,9 @@ export default {
   },
   created() {
     this.allMovies().then(result => {
-      this.moviesTmp = result;
+      console.log("load", result.data.response)
+      this.movieList = result.data.response;
+      this.listLoaded = true
     });
   },
   computed: {
