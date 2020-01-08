@@ -1,8 +1,13 @@
 <template>
   <div width="1000px">
     <b-modal id="MovieDetail" title="Szczegóły filmu">
-      <table class="table">
+      <table class="table table-border">
         <tbody>
+          <tr class="noborder">
+            <td rowspan=1 class="noborder">
+              <img :src="image(movie.slug)" alt="miniatura filmu" width="150" height="150" />
+            </td>
+          </tr>
           <tr>
             <th>Id</th>
             <td>{{this.movie._id}}</td>
@@ -14,11 +19,6 @@
           <tr>
             <th>Rok powstania</th>
             <td>{{movie.year}}</td>
-          </tr>
-          <tr>
-            <td>
-              <img :src="image(movie.slug)" alt="miniatura filmu" width="150" height="150" />
-            </td>
           </tr>
           <tr>
             <th>Opis</th>
@@ -34,7 +34,7 @@
           </tr>
           <tr>
             <th>Czas trwania (min)</th>
-            <td>{{movie.length}}</td>
+            <td>{{Math.round(movie.length*100/60)/100}}</td>
           </tr>
           <tr>
             <th>Reżyser</th>
@@ -77,6 +77,7 @@ export default {
 
 <style>
 .modal-dialog {
-  max-width: auto !important;
+  max-width: 50% !important;
+  background-color: rgba(211, 32, 52, 0.6);
 }
 </style>

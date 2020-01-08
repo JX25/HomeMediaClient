@@ -6,46 +6,53 @@
         <input
           type="text"
           class="form-control mb-2 mr-sm-2"
-          id="inlineFormInputName2"
+          id="title"
           placeholder="Nazwa filmu"
+          v-model="params.title"
         />
         <input
           type="text"
           class="form-control mb-2 mr-sm-2"
-          id="inlineFormInputName2"
+          id="keyword"
           placeholder="Słowa kluczowe"
+          v-model="params.keyword"
         />
         <input
           type="text"
           class="form-control mb-2 mr-sm-2"
-          id="inlineFormInputName2"
+          id="genre"
           placeholder="Gatunek"
+          v-model="params.genre"
         />
         <input
           type="number"
           class="form-control mb-2 mr-sm-2 col-xs-2"
-          id="inlineFormInputName2"
+          id="lengthMin"
           placeholder="Długość od min"
+          v-model="params.lengthMin"
         />
         <input
           type="number"
           class="form-control mb-2 mr-sm-2"
-          id="inlineFormInputName2"
+          id="lengthMax"
           placeholder="Długość do min"
+          v-model="params.lengthMax"
         />
         <input
           type="number"
           class="form-control mb-2 mr-sm-2"
-          id="inlineFormInputName2"
+          id="yearMin"
           placeholder="Od roku"
+          v-model="params.yearMin"
         />
         <input
           type="number"
           class="form-control mb-2 mr-sm-2"
-          id="inlineFormInputName2"
+          id="yearMax"
           placeholder="Do roku"
+          v-model="params.yearMax"
         />
-        <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies">Wyszukaj</button>
+        <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies()">Wyszukaj</button>
       </form>
       <table class="table table-hover table-striped">
         <thead class="thead-light">
@@ -71,24 +78,28 @@
             <td>{{movie.year}}</td>
             <td>{{movie.language}}</td>
             <td>{{movie.genre.toUpperCase()}}</td>
-            <td>{{movie.length}}</td>
+            <td>{{Math.round(movie.length*100/60)/100}}</td>
             <td>
               <button type="button" class="btn btn-success" @click="runPlayer(movie.slug)">Oglądaj</button>
             </td>
             <td>
-              <b-button v-b-modal.MovieDetail @click="setTargetMovie(movie)">Podgląd</b-button>
+              <b-button v-b-modal.MovieDetail @click="movieInfo(movie)">Podgląd</b-button>
             </td>
             <td>
               <button type="button" class="btn btn-primary" @click="editMovie(movie)">Edycja</button>
             </td>
             <td>
-              <button type="button" class="btn btn-danger" @click="deleteMovie(movie.slug)">Usuń</button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="deleteMovie(movie.slug, movie.title)"
+              >Usuń</button>
             </td>
           </tr>
         </tbody>
       </table>
       <MoviePlayer :show="this.player.show" :src="this.player.src" />
-      <MovieDetail :movie="this.targetMovie" />
+      <MovieDetail :name="this.componentInfo" :movie="this.targetMovie" />
     </div>
     <router-link to="movie/add">
       <button type="button" class="btn btn-success btn-circle btn-md">
@@ -102,6 +113,7 @@
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
 import MoviePlayer from "./MoviePlayer";
+import filterMovieList from "../../plugins/filterList";
 
 export default {
   name: "MovieList",
@@ -114,17 +126,27 @@ export default {
       movies2: [],
       moviesTmp: [],
       targetMovie: {},
+      params: {
+        title: "",
+        keyword: "",
+        genre: "",
+        lengthMin: '',
+        lengthMax: '',
+        yearMin: '',
+        yearMax: '',
+      },
       player: {
         src: "",
         show: false
-      }
+      },
+      componentInfo: "movie-detail"
     };
   },
   methods: {
     ...mapActions("movie", ["allMovies"]),
     ...mapActions("movie", ["movieToEdit"]),
-    deleteMovie: function(movieSlug) {
-      if (confirm("Czy na pewno chcesz usunąć ten film?")) {
+    deleteMovie: function(movieSlug, movieTitle) {
+      if (confirm("Czy na pewno chcesz usunąć film " + movieTitle + "?")) {
         this.$store
           .dispatch("movie/deleteMovie", movieSlug)
           .then(result => {
@@ -135,11 +157,14 @@ export default {
           });
       }
     },
-    filterMovies: function(filters) {
-      filters * 2;
+    filterMovies: function() {
+      //WALIDACJA
+      console.log(this.movies);
+      console.log("filters", this.params);
+      let filteredMovies = filterMovieList(this.movies, this.params);
+      console.log('result', filteredMovies);
     },
-    setTargetMovie: function(movie) {
-      //console.log(movie)
+    movieInfo: function(movie) {
       this.targetMovie = movie;
     },
     image: function(slug) {
@@ -159,7 +184,7 @@ export default {
   },
   created() {
     this.allMovies().then(result => {
-      this.moviesTmp = result; //this.movies
+      this.moviesTmp = result;
     });
   },
   computed: {

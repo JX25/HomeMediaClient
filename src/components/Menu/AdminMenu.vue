@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="menu">
     <b-navbar toggleable="lg" type="dark" variant="danger">
       <b-navbar-brand href="#">HomeMedia-Admin</b-navbar-brand>
 
@@ -9,15 +9,26 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="auto">
           <b-nav-item-dropdown text="Filmy" right>
+            <template slot="button-content">
+              <i class="fas fa-server fa-2x"></i>
+              <div class="navi-title">Filmy</div>
+            </template>
             <b-dropdown-item href="#">
               <router-link to="/admin/movie">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/movie/add">Dodaj film <mdb-icon icon="film" /></router-link>
+              <router-link to="/admin/movie/add">
+                Dodaj nowy
+                <i class="fas fa-film fa-2x"></i>
+              </router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Muzyka" right>
-             <b-dropdown-item href="#">
+            <template slot="button-content">
+              <i class="fas fa-server fa-2x"></i>
+              <div class="navi-title">Muzyka</div>
+            </template>
+            <b-dropdown-item href="#">
               <router-link to="/admin/music/">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
@@ -25,6 +36,10 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Zdjęcia" right>
+            <template slot="button-content">
+              <i class="fas fa-server fa-2x"></i>
+              <div class="navi-title">Zdjęcia</div>
+            </template>
             <b-dropdown-item href="#">
               <router-link to="/admin/photo">Przeglądaj</router-link>
             </b-dropdown-item>
@@ -33,22 +48,38 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item>
-              <router-link to="/admin/users">Użytkownicy</router-link>              
+            <router-link to="/admin/users">
+              <i class="fas fa-users fa-2x"></i>
+              <div class="navi-title">Użytkownicy</div>
+            </router-link>
           </b-nav-item>
           <b-nav-item>
-              <router-link to="/admin/admins">Administratorzy</router-link>              
-          </b-nav-item>
-            <b-nav-item>
-              <router-link to="/admin/server">Serwer</router-link>              
-          </b-nav-item>
-          <b-nav-item>
-              <router-link to="/myaccount">Konto</router-link>              
+            <router-link to="/admin/admins">
+              <i class="fas fa-user-tie fa-2x"></i>
+              <div class="navi-title">Administratorzy</div>
+            </router-link>
           </b-nav-item>
           <b-nav-item>
-            <b @click="logout">Wylogowanie</b>
+            <router-link to="/admin/server">
+              <i class="fas fa-hdd fa-2x"></i>
+              <div class="navi-title">Serwer</div>
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/myaccount">
+              <i class="fas fa-user-edit fa-2x"></i>
+              <div class="navi-title">Konto</div>
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <b @click="logout">
+              <i class="fas fa-sign-out-alt fa-2x"></i>
+              <div class="navi-title">Wyloguj</div>
+            </b>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
+      
     </b-navbar>
   </div>
 </template>
@@ -56,23 +87,32 @@
 export default {
   name: "AdminMenu",
   components: {},
-  props: ['accountType'],
+  props: ["accountType"],
   methods: {
     logout: function() {
-      localStorage.clear()
-      this.$store.dispatch('user/clear')
-      this.$router.push('/home')
+      localStorage.clear();
+      this.$store.dispatch("user/clear");
+      this.$router.push("/home");
     }
-  },
+  }
 };
 </script>
 <style scoped>
 a {
   text-decoration: none;
+  color: #fff;
+}
+a:hover{
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
 }
 .menu-box {
-  height: 120px;
+  height: 10px;
   top: 0;
   width: 100%;
 }
+.navi-title {
+  font-size: 15px;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="menu">
         <AdminMenu v-if="this.$store.state.user.type===true"/> 
         <UserMenu v-else-if="this.$store.state.user.type===false"/>
         <GuestMenu v-else/>
@@ -22,5 +22,12 @@ export default {
 </script>
 
 <style>
-
+a {
+  text-decoration: none;
+  color: #fff;
+}
+a:hover{
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
+}
 </style>

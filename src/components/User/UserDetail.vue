@@ -4,9 +4,13 @@
 
 <script>
 export default {
-    name: 'UserDetailh3 {
-  margin: 40px 0 0;
+    name: 'UserDetailh3'
+ 
 }
+
+</script>
+
+<style>
 ul {
   list-style-type: none;
   padding: 0;
@@ -17,10 +21,5 @@ li {
 }
 a {
   color: #42b983;
-}'
 }
-</script>
-
-<style>
-
 </style>
