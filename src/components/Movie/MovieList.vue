@@ -54,7 +54,7 @@
         />
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies()">Wyszukaj</button>
       </form>
-      <table class="table table-hover table-striped" v-if=listLoaded>
+      <table class="table table-hover table-striped" v-if="listLoaded">
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
@@ -98,8 +98,9 @@
           </tr>
         </tbody>
       </table>
-      <MoviePlayer :show="this.player.show" :src="this.player.src" />
+      <MoviePlayer />
       <MovieDetail :movie="this.targetMovie" />
+      <MovieInfo v-if="infoVisibility" />
     </div>
     <router-link to="movie/add">
       <button type="button" class="btn btn-success btn-circle btn-md">
@@ -113,13 +114,15 @@
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
 import MoviePlayer from "./MoviePlayer";
+import MovieInfo from "./MovieInfo"
 import filterMovieList from "../../plugins/filterList";
 
 export default {
   name: "MovieList",
   components: {
     MovieDetail,
-    MoviePlayer
+    MoviePlayer,
+    MovieInfo
   },
   data() {
     return {
@@ -130,27 +133,29 @@ export default {
         title: "",
         keyword: "",
         genre: "",
-        lengthMin: '',
-        lengthMax: '',
-        yearMin: '',
-        yearMax: '',
+        lengthMin: "",
+        lengthMax: "",
+        yearMin: "",
+        yearMax: ""
       },
       player: {
         src: "",
         show: false
-      },
+      }
     };
   },
   methods: {
-    ...mapActions("movie", ["allMovies"]),
-    ...mapActions("movie", ["movieToEdit"]),
+    ...mapActions("movie", ["allMovies", "movieToEdit", "showVideoPlayer", "setVideoPlayer"]),
+    //...mapActions("movie", ["movieToEdit"]),
+    //...mapActions("movie", ["showVideoPlayer"]),
+    //...mapActions("movie", ["setVideoPlayer"]),
     deleteMovie: function(movieSlug, movieTitle) {
       if (confirm("Czy na pewno chcesz usunąć film " + movieTitle + "?")) {
         this.$store
           .dispatch("movie/deleteMovie", movieSlug)
           .then(result => {
-            this.movieList = this.movieList.filter(x=> x.slug != movieSlug)
-            console.log(movieSlug, this.movieList,result);
+            this.movieList = this.movieList.filter(x => x.slug != movieSlug);
+            console.log(movieSlug, this.movieList, result);
           })
           .catch(error => {
             console.log(error);
@@ -160,10 +165,11 @@ export default {
     filterMovies: function() {
       //WALIDACJA
       let filteredMovies = filterMovieList(this.movies, this.params);
-      this.movieList = filteredMovies
+      this.movieList = filteredMovies;
     },
     movieInfo: function(movie) {
-      this.targetMovie = movie;
+      this.targetMovie = movie
+      this.$bvModal.show('MovieDetail')
     },
     image: function(slug) {
       return "http://localhost:8000/api/v1/movie/stream-thumbnail/" + slug;
@@ -176,19 +182,21 @@ export default {
       this.$router.push("/admin/movie/edit/" + movie.slug);
     },
     runPlayer: function(slug) {
-      this.player.src = this.srcStream(slug);
-      this.player.show = true;
+      console.log("XD")
+      let src = this.srcStream(slug)
+      this.showVideoPlayer(src)
     }
   },
   created() {
     this.allMovies().then(result => {
-      console.log("load", result.data.response)
+      console.log("load", result.data.response);
       this.movieList = result.data.response;
-      this.listLoaded = true
+      this.listLoaded = true;
     });
   },
   computed: {
-    ...mapGetters("movie", ["movies"])
+    ...mapGetters("movie", ["movies"]),
+    ...mapGetters("movie", ["infoVisibility"])
   }
 };
 </script>
@@ -204,5 +212,11 @@ export default {
   border-radius: 50%;
   font-size: 12px;
   text-align: center;
+}
+img:hover{
+  transform: scale(2.0);
+  transform-origin: center;
+  transition: 0.3s ease-in;
+  border-radius: 10px;
 }
 </style>

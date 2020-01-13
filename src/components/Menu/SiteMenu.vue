@@ -21,13 +21,8 @@ export default {
 }
 </script>
 
-<style>
-a {
-  text-decoration: none;
-  color: #fff;
-}
-a:hover{
-  text-decoration: none;
-  color: rgba(255,255,255,0.5);
+<style scoped>
+#menu{
+    height: 120px;
 }
 </style>

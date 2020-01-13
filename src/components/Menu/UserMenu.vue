@@ -54,10 +54,10 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+  color: #fff;
 }
-.menu-box {
-  height: 120px;
-  top: 0;
-  width: 100%;
+a:hover{
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
 }
 </style>

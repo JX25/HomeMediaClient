@@ -32,14 +32,12 @@ export default {
 };
 </script>
 <style scoped>
-i{
-  color: white;
+a {
+  text-decoration: none;
+  color: #fff;
 }
-button href{
-	text-decoration: none;
-  color: white;
-}
-a{
-    text-decoration: none;
+a:hover{
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
 }
 </style>

@@ -90,7 +90,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import getBlobDuration from 'get-blob-duration';
 
 export default {
   name: "EditMovie",
@@ -101,10 +102,13 @@ export default {
       directors: "",
       actors: "",
       tags: "",
-      slug: this.$route.params.slug
+      slug: this.$route.params.slug,
+      result: []
     };
   },
   methods: {
+    ...mapActions("movie", ["setInfo"]),
+    ...mapActions("movie", ["showInfo", "clearInfo"]),
     validateAndUpdate: function() {
       //console.log(this.$refs.video.files[0] === undefined)
       //validate();
@@ -141,23 +145,40 @@ export default {
     updateMovie: function(meta, files){
       meta.slug = meta.title + '_' + meta.year
       meta.OLDslug = this.slug
+      this.clearInfo()
+      if(files.file != undefined){
+        let fileURL = URL.createObjectURL(this.file);
+      getBlobDuration(fileURL).then(duration => {
+        console.log(duration);
+        let minutes = Math.floor(duration / 60);
+        let seconds = Math.floor(duration - minutes * 60);
+        meta.length = minutes + "min " + seconds + "s";
+      });
+      }
+
       this.$store.dispatch("movie/updateMetaData", meta)
       .then(result =>{
-        console.log("01", result)
+        //console.log("01", result)
+        this.result.push(result[0])
+        this.setInfo("Dane pliku wideo: " + result[0])
       })
       if(files.thumbnail != undefined){
         this.$store.dispatch("movie/uploadThumbnail", files)
               .then(result =>{
-        console.log("02", result)
+        //console.log("02", result)
+         this.setInfo("Miniatura: " + result.data.response)
       })
       }
       if(files.file != undefined){
         this.$store.dispatch("movie/uploadMovie", files)
               .then(result =>{
-        console.log("02", result)
+        //console.log("02", result)
+         this.setInfo("Plik wideo: " + result.data.response)
       })
       }
-    }
+      this.showInfo()
+      this.$router.push('/admin/movie')
+    },
   },
   created() {
     this.setMovie().then(() => {

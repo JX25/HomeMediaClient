@@ -3,7 +3,7 @@ export default function filterMovieList(list, params){
     let tmpList =list
     .filter(x => inArray(x.title.toUpperCase(), params.title.toUpperCase()))
     .filter(x => inArray(x.tags, params.keyword))
-    .filter(x => equalValue(x.genre, params.genre))
+    .filter(x => inArray(x.genre, params.genre))
     .filter(x => greaterThan(x.length, params.lengthMin*60))
     .filter(x => lowerThan(x.length, params.lengthMax*60))
     .filter(x => greaterThan(x.year, params.yearMin))
@@ -25,11 +25,11 @@ function lowerThan(movieVal, paramVal) {
     return movieVal <= paramVal
 }
 
-function equalValue(movieVal, paramVal) {
+/*function equalValue(movieVal, paramVal) {
 //    console.log(paramVal === '')
     if(paramVal === '') return true
     return paramVal.toUpperCase() === movieVal.toUpperCase()
-}
+}*/
 
 function inArray(obj, paramVal) {
     //console.log(objArr, paramVal, objArr.includes(paramVal))

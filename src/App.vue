@@ -41,17 +41,14 @@ body {
   position: relative;
 }
 #mn {
-  width: 100%;
-  height: 80px;
+  padding-bottom: 20px;
 }
 #vw {
   padding-bottom: 100px;
   min-height: 91vh;
 }
 #ftr {
-  background: #ffab62;
   width: 100%;
-  height: 100px;
   position: relative;
   bottom: 0;
   left: 0;

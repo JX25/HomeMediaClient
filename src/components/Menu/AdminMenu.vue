@@ -6,7 +6,6 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="auto">
           <b-nav-item-dropdown text="Filmy" right>
             <template slot="button-content">
@@ -17,10 +16,7 @@
               <router-link to="/admin/movie">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/movie/add">
-                Dodaj nowy
-                <i class="fas fa-film fa-2x"></i>
-              </router-link>
+              <router-link to="/admin/movie/add">Dodaj nowy</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Muzyka" right>
@@ -79,7 +75,6 @@
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
-      
     </b-navbar>
   </div>
 </template>
@@ -102,17 +97,24 @@ a {
   text-decoration: none;
   color: #fff;
 }
-a:hover{
+a:hover {
   text-decoration: none;
-  color: rgba(255,255,255,0.5);
-}
-.menu-box {
-  height: 10px;
-  top: 0;
-  width: 100%;
+  color: rgba(255, 255, 255, 0.5);
 }
 .navi-title {
   font-size: 15px;
+}
+@media (min-width: 995px){
+.navbar {
+  padding-top: 20px;
+  height: 100px;
+  position: relative;
+  padding-bottom: 2px;
+}
+#nav-collapse {
+  position: absolute;
+  right: 30px;
+}
 }
 
 </style>

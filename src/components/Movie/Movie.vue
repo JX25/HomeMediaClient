@@ -80,4 +80,19 @@ export default {
   max-width: 50% !important;
   background-color: rgba(211, 32, 52, 0.6);
 }
+header {
+  background-color: rgba(79, 180, 226, 0.774)!important;
+}
+
+footer{
+  background-color: rgba(79, 180, 226, 0.774)!important;
+}
+
+footer .btn-primary{
+  background-color: rgba(0, 245, 73, 0.801)!important;
+}
+
+footer .btn-secondary{
+  background-color: rgba(240, 21, 39, 0.904)!important;
+}
 </style>

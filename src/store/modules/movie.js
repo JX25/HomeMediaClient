@@ -9,6 +9,8 @@ export default {
         uploadMovie: '',
         uploadMovieThumbnail: '',
         uploadMetaData: {},
+        info: [],
+        showInfo: false,
         moviePlayer: {
             src: '',
             show: false
@@ -41,14 +43,24 @@ export default {
         removeMovie(state, slug){
             state.movies.filter(x => x.slug != slug)
         },
-        showMoviePlayer(state){
-            state.moviePlayer.show = true
+        setMoviePlayerVisibility(state, visible){
+            state.moviePlayer.show = visible
         },
         hideMoviePlayer(state){
             state.moviePlayer.show = false
         },
         setMoviePlayerSrc(state, src){
             state.moviePlayer.src = src
+        },
+        setInfo(state, info){
+            console.log("ZZC",state.info, info)
+            state.info.push(info)
+        },
+        infoVisible(state, value){
+            state.showInfo = value
+        },
+        clearInfo(state){
+            state.info = []
         }
     },
     getters:{
@@ -60,8 +72,29 @@ export default {
         uploadThumbnail: state => {return state.uploadMovieThumbnail},
         uploadMetaData: state => {return state.uploadMetaData},
         moviePlayer: state => {return state.moviePlayer},
+        infoVisibility: state => {return state.showInfo},
+        movieInfo: state => {return state.info}
     },
     actions:{
+        hideInfo : ({commit}) => {
+            commit("infoVisible", false)
+        },
+        showInfo : ({commit}) => {
+            commit("infoVisible", true)
+        },
+        setInfo : ({commit}, info) => {
+            commit("setInfo", info)
+        },
+        clearInfo : ({commit}) => {
+            commit("clearInfo")
+        },
+        hideVideoPlayer: ({commit}) => {
+            commit("setMoviePlayerVisibility", false)
+        },
+        showVideoPlayer: ({commit}, src) => {
+            commit("setMoviePlayerSrc", src)
+            commit("setMoviePlayerVisibility", true)
+        },
         movieToEdit: ({commit}, movie) => {
             commit("setMovieToEdit", movie)
         },
