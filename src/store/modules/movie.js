@@ -13,7 +13,11 @@ export default {
         showInfo: false,
         moviePlayer: {
             src: '',
-            show: false
+            show: false,
+            currentTime: 0,
+            time: 0,
+            sound: 0.5,
+            play: true,
         }
     },
     mutations:{

@@ -1,13 +1,8 @@
 <template>
-  <div width="1000px">
+  <div>
     <b-modal id="MovieDetail" title="Szczegóły filmu">
       <table class="table table-border table-responsive">
         <tbody>
-          <tr class="noborder">
-            <td rowspan=1 class="noborder">
-              <img :src="image(movie.slug)" alt="miniatura filmu" width="150" height="150" />
-            </td>
-          </tr>
           <tr>
             <th>Id</th>
             <td>{{this.movie._id}}</td>
@@ -25,6 +20,11 @@
             <td>{{movie.description}}</td>
           </tr>
           <tr>
+            <td rowspan="2" colspan="2">
+                <img class="thumbnail" :src="image(movie.slug)" alt="miniatura filmu"/>
+            </td>
+          </tr>
+          <tr>
             <th>Gatunek</th>
             <td>{{movie.genre}}</td>
           </tr>
@@ -37,7 +37,7 @@
             <td>{{Math.round(movie.length*100/60)/100}}</td>
           </tr>
           <tr>
-            <th>Reżyser</th>
+            <th>Reżyser/Reżyserzy</th>
             <td>
               <p v-for="director in this.movie.director" :key="director">{{director}}</p>
             </td>
@@ -56,11 +56,14 @@
           </tr>
         </tbody>
       </table>
+
+
     </b-modal>
   </div>
 </template>
 
 <script>
+import { address } from '../../store/api';
 export default {
   name: "Movie",
   props: ["movie"],
@@ -69,30 +72,53 @@ export default {
   },
   methods: {
     image: function(slug) {
-      return "http://localhost:8000/api/v1/movie/stream-thumbnail/" + slug;
+      return address + "/api/v1/movie/stream-thumbnail/" + slug;
     }
   }
 };
 </script>
 
-<style>
-.modal-dialog {
-  max-width: 50% !important;
+<style scoped>
+div >>> .modal-dialog {
+  margin: auto!important;
+  max-width: 90% !important;
   background-color: rgba(211, 32, 52, 0.6);
 }
-header {
-  background-color: rgba(79, 180, 226, 0.774)!important;
+div >>> header {
+  background-color: #6f42c1 !important;
 }
 
-footer{
-  background-color: rgba(79, 180, 226, 0.774)!important;
+div >>> footer {
+  background-color: #6f42c1 !important;
 }
 
-footer .btn-primary{
-  background-color: rgba(0, 245, 73, 0.801)!important;
+div >>> footer .btn-primary {
+  width: 50px;
+  background-color:rgba(79, 180, 226, 0.774) !important;
 }
 
-footer .btn-secondary{
-  background-color: rgba(240, 21, 39, 0.904)!important;
+div >>> footer .btn-secondary {
+  background-color: rgba(79, 180, 226, 0.774) !important;
+  visibility: hidden;
+}
+
+div >>> td{
+  word-break: break-all;
+  display: block;
+}
+
+div >>> .thumbnail{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 50%;
+}
+
+@media (max-width: 800px) {
+div >>> .thumbnail{
+  width: 25%;
+  height: 25%;
+}
 }
 </style>

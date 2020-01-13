@@ -15,7 +15,7 @@
           <tr>
             <th>Opis filmu</th>
             <td>
-               <v-icon name="beer"></v-icon>
+              <v-icon name="beer"></v-icon>
               <textarea name="description" id cols="30" rows="1" v-model="description"></textarea>
             </td>
           </tr>
@@ -113,6 +113,7 @@
 
 <script>
 import getBlobDuration from "get-blob-duration";
+import { mapActions } from "vuex";
 
 export default {
   name: "AddMovie",
@@ -135,10 +136,11 @@ export default {
       isError: false,
       isSuccess: false,
       error: "",
-      success: "",
+      success: ""
     };
   },
   methods: {
+    ...mapActions("movie", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSend: function() {
       //validation
       this.actors = this.actors.split(",").map(x => x.trim());
@@ -150,6 +152,7 @@ export default {
       }
       lengthInSeconds =
         Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
+      this.clearInfo();
       this.$store
         .dispatch("movie/uploadMetaData", {
           title: this.title,
@@ -165,6 +168,7 @@ export default {
         })
         .then(result => {
           console.log(result);
+          this.setInfo("Dane pliku: " + result.msg);
           const slug = result.slg;
           this.$store
             .dispatch("movie/uploadThumbnail", {
@@ -173,20 +177,21 @@ export default {
             })
             .then(result2 => {
               console.log("2", result2);
+              this.setInfo("Miniatura wideo: " + result2.data.response);
               this.$store
                 .dispatch("movie/uploadMovie", { slug: slug, file: this.file })
                 .then(finalResult => {
-                  this.isSuccess = true
-                  this.success = "dssadads"
+                  this.setInfo("Plik wideo: " + finalResult.data.response)
+                  this.isSuccess = true;
+                  this.success = "dssadads";
                   console.log("3", finalResult);
-
                 })
                 .finally(res => {
-                  this.isSuccess = false
-                  console.log("4", res)
-                  this.$router.push('/admin/movie')
-
-                })
+                  this.isSuccess = false;
+                  console.log("4", res);
+                  this.showInfo()
+                  this.$router.push("/admin/movie");
+                });
             });
         })
         .catch(error => {

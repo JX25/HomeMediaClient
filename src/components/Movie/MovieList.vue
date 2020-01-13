@@ -54,19 +54,17 @@
         />
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies()">Wyszukaj</button>
       </form>
-      <table class="table table-hover table-striped" v-if="listLoaded">
+      <table class="table table-hover table-striped col-md-12" v-if="listLoaded">
         <thead class="thead-light">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nazwa filmu</th>
-            <th scope="col">Rok</th>
-            <th scope="col">Język</th>
-            <th scope="col">Gatunek</th>
-            <th scope="col">Długość (min)</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th scope="col col-sm-2">#</th>
+            <th scope="col col-sm-2">Nazwa filmu</th>
+            <th scope="col col-sm-2">Rok</th>
+            <th scope="col col-sm-2">Język</th>
+            <th scope="col col-sm-2">Gatunek</th>
+            <th scope="col col-sm-2">Długość (min)</th>
+            <th scope="col" colspan="2"></th>
+            <th scope="col" colspan="2"></th>
           </tr>
         </thead>
         <tbody>
@@ -98,14 +96,12 @@
           </tr>
         </tbody>
       </table>
-      <MoviePlayer />
+      <MoviePlayer class="movie-player" />
       <MovieDetail :movie="this.targetMovie" />
       <MovieInfo v-if="infoVisibility" />
     </div>
     <router-link to="movie/add">
-      <button type="button" class="btn btn-success btn-circle btn-md">
-        <h1>+</h1>
-      </button>
+      <i id="addMovie" class="fas fa-plus-circle fa-3x"></i>
     </router-link>
   </div>
 </template>
@@ -114,8 +110,9 @@
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
 import MoviePlayer from "./MoviePlayer";
-import MovieInfo from "./MovieInfo"
+import MovieInfo from "./MovieInfo";
 import filterMovieList from "../../plugins/filterList";
+import { address } from "../../store/api";
 
 export default {
   name: "MovieList",
@@ -145,7 +142,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions("movie", ["allMovies", "movieToEdit", "showVideoPlayer", "setVideoPlayer"]),
+    ...mapActions("movie", [
+      "allMovies",
+      "movieToEdit",
+      "showVideoPlayer",
+      "setVideoPlayer"
+    ]),
     //...mapActions("movie", ["movieToEdit"]),
     //...mapActions("movie", ["showVideoPlayer"]),
     //...mapActions("movie", ["setVideoPlayer"]),
@@ -168,23 +170,25 @@ export default {
       this.movieList = filteredMovies;
     },
     movieInfo: function(movie) {
-      this.targetMovie = movie
-      this.$bvModal.show('MovieDetail')
+      this.targetMovie = movie;
+      this.$bvModal.show("MovieDetail");
     },
     image: function(slug) {
-      return "http://localhost:8000/api/v1/movie/stream-thumbnail/" + slug;
+      console.log(address);
+      return address + "/api/v1/movie/stream-thumbnail/" + slug;
     },
     srcStream: function(slug) {
-      return "http://localhost:8000/api/v1/movie/stream/" + slug;
+      console.log("XD", address);
+      return address + "/api/v1/movie/stream/" + slug;
     },
     editMovie: function(movie) {
       this.movieToEdit(movie);
       this.$router.push("/admin/movie/edit/" + movie.slug);
     },
     runPlayer: function(slug) {
-      console.log("XD")
-      let src = this.srcStream(slug)
-      this.showVideoPlayer(src)
+      console.log("XD");
+      let src = this.srcStream(slug);
+      this.showVideoPlayer(src);
     }
   },
   created() {
@@ -201,22 +205,55 @@ export default {
 };
 </script>
 
-<style>
-.btn-circle.btn-md {
-  position: absolute;
-  bottom: 120px;
-  right: 50px;
-  width: 70px;
-  height: 70px;
-  padding: 10px;
-  border-radius: 50%;
-  font-size: 12px;
-  text-align: center;
+<style scoped>
+#addMovie {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+
+  color: rgba(24, 150, 41, 0.979);
 }
-img:hover{
-  transform: scale(2.0);
+
+#addMovie:hover {
+  color: rgba(37, 228, 63, 0.979);
+  transition: 0.5s ease-out;
+}
+
+img:hover {
+  transform: scale(2);
   transform-origin: center;
   transition: 0.3s ease-in;
   border-radius: 10px;
+}
+
+.movie-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+@media (max-width: 1091px) {
+  tr {
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+  }
+}
+
+tr {
+  text-align: center;
+  border: rgba(200, 200, 200, 1) 2px solid;
+}
+
+button {
+  width: 150px;
+}
+
+button:hover {
+  filter: brightness(90%);
+}
+
+.actions {
+  width: 250px;
 }
 </style>
