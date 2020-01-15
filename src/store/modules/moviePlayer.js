@@ -5,6 +5,8 @@ export default {
     state:{
         src: '',
         show: false,
+        showVolume: false,
+        volume: 50,
         play: true,
         duration: 100,
         currentTime: 0,
@@ -19,7 +21,10 @@ export default {
             state.show = show
         },
         setPlay(state, play){
-            state.src = play
+            state.play = play
+        },
+        setVolume(state, volume){
+            state.volume = volume
         },
         setDuration(state, duration){
             state.src = duration
@@ -39,6 +44,7 @@ export default {
         getSrc: state => {return state.src},
         getShow: state => {return state.show},
         getPlay: state => {return state.play},
+        getVolume: state => {return state.volume},
         getDuration: state => {return state.duration},
         getCurrentTime: state => {return state.currentTime},
         getFullscreen: state => {return state.fullscreen},
@@ -61,6 +67,9 @@ export default {
         },
         pauseVideo: ({commit}) => {
             commit("setPlay", false)
+        },
+        changeVolume: ({commit}, value) => {
+            commit("setVolume", value)
         },
         showFullscreen: ({commit}) => {
             commit("setFullscreen", true)

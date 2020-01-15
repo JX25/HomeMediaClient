@@ -1,5 +1,5 @@
 <template>
-<footer class="page-footer font-small blue">
+<footer class="page-footer font-small ">
   <div class="footer-copyright text-center py-3">
     <h6>Autor: Jakub Woźniak 2019-2020 &copy; <br/> Praca inżynierska: Budowa Multimedialnego Serwera domowego i implementacja narzędzi do jego wykorzystania</h6>
   </div>
@@ -15,10 +15,8 @@ export default {
 <style>
 footer{
     text-align: justify;
-    color: #fff;
-    background-color: #17a2b8!important;
+    color: #fff!important;
+    background-color: #ff3547 !important;
 }
-h6{
- color: #222222;
-}
+
 </style>

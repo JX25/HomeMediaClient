@@ -96,7 +96,7 @@
           </tr>
         </tbody>
       </table>
-      <MoviePlayer class="movie-player" />
+      <!--<MoviePlayer class="movie-player" />-->
       <MovieDetail :movie="this.targetMovie" />
       <MovieInfo v-if="infoVisibility" />
     </div>
@@ -109,7 +109,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
-import MoviePlayer from "./MoviePlayer";
+//import MoviePlayer from "./MoviePlayer";
 import MovieInfo from "./MovieInfo";
 import filterMovieList from "../../plugins/filterList";
 import { address } from "../../store/api";
@@ -118,7 +118,7 @@ export default {
   name: "MovieList",
   components: {
     MovieDetail,
-    MoviePlayer,
+    //MoviePlayer,
     MovieInfo
   },
   data() {
@@ -222,13 +222,6 @@ img:hover {
   transform-origin: center;
   transition: 0.3s ease-in;
   border-radius: 10px;
-}
-
-.movie-player {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
 }
 
 @media (max-width: 1091px) {

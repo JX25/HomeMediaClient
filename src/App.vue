@@ -2,12 +2,14 @@
   <div id="app">
     <SiteMenu id="mn" />
     <SiteView id="vw" />
+    <MoviePlayer class="movie-player" />
     <SiteFooter id="ftr" />
   </div>
 </template>
 
 
 <script>
+import MoviePlayer from "./components/Movie/MoviePlayer";
 import SiteView from "./components/SiteView.vue";
 import SiteMenu from "./components/Menu/SiteMenu.vue";
 import SiteFooter from "./components/Footer/SiteFooter.vue";
@@ -16,14 +18,15 @@ export default {
   components: {
     SiteView,
     SiteMenu,
-    SiteFooter
+    SiteFooter,
+    MoviePlayer
   }
 };
 </script>
 
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 
 body {
   margin: 0;
@@ -53,5 +56,14 @@ body {
   bottom: 0;
   left: 0;
   z-index: -1;
+}
+
+.movie-player {
+  height: 480px;
+  width: 640px;
+  position: fixed !important;
+  bottom: 15px;
+  left: 15px;
+  z-index: 10;
 }
 </style>
