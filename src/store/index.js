@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import User from './modules/user';
 import Movie from './modules/movie';
+import moviePlayer from './modules/moviePlayer';
 import Music from './modules/music';
 import Photo from './modules/photo';
 
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
   modules: {
     user: User,
     movie: Movie,
+    moviePlayer: moviePlayer,
     music: Music,
     photo: Photo,
   },

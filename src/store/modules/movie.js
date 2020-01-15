@@ -11,14 +11,6 @@ export default {
         uploadMetaData: {},
         info: [],
         showInfo: false,
-        moviePlayer: {
-            src: '',
-            show: false,
-            currentTime: 0,
-            time: 0,
-            sound: 0.5,
-            play: true,
-        }
     },
     mutations:{
         setMovies(state, movies){
@@ -47,17 +39,7 @@ export default {
         removeMovie(state, slug){
             state.movies.filter(x => x.slug != slug)
         },
-        setMoviePlayerVisibility(state, visible){
-            state.moviePlayer.show = visible
-        },
-        hideMoviePlayer(state){
-            state.moviePlayer.show = false
-        },
-        setMoviePlayerSrc(state, src){
-            state.moviePlayer.src = src
-        },
         setInfo(state, info){
-            console.log("ZZC",state.info, info)
             state.info.push(info)
         },
         infoVisible(state, value){
@@ -75,7 +57,6 @@ export default {
         uploadMovie: state => {return state.uploadMovie},
         uploadThumbnail: state => {return state.uploadMovieThumbnail},
         uploadMetaData: state => {return state.uploadMetaData},
-        moviePlayer: state => {return state.moviePlayer},
         infoVisibility: state => {return state.showInfo},
         movieInfo: state => {return state.info}
     },
@@ -91,13 +72,6 @@ export default {
         },
         clearInfo : ({commit}) => {
             commit("clearInfo")
-        },
-        hideVideoPlayer: ({commit}) => {
-            commit("setMoviePlayerVisibility", false)
-        },
-        showVideoPlayer: ({commit}, src) => {
-            commit("setMoviePlayerSrc", src)
-            commit("setMoviePlayerVisibility", true)
         },
         movieToEdit: ({commit}, movie) => {
             commit("setMovieToEdit", movie)

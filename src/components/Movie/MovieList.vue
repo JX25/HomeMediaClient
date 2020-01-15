@@ -142,12 +142,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions("movie", [
-      "allMovies",
-      "movieToEdit",
-      "showVideoPlayer",
-      "setVideoPlayer"
-    ]),
+    ...mapActions("movie", ["allMovies", "movieToEdit"]),
+    ...mapActions("moviePlayer", ["showVideoPlayer", "hideVideoPlayer"]),
     //...mapActions("movie", ["movieToEdit"]),
     //...mapActions("movie", ["showVideoPlayer"]),
     //...mapActions("movie", ["setVideoPlayer"]),
@@ -186,9 +182,11 @@ export default {
       this.$router.push("/admin/movie/edit/" + movie.slug);
     },
     runPlayer: function(slug) {
-      console.log("XD");
       let src = this.srcStream(slug);
-      this.showVideoPlayer(src);
+      if (this.getShow == true) {
+        this.hideVideoPlayer();
+      }
+        this.showVideoPlayer(src);
     }
   },
   created() {
@@ -199,8 +197,8 @@ export default {
     });
   },
   computed: {
-    ...mapGetters("movie", ["movies"]),
-    ...mapGetters("movie", ["infoVisibility"])
+    ...mapGetters("movie", ["movies", "infoVisibility"]),
+    ...mapGetters("moviePlayer", ["getSrc", "getShow"])
   }
 };
 </script>
