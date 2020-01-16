@@ -96,7 +96,6 @@ export default {
                         console.log(result.data.response)
                         commit('setMovies', result.data.response)
                         res(result)
-
                     })
                     .catch(error => {
                         rej(error)

@@ -4,6 +4,7 @@
     v-if="getShow"
     @keyup.space="play(!moviePlayer.play)"
     @keyup.f="manageFullscreen()"
+    @keyup.escape="closeFullscreen()"
     tabindex="0"
     @fullscreenchange="fullScreenChange()"
     v-bind:class="moviePlayer.fullscreen ? 'MoviePlayerFullScreen' : 'MoviePlayer'"
@@ -168,8 +169,8 @@ export default {
 
 .volume-slider {
   position: fixed;
-  left: -10px;
-  bottom: 40px;
+  left: 0px;
+  bottom: 120px;
   -webkit-appearance: slider-vertical;
   min-height: 100px;
   max-height: 150px;
@@ -212,7 +213,7 @@ export default {
 
 .TopBar {
   text-align: right;
-  opacity: 0.8;
+  opacity: 0.5;
   display: block;
   position: absolute;
   top: 60px;
@@ -241,6 +242,7 @@ export default {
   padding-top: 5px;
   bottom: 70px;
   left: 15px;
+  opacity: 0.5;
 }
 
 .BotBarFullscreen {
@@ -248,7 +250,7 @@ export default {
   left: 10px;
   bottom: 5px;
   width: 100%;
-  opacity: 0.9;
+  opacity: 0.0;
 }
 
 .BotBarFullscreen:hover {

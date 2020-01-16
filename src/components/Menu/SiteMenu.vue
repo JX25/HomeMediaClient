@@ -1,7 +1,7 @@
 <template>
     <div id="menu">
-        <AdminMenu v-if="this.$store.state.user.type===true"/> 
-        <UserMenu v-else-if="this.$store.state.user.type===false"/>
+        <AdminMenu v-if="type===true"/> 
+        <UserMenu v-else-if="type===false"/>
         <GuestMenu v-else/>
     </div>
 </template>
@@ -10,6 +10,7 @@
 import AdminMenu from "./AdminMenu.vue";
 import UserMenu from "./UserMenu.vue";
 import GuestMenu from "./GuestMenu.vue";
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'SiteMenu',
@@ -17,6 +18,9 @@ export default {
         AdminMenu,
         UserMenu,
         GuestMenu,
+    },
+    computed: {
+        ...mapGetters("user", ["type"])
     },
 }
 </script>

@@ -28,7 +28,7 @@
               <router-link to="/admin/music/">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/add/music/">Dodaj muzykę</router-link>
+              <router-link to="/admin/music/add">Dodaj muzykę</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Zdjęcia" right>
@@ -110,6 +110,7 @@ a:hover {
   height: 100px;
   position: relative;
   padding-bottom: 2px;
+  z-index: 100;
 }
 #nav-collapse {
   position: absolute;

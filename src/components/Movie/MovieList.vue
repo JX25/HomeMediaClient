@@ -109,7 +109,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
-//import MoviePlayer from "./MoviePlayer";
 import MovieInfo from "./MovieInfo";
 import filterMovieList from "../../plugins/filterList";
 import { address } from "../../store/api";
@@ -118,8 +117,7 @@ export default {
   name: "MovieList",
   components: {
     MovieDetail,
-    //MoviePlayer,
-    MovieInfo
+    MovieInfo,
   },
   data() {
     return {
@@ -135,18 +133,11 @@ export default {
         yearMin: "",
         yearMax: ""
       },
-      player: {
-        src: "",
-        show: false
-      }
     };
   },
   methods: {
     ...mapActions("movie", ["allMovies", "movieToEdit"]),
     ...mapActions("moviePlayer", ["showVideoPlayer", "hideVideoPlayer"]),
-    //...mapActions("movie", ["movieToEdit"]),
-    //...mapActions("movie", ["showVideoPlayer"]),
-    //...mapActions("movie", ["setVideoPlayer"]),
     deleteMovie: function(movieSlug, movieTitle) {
       if (confirm("Czy na pewno chcesz usunąć film " + movieTitle + "?")) {
         this.$store

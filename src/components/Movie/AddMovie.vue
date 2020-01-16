@@ -153,19 +153,20 @@ export default {
       lengthInSeconds =
         Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
       this.clearInfo();
+      let data = {
+        title: this.title,
+        description: this.description,
+        year: this.year,
+        genre: this.genre,
+        tags: this.tags,
+        language: this.language,
+        length: lengthInSeconds,
+        age_rate: this.pegi,
+        director: this.directors,
+        actors: this.actors
+      };
       this.$store
-        .dispatch("movie/uploadMetaData", {
-          title: this.title,
-          description: this.description,
-          year: this.year,
-          genre: this.genre,
-          tags: this.tags,
-          language: this.language,
-          length: lengthInSeconds,
-          age_rate: this.pegi,
-          director: this.directors,
-          actors: this.actors
-        })
+        .dispatch("movie/uploadMetaData", data)
         .then(result => {
           console.log(result);
           this.setInfo("Dane pliku: " + result.msg);
@@ -181,7 +182,7 @@ export default {
               this.$store
                 .dispatch("movie/uploadMovie", { slug: slug, file: this.file })
                 .then(finalResult => {
-                  this.setInfo("Plik wideo: " + finalResult.data.response)
+                  this.setInfo("Plik wideo: " + finalResult.data.response);
                   this.isSuccess = true;
                   this.success = "dssadads";
                   console.log("3", finalResult);
@@ -189,7 +190,7 @@ export default {
                 .finally(res => {
                   this.isSuccess = false;
                   console.log("4", res);
-                  this.showInfo()
+                  this.showInfo();
                   this.$router.push("/admin/movie");
                 });
             });

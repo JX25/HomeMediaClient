@@ -6,11 +6,13 @@ import SignIn from '../components/Login/SignIn.vue'
 import SignUp from '../components/Login/SignUp.vue'
 import MovieList from '../components/Movie/MovieList.vue'
 import Music from '../components/Music/Music.vue'
+import AddMusic from '../components/Music/AddMusic.vue'
+import MusicList from '../components/Music/MusicList.vue'
 import Photo from '../components/Photo/Photo.vue'
 import UserSettings from '../components/User/UserSettings.vue'
 import AddMovie from '../components/Movie/AddMovie'
 import EditMovie from '../components/Movie/EditMovie'
-
+import EditMusic from '../components/Music/EditMusic'
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,6 +42,16 @@ const routes = [
     component: MovieList
   },
   {
+    path: '/admin/music',
+    name: 'MusicList',
+    component: MusicList
+  },
+  {
+    path: '/admin/music/add',
+    name: 'AddMusic',
+    component: AddMusic
+  },
+  {
     path: '/music',
     name: 'Music',
     component: Music
@@ -63,7 +75,12 @@ const routes = [
     path: '/admin/movie/edit/:slug',
     name: 'EditMovie',
     component: EditMovie
-  }
+  },
+  {
+    path: '/admin/music/edit/:slug',
+    name: 'EditMusic',
+    component: EditMusic
+  },
 
 ]
 
