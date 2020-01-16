@@ -84,11 +84,11 @@ export default {
       "changeVolume"
     ]),
     changeVideoTime: function(event) {
-      let timeline = this.$refs.videoTime.clientWidth
-      let timelinePart = event.layerX
-      let duration = this.$refs.video.duration
-      let currentTime = timelinePart/timeline * duration
-      this.$refs.video.currentTime = currentTime
+      let timeline = this.$refs.videoTime.clientWidth;
+      let timelinePart = event.layerX;
+      let duration = this.$refs.video.duration;
+      let currentTime = (timelinePart / timeline) * duration;
+      this.$refs.video.currentTime = currentTime;
     },
     progress: function(currTime) {
       try {
@@ -198,7 +198,6 @@ export default {
 
 .MoviePlayer {
   z-index: 5;
-  transition: 1.1s ease-out;
   position: relative;
   color: #fff;
   outline: none;
@@ -209,6 +208,7 @@ export default {
   min-height: 90%;
   max-width: 100%;
   max-height: 100%;
+  transition: 0s;
 }
 
 .TopBar {
@@ -250,7 +250,7 @@ export default {
   left: 10px;
   bottom: 5px;
   width: 100%;
-  opacity: 0.0;
+  opacity: 0;
 }
 
 .BotBarFullscreen:hover {
@@ -350,5 +350,46 @@ span {
   width: 0%;
   padding-bottom: 10px;
   background-color: blue;
+}
+
+@media (max-width: 675px) {
+  .video {
+    position: relative;
+    bottom: -140px;
+    left: -110px;
+    width: 425px;
+    height: 320px;
+  }
+
+  .progress {
+    position: absolute;
+    z-index: 2147483647;
+    bottom: 50px;
+    left: -2px;
+    width: 66.5%;
+    background-color: rgba(48, 48, 233, 0.411);
+    cursor: pointer;
+  }
+
+  .BotBar {
+    max-height: 25px;
+    opacity: 0.8;
+    background-color: rgba(200, 200, 200, 0);
+    text-align: left;
+    position: absolute;
+    padding-top: 5px;
+    bottom: 70px;
+    left: 15px;
+    opacity: 0.5;
+  }
+
+  .TopBar {
+    text-align: right;
+    opacity: 0.5;
+    display: block;
+    position: absolute;
+    top: 180px;
+    right: 240px;
+  }
 }
 </style>
