@@ -101,6 +101,9 @@ a:hover {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.5);
 }
+.navbar{
+    z-index: 1;
+}
 .navi-title {
   font-size: 15px;
 }
@@ -110,7 +113,6 @@ a:hover {
   height: 100px;
   position: relative;
   padding-bottom: 2px;
-  z-index: 100;
 }
 #nav-collapse {
   position: absolute;

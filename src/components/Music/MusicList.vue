@@ -69,39 +69,40 @@
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMusic()">Wyszukaj</button>
       </form>
       <table class="table table-hover table-striped col-md-12" v-if="listLoaded">
-        
-          <tr>
-            <th scope="col col-sm-2">#</th>
-            <th scope="col col-sm-2">Nazwa utworu</th>
-            <th scope="col col-sm-2">Album</th>
-            <th scope="col col-sm-2">Gatunek</th>
-            <th scope="col col-sm-2">Autor</th>
-            <th scope="col col-sm-2">Język</th>
-            <th scope="col col-sm-2">Rok</th>
-            <th scope="col col-sm-2">Długość (min)</th>
-            <th scope="col" colspan="2"></th>
-            <th scope="col" colspan="2"></th>
-          </tr>
-       
+        <tr>
+          <th scope="col col-sm-2">#</th>
+          <th scope="col col-sm-2">Nazwa utworu</th>
+          <th scope="col col-sm-2">Album</th>
+          <th scope="col col-sm-2">Gatunek</th>
+          <th scope="col col-sm-2">Autor</th>
+          <th scope="col col-sm-2">Język</th>
+          <th scope="col col-sm-2">Rok</th>
+          <th scope="col col-sm-2">Długość (min)</th>
+          <th scope="col" colspan="3"></th>
+          <th scope="col" colspan="2"></th>
+        </tr>
+
         <tbody>
           <tr v-for="music in musicList" :key="music.id">
             <td>
-              <img
-                :src="image(music.thumbnail)"
-                width="35"
-                height="35"
-                alt="brak"
-              />
+              <img :src="image(music.thumbnail)" width="35" height="35" alt="brak" />
             </td>
-            <td>{{music.title.toUpperCase()}}</td>
-            <td>{{music.album}}</td>
-            <td>{{music.genre}}</td>
-            <td>{{music.author}}</td>
-            <td>{{music.language}}</td>
-            <td>{{music.year}}</td>
-            <td>{{Math.round(music.length*100/60)/100}}</td>
+            <td title="Tytuł utworu">{{music.title.toUpperCase()}}</td>
+            <td title="Album utworu">{{music.album}}</td>
+            <td title="Gatunek muzyczny">{{music.genre}}</td>
+            <td title="Zespół/Autor">{{music.author}}</td>
+            <td title="Język">{{music.language}}</td>
+            <td title="Rok wydania">{{music.year}}</td>
+            <td title="Długość (min)">{{Math.round(music.length*100/60)/100}}</td>
             <td>
               <button type="button" class="btn btn-success" @click="runPlayer(music.slug)">Odtwórz</button>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-warning"
+                @click="addPlaylist(music)"
+              >+ playlista</button>
             </td>
             <td>
               <b-button v-b-modal.MusicDetail @click="musicInfo(music)">Podgląd</b-button>
@@ -223,4 +224,47 @@ export default {
 </script>
 
 <style scoped>
+#addMusic {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+
+  color: rgba(24, 150, 41, 0.979);
+}
+
+#addMusic:hover {
+  color: rgba(37, 228, 63, 0.979);
+  transition: 0.5s ease-out;
+}
+
+img:hover {
+  transform: scale(2);
+  transform-origin: center;
+  transition: 0.3s ease-in;
+  border-radius: 10px;
+}
+
+@media (max-width: 1091px) {
+  tr {
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+  }
+}
+
+tr {
+  text-align: center;
+  border: rgba(200, 200, 200, 1) 2px solid;
+}
+
+button {
+  width: 150px;
+}
+
+button:hover {
+  filter: brightness(90%);
+}
+
+.actions {
+  width: 250px;
+}
 </style>

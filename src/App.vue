@@ -62,8 +62,14 @@ body {
   height: 480px;
   width: 640px;
   position: fixed !important;
-  bottom: 15px;
+
   left: 15px;
   z-index: 10;
 }
+
+@media (max-width: 750px){
+  .movie-player{
+    width: 50%;
+  }
+  }
 </style>

@@ -6,7 +6,7 @@
     <b-tabs content-class="col md-6 mt-12">
       <b-tab title="Dodaj pojedynczy utwór" active>
         <form @submit.prevent="validateAndSend(0)">
-          <table class="table">
+          <table class="table col-10">
             <tbody>
               <tr>
                 <th>Tytuł</th>
@@ -40,11 +40,10 @@
                 </td>
               </tr>
               <tr>
-                <th>Miniatura</th>
+                <th>Okładka</th>
                 <td>
                   <input
                     type="file"
-                    id="thumbnail"
                     accept="image/jpeg image/png"
                     @change="handleThumbnailFile"
                     ref="thumbnail"
@@ -54,19 +53,13 @@
               <tr>
                 <th>Plik</th>
                 <td>
-                  <input
-                    type="file"
-                    accept="audio/*"
-                    @change="handleAudioFile(0)"
-                    id="file"
-                    ref="audio"
-                  />
+                  <input type="file" accept="audio/*" @change="handleAudio(0)" ref="audio" />
                 </td>
               </tr>
               <tr>
                 <th>Długość</th>
                 <td>
-                  <input type="text" disabled v-model="length" />
+                  <input type="text" disabled v-model="length[0]" />
                 </td>
               </tr>
               <tr>
@@ -108,7 +101,117 @@
         </form>
       </b-tab>
       <b-tab title="Dodaj cały album">
-        <p>I'm the second tab</p>
+        <form @submit.prevent="validateAndSendAlbum()">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Nazwa albumu</th>
+                <td>
+                  <input type="text" v-model="album" />
+                </td>
+              </tr>
+              <tr>
+                <th>Autor</th>
+                <td>
+                  <input type="text" v-model="author" />
+                </td>
+              </tr>
+              <tr>
+                <th>Rok</th>
+                <td>
+                  <input type="number" :max="currentYear" :min="1900" v-model="year" />
+                </td>
+              </tr>
+              <tr>
+                <th>Gatunek</th>
+                <td>
+                  <input type="text" v-model="genre" />
+                </td>
+              </tr>
+              <tr>
+                <th>Wiek (PEGI)</th>
+                <td>
+                  <select name="pegi" v-model="pegi">
+                    <option value="0">Familijny</option>
+                    <option value="1">Wiek &#x3c;16</option>
+                    <option value="2">Wiek 16+</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th>Okładka</th>
+                <td>
+                  <input
+                    type="file"
+                    accept="image/jpeg image/png"
+                    @change="handleThumbnailFile"
+                    ref="thumbnail"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>Pliki</th>
+                <td>
+                  <input
+                    type="file"
+                    accept="audio/*"
+                    @change="handleAudio(1)"
+                    ref="audios"
+                    multiple
+                  />
+                </td>
+              </tr>
+              <template v-if="filesDetails">
+                <div
+                  v-for="(audio, index) in this.$refs.audios.files"
+                  class="fileDetails"
+                  :key="index"
+                >
+                  <tr class="fileDetailName">
+                    <th>Plik #{{index + 1}}</th>
+                    <td>{{audio.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Tytuł</th>
+                    <td>
+                      <input type="text" v-model="title[index]" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Opis utworu</th>
+
+                    <td>
+                      <v-icon name="beer"></v-icon>
+                      <textarea
+                        name="description"
+                        id
+                        cols="30"
+                        rows="1"
+                        v-model="description[index]"
+                      ></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Długość</th>
+                    <td>
+                      <input type="text" disabled v-model="length[index]" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      Słowa kluczowe
+                      <sub>a,b</sub>
+                    </th>
+                    <td>
+                      <input type="text" v-model="tags[index]" />
+                    </td>
+                  </tr>
+                </div>
+              </template>
+            </tbody>
+          </table>
+          <b-button variant="primary" type="submit">Dodaj album</b-button>
+        </form>
       </b-tab>
     </b-tabs>
   </div>
@@ -130,8 +233,7 @@ export default {
       language: "",
       currentYear: "",
       genre: "",
-      thumbnail: [],
-      audioFiles: [],
+      thumbnail: "",
       length: [],
       pegi: "",
       tags: [],
@@ -139,11 +241,18 @@ export default {
       isError: false,
       isSuccess: false,
       error: "",
-      success: ""
+      success: "",
+      filesDetails: false
     };
   },
   methods: {
     ...mapActions("music", ["clearInfo", "setInfo", "showInfo"]),
+    validateAndSendAlbum: function() {
+      let i = 0;
+      for (i in this.$refs.audio.files.length) {
+        this.validateAndSend(i);
+      }
+    },
     validateAndSend: function(i) {
       //validation TODO
       this.tags = this.tags[i].split(",").map(x => x.trim());
@@ -153,36 +262,39 @@ export default {
       }
       lengthInSeconds =
         Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
-        this.clearInfo()
-        let data = {
-            title: this.title[i],
-            author: this.author,
-            album: this.album,
-            year: this.year,
-            genre: this.genre,
-            tags: this.tags[i],
-            length: lengthInSeconds,
-            age_rate: this.age_rate,
-            language: this.language,
-            description: this.description[i],
-        }
-        this.$store
+      this.clearInfo();
+      let data = {
+        title: this.title[i],
+        author: this.author,
+        album: this.album,
+        year: this.year,
+        genre: this.genre,
+        tags: this.tags[i],
+        length: lengthInSeconds,
+        age_rate: this.age_rate,
+        language: this.language,
+        description: this.description[i]
+      };
+      this.$store
         .dispatch("music/uploadMetaData", data)
         .then(result => {
           console.log(result);
-          this.setInfo("Dane pliku: " + result.msg)
-          const slugThumbnail = result.thmb
-          const slug = result.slg
-         this.$store
+          this.setInfo("Dane pliku: " + result.msg);
+          const slugThumbnail = result.thmb;
+          const slug = result.slg;
+          this.$store
             .dispatch("music/uploadThumbnail", {
               slug: slugThumbnail,
               thumbnail: this.thumbnail
             })
             .then(result2 => {
               console.log("2", result2);
-              this.setInfo("Miniatura audio: " + result2.data.response);
+              this.setInfo("Okładka audio: " + result2.data.response);
               this.$store
-                .dispatch("music/uploadMusic", { slug: slug, file: this.audioFiles[i] })
+                .dispatch("music/uploadMusic", {
+                  slug: slug,
+                  file: this.audioFiles[i]
+                })
                 .then(finalResult => {
                   this.setInfo("Plik audio: " + finalResult.data.response);
                   this.isSuccess = true;
@@ -201,14 +313,29 @@ export default {
           console.log(error);
         });
     },
-    handleAudioFile: function(i) {
-      this.audioFiles = this.$refs.audio.files;
-      let fileURL = URL.createObjectURL(this.audioFiles[i]);
+    handleAudioFile: function(file, i) {
+      console.log("P", file, i);
+      let fileURL = URL.createObjectURL(file);
       getBlobDuration(fileURL).then(duration => {
         let minutes = Math.floor(duration / 60);
         let seconds = Math.floor(duration - minutes * 60);
         this.length[i] = minutes + "min " + seconds + "s";
       });
+    },
+    handleAudioFiles: function(audioFiles) {
+      for (let i = 0; i <= audioFiles.length - 1; ++i) {
+        this.handleAudioFile(audioFiles[i], i);
+      }
+      this.filesDetails = true;
+    },
+    handleAudio: function(type) {
+      if (type === 0) {
+        let audioFile = this.$refs.audio.files[0];
+        this.handleAudioFile(audioFile, 0);
+      } else {
+        let audioFiles = this.$refs.audios.files;
+        this.handleAudioFiles(audioFiles);
+      }
     },
     handleThumbnailFile: function() {
       this.thumbnail = this.$refs.thumbnail.files[0];
@@ -217,9 +344,27 @@ export default {
   created() {
     this.currentYear = new Date().getFullYear();
     this.year = this.currentYear;
+    for (let i = 0; i < 50; ++i) {
+      this.title.push("ab");
+      this.length.push("ab");
+      //this.description.push("");
+      this.tags.push("");
+    }
   }
 };
 </script>
 
 <style scoped>
+.fileDetails {
+  transition: 0.3s ease-in;
+  position: flex;
+}
+.fileDetailName {
+  border-top: 2px solid #9999;
+  background: rgba(55, 55, 130, 0.1);
+}
+.table {
+  margin: auto;
+  width: 80% !important;
+}
 </style>

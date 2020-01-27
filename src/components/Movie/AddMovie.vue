@@ -184,7 +184,7 @@ export default {
                 .then(finalResult => {
                   this.setInfo("Plik wideo: " + finalResult.data.response);
                   this.isSuccess = true;
-                  this.success = "dssadads";
+                  this.success = "final";
                   console.log("3", finalResult);
                 })
                 .finally(res => {

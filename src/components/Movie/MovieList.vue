@@ -54,7 +54,7 @@
         />
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies()">Wyszukaj</button>
       </form>
-      <table class="table table-hover table-striped col-md-12" v-if="listLoaded">
+      <table class="table table-hover table-striped col-md-12 content" v-if="listLoaded">
         <thead class="thead-light">
           <tr>
             <th scope="col col-sm-2">#</th>

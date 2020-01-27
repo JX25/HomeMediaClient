@@ -170,7 +170,7 @@ export default {
 .volume-slider {
   position: fixed;
   left: 0px;
-  bottom: 120px;
+  bottom: 7%;
   -webkit-appearance: slider-vertical;
   min-height: 100px;
   max-height: 150px;
@@ -198,6 +198,7 @@ export default {
 
 .MoviePlayer {
   z-index: 5;
+  bottom: -10%;
   position: relative;
   color: #fff;
   outline: none;
@@ -216,7 +217,7 @@ export default {
   opacity: 0.5;
   display: block;
   position: absolute;
-  top: 60px;
+  top: 0px;
   right: 30px;
 }
 
@@ -240,7 +241,7 @@ export default {
   text-align: left;
   position: absolute;
   padding-top: 5px;
-  bottom: 70px;
+  bottom: 27%;
   left: 15px;
   opacity: 0.5;
 }
@@ -268,8 +269,7 @@ export default {
 
 .video {
   position: relative;
-  width: 640px;
-  height: 480px;
+  width: 100%;
 }
 
 .videoFullscreen {
@@ -307,7 +307,7 @@ span {
 .progress {
   position: absolute;
   z-index: 2147483647;
-  bottom: 50px;
+  bottom: 22%;
   left: 0px;
   width: 100%;
   background-color: rgba(48, 48, 233, 0.411);
@@ -351,22 +351,35 @@ span {
   padding-bottom: 10px;
   background-color: blue;
 }
-
-@media (max-width: 675px) {
-  .video {
-    position: relative;
-    bottom: -140px;
-    left: -110px;
-    width: 425px;
-    height: 320px;
+@media (max-width: 500px) and (max-height: 751px){
+  .MoviePlayer{
+    height: 35%;
+  }
+}
+@media (max-width: 750px) and (max-height: 400px){
+  .MoviePlayer{
+    width: 60%;
+    height: 75%;
   }
 
+}
+/*
+@media (max-width: 675px) and (-height: 475px) {
+  .MoviePlayer{
+    position: absolute;
+    width: 80%;
+    left: 0px;
+    bottom: -50px;
+  }
+  .video {
+    width: 100%;
+  }
   .progress {
     position: absolute;
     z-index: 2147483647;
-    bottom: 50px;
-    left: -2px;
-    width: 66.5%;
+    bottom: 30%;
+    left: 0px;
+    width: 100%;
     background-color: rgba(48, 48, 233, 0.411);
     cursor: pointer;
   }
@@ -378,8 +391,8 @@ span {
     text-align: left;
     position: absolute;
     padding-top: 5px;
-    bottom: 70px;
-    left: 15px;
+    bottom: 35%;
+    left: 8%;
     opacity: 0.5;
   }
 
@@ -388,8 +401,10 @@ span {
     opacity: 0.5;
     display: block;
     position: absolute;
-    top: 180px;
-    right: 240px;
+    top: 33%;
+    right: 6%;
+
   }
 }
+*/
 </style>
