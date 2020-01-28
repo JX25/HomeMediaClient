@@ -11,7 +11,7 @@
               <tr>
                 <th>Tytuł</th>
                 <td>
-                  <input type="text" v-model="title[0]" />
+                  <input type="text" v-model="titleOne" />
                 </td>
               </tr>
               <tr>
@@ -59,14 +59,14 @@
               <tr>
                 <th>Długość</th>
                 <td>
-                  <input type="text" disabled v-model="length[0]" />
+                  <input type="text" disabled v-model="lengthOne" />
                 </td>
               </tr>
               <tr>
                 <th>Wiek (PEGI)</th>
                 <td>
                   <select name="pegi" id="pg" v-model="pegi">
-                    <option value="0">Familijny</option>
+                    <option value="0" >Familijny</option>
                     <option value="1">Wiek &#x3c;16</option>
                     <option value="2">Wiek 16+</option>
                   </select>
@@ -226,6 +226,8 @@ export default {
   data() {
     return {
       title: [],
+      titleOne: "",
+      lengthOne: "",
       description: [],
       author: "",
       album: "",
@@ -235,7 +237,7 @@ export default {
       genre: "",
       thumbnail: "",
       length: [],
-      pegi: "",
+      pegi: 0,
       tags: [],
       tmpURL: "",
       isError: false,
@@ -319,7 +321,7 @@ export default {
       getBlobDuration(fileURL).then(duration => {
         let minutes = Math.floor(duration / 60);
         let seconds = Math.floor(duration - minutes * 60);
-        this.length[i] = minutes + "min " + seconds + "s";
+        this.lengthOne = minutes + "min " + seconds + "s";
       });
     },
     handleAudioFiles: function(audioFiles) {
@@ -344,12 +346,6 @@ export default {
   created() {
     this.currentYear = new Date().getFullYear();
     this.year = this.currentYear;
-    for (let i = 0; i < 50; ++i) {
-      this.title.push("ab");
-      this.length.push("ab");
-      //this.description.push("");
-      this.tags.push("");
-    }
   }
 };
 </script>

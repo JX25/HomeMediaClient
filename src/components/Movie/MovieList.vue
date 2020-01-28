@@ -76,7 +76,7 @@
             <td>{{movie.year}}</td>
             <td>{{movie.language}}</td>
             <td>{{movie.genre.toUpperCase()}}</td>
-            <td>{{Math.round(movie.length*100/60)/100}}</td>
+            <td>{{Math.round(movie.length/60,0)}}:{{(movie.length%60)>=10 ? movie.length%60 : "0"+movie.length%60}}</td>
             <td>
               <button type="button" class="btn btn-success" @click="runPlayer(movie.slug)">Oglądaj</button>
             </td>
@@ -110,7 +110,7 @@
 import { mapActions, mapGetters } from "vuex";
 import MovieDetail from "./Movie";
 import MovieInfo from "./MovieInfo";
-import filterMovieList from "../../plugins/filterList";
+import {filterMovieList} from "../../plugins/filterList";
 import { address } from "../../store/api";
 
 export default {

@@ -77,7 +77,7 @@
           <th scope="col col-sm-2">Autor</th>
           <th scope="col col-sm-2">Język</th>
           <th scope="col col-sm-2">Rok</th>
-          <th scope="col col-sm-2">Długość (min)</th>
+          <th scope="col col-sm-2">Długość (min:s)</th>
           <th scope="col" colspan="3"></th>
           <th scope="col" colspan="2"></th>
         </tr>
@@ -93,7 +93,7 @@
             <td title="Zespół/Autor">{{music.author}}</td>
             <td title="Język">{{music.language}}</td>
             <td title="Rok wydania">{{music.year}}</td>
-            <td title="Długość (min)">{{Math.round(music.length*100/60)/100}}</td>
+            <td title="Długość (min)">{{Math.round(music.length/60,0)}}:{{(music.length%60)>=10 ? music.length%60 : "0"+music.length%60}}</td>
             <td>
               <button type="button" class="btn btn-success" @click="runPlayer(music.slug)">Odtwórz</button>
             </td>
@@ -133,7 +133,7 @@
 import { mapActions, mapGetters } from "vuex";
 import MusicDetail from "./Music";
 import MusicInfo from "./MusicInfo";
-import filterMusicList from "../../plugins/filterList";
+import {filterMusicList} from "../../plugins/filterList";
 import { address } from "../../store/api";
 
 export default {

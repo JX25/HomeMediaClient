@@ -1,4 +1,4 @@
-export default function filterMovieList(list, params){
+export function filterMovieList(list, params){
     console.log("welcome", list, params)
     let tmpList =list
     .filter(x => inArray(x.title.toUpperCase(), params.title.toUpperCase()))
@@ -9,6 +9,20 @@ export default function filterMovieList(list, params){
     .filter(x => greaterThan(x.year, params.yearMin))
     .filter(x => lowerThan(x.year, params.yearMax))
     return tmpList
+}
+
+export function filterMusicList(list, params){
+    let tmpList = list
+        .filter(x=>inArray(x.title.toUpperCase(), params.title.toUpperCase()))
+        .filter(x=>inArray(x.author.toUpperCase(), params.author.toUpperCase()))
+        .filter(x=>inArray(x.album.toUpperCase(), params.album.toUpperCase()))
+        .filter(x=>inArray(x.tags, params.keyword))
+        .filter(x=>inArray(x.genre, params.genre))
+        .filter(x=>greaterThan(x.length, params.lengthMin*60))
+        .filter(x=>lowerThan(x.length, params.lengthMax*60))
+        .filter(x=>greaterThan(x.year, params.yearMin))
+        .filter(x=>lowerThan(x.year, params.yearMax))
+        return tmpList
 }
 
 
