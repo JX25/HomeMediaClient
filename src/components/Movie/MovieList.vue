@@ -214,7 +214,12 @@ img:hover {
   transition: 0.3s ease-in;
   border-radius: 10px;
 }
-
+@media (max-width: 1350px) {
+  tr {
+    display: grid;
+    grid-template-columns: 5fr 5fr;
+  }
+}
 @media (max-width: 1091px) {
   tr {
     display: grid;

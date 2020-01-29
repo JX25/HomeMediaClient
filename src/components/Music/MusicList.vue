@@ -68,14 +68,14 @@
         />
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMusic()">Wyszukaj</button>
       </form>
-      <table class="table table-hover table-striped col-md-12" v-if="listLoaded">
+      <table class="table table-hover table-striped col-md-12 content" v-if="listLoaded">
         <tr>
           <th scope="col col-sm-2">#</th>
           <th scope="col col-sm-2">Nazwa utworu</th>
           <th scope="col col-sm-2">Album</th>
           <th scope="col col-sm-2">Gatunek</th>
           <th scope="col col-sm-2">Autor</th>
-          <th scope="col col-sm-2">Język</th>
+
           <th scope="col col-sm-2">Rok</th>
           <th scope="col col-sm-2">Długość (min:s)</th>
           <th scope="col" colspan="3"></th>
@@ -91,18 +91,16 @@
             <td title="Album utworu">{{music.album}}</td>
             <td title="Gatunek muzyczny">{{music.genre}}</td>
             <td title="Zespół/Autor">{{music.author}}</td>
-            <td title="Język">{{music.language}}</td>
+
             <td title="Rok wydania">{{music.year}}</td>
-            <td title="Długość (min)">{{Math.round(music.length/60,0)}}:{{(music.length%60)>=10 ? music.length%60 : "0"+music.length%60}}</td>
+            <td
+              title="Długość (min)"
+            >{{Math.round(music.length/60,0)}}:{{(music.length%60)>=10 ? music.length%60 : "0"+music.length%60}}</td>
             <td>
               <button type="button" class="btn btn-success" @click="runPlayer(music.slug)">Odtwórz</button>
             </td>
             <td>
-              <button
-                type="button"
-                class="btn btn-warning"
-                @click="addPlaylist(music)"
-              >+ playlista</button>
+              <button type="button" class="btn btn-warning" @click="addPlaylist(music)">+ playlista</button>
             </td>
             <td>
               <b-button v-b-modal.MusicDetail @click="musicInfo(music)">Podgląd</b-button>
@@ -133,7 +131,7 @@
 import { mapActions, mapGetters } from "vuex";
 import MusicDetail from "./Music";
 import MusicInfo from "./MusicInfo";
-import {filterMusicList} from "../../plugins/filterList";
+import { filterMusicList } from "../../plugins/filterList";
 import { address } from "../../store/api";
 
 export default {
@@ -244,7 +242,14 @@ img:hover {
   border-radius: 10px;
 }
 
-@media (max-width: 1091px) {
+@media (max-width: 1600px) {
+  tr {
+    display: grid;
+    grid-template-columns: 4fr 4fr 5fr;
+  }
+}
+
+@media (max-width: 1200px) {
   tr {
     display: grid;
     grid-template-columns: 3fr 3fr;
@@ -254,6 +259,8 @@ img:hover {
 tr {
   text-align: center;
   border: rgba(200, 200, 200, 1) 2px solid;
+  page-break-inside: initial;
+
 }
 
 button {

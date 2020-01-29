@@ -5,241 +5,29 @@
     <div id="successbox" v-if="isSuccess">{{this.success}}</div>
     <b-tabs content-class="col md-6 mt-12">
       <b-tab title="Dodaj pojedynczy utwór" active>
-        <form @submit.prevent="validateAndSend(0)">
-          <table class="table col-10">
-            <tbody>
-              <tr>
-                <th>Tytuł</th>
-                <td>
-                  <input type="text" v-model="titleOne" />
-                </td>
-              </tr>
-              <tr>
-                <th>Autor</th>
-                <td>
-                  <input type="text" v-model="author" />
-                </td>
-              </tr>
-              <tr>
-                <th>Album</th>
-                <td>
-                  <input type="text" v-model="album" />
-                </td>
-              </tr>
-
-              <tr>
-                <th>Rok</th>
-                <td>
-                  <input type="number" :max="currentYear" :min="1900" v-model="year" />
-                </td>
-              </tr>
-              <tr>
-                <th>Gatunek</th>
-                <td>
-                  <input type="text" v-model="genre" />
-                </td>
-              </tr>
-              <tr>
-                <th>Okładka</th>
-                <td>
-                  <input
-                    type="file"
-                    accept="image/jpeg image/png"
-                    @change="handleThumbnailFile"
-                    ref="thumbnail"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Plik</th>
-                <td>
-                  <input type="file" accept="audio/*" @change="handleAudio(0)" ref="audio" />
-                </td>
-              </tr>
-              <tr>
-                <th>Długość</th>
-                <td>
-                  <input type="text" disabled v-model="lengthOne" />
-                </td>
-              </tr>
-              <tr>
-                <th>Wiek (PEGI)</th>
-                <td>
-                  <select name="pegi" id="pg" v-model="pegi">
-                    <option value="0" >Familijny</option>
-                    <option value="1">Wiek &#x3c;16</option>
-                    <option value="2">Wiek 16+</option>
-                  </select>
-                </td>
-              </tr>
-
-              <tr>
-                <th>Język</th>
-                <td>
-                  <input type="text" v-model="language" />
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  Słowa kluczowe
-                  <sub>a,b</sub>
-                </th>
-                <td>
-                  <input type="text" v-model="tags[0]" />
-                </td>
-              </tr>
-              <tr>
-                <th>Opis utworu</th>
-                <td>
-                  <v-icon name="beer"></v-icon>
-                  <textarea name="description" id cols="30" rows="1" v-model="description"></textarea>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <b-button variant="primary" type="submit">Dodaj utwór</b-button>
-        </form>
+        <AddOneAudio />
       </b-tab>
       <b-tab title="Dodaj cały album">
-        <form @submit.prevent="validateAndSendAlbum()">
-          <table class="table">
-            <tbody>
-              <tr>
-                <th>Nazwa albumu</th>
-                <td>
-                  <input type="text" v-model="album" />
-                </td>
-              </tr>
-              <tr>
-                <th>Autor</th>
-                <td>
-                  <input type="text" v-model="author" />
-                </td>
-              </tr>
-              <tr>
-                <th>Rok</th>
-                <td>
-                  <input type="number" :max="currentYear" :min="1900" v-model="year" />
-                </td>
-              </tr>
-              <tr>
-                <th>Gatunek</th>
-                <td>
-                  <input type="text" v-model="genre" />
-                </td>
-              </tr>
-              <tr>
-                <th>Wiek (PEGI)</th>
-                <td>
-                  <select name="pegi" v-model="pegi">
-                    <option value="0">Familijny</option>
-                    <option value="1">Wiek &#x3c;16</option>
-                    <option value="2">Wiek 16+</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th>Okładka</th>
-                <td>
-                  <input
-                    type="file"
-                    accept="image/jpeg image/png"
-                    @change="handleThumbnailFile"
-                    ref="thumbnail"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Pliki</th>
-                <td>
-                  <input
-                    type="file"
-                    accept="audio/*"
-                    @change="handleAudio(1)"
-                    ref="audios"
-                    multiple
-                  />
-                </td>
-              </tr>
-              <template v-if="filesDetails">
-                <div
-                  v-for="(audio, index) in this.$refs.audios.files"
-                  class="fileDetails"
-                  :key="index"
-                >
-                  <tr class="fileDetailName">
-                    <th>Plik #{{index + 1}}</th>
-                    <td>{{audio.name}}</td>
-                  </tr>
-                  <tr>
-                    <th>Tytuł</th>
-                    <td>
-                      <input type="text" v-model="title[index]" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Opis utworu</th>
-
-                    <td>
-                      <v-icon name="beer"></v-icon>
-                      <textarea
-                        name="description"
-                        id
-                        cols="30"
-                        rows="1"
-                        v-model="description[index]"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Długość</th>
-                    <td>
-                      <input type="text" disabled v-model="length[index]" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>
-                      Słowa kluczowe
-                      <sub>a,b</sub>
-                    </th>
-                    <td>
-                      <input type="text" v-model="tags[index]" />
-                    </td>
-                  </tr>
-                </div>
-              </template>
-            </tbody>
-          </table>
-          <b-button variant="primary" type="submit">Dodaj album</b-button>
-        </form>
+        <AddManyAudio />
       </b-tab>
     </b-tabs>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import getBlobDuration from "get-blob-duration";
+import { mapActions } from "vuex"
+import getBlobDuration from "get-blob-duration"
+import AddOneAudio from "./AddOneAudio"
+import AddManyAudio from "./AddManyAudio"
 
 export default {
   name: "AddMusic",
+  components: {
+    AddOneAudio,
+    AddManyAudio
+  },
   data() {
     return {
-      title: [],
-      titleOne: "",
-      lengthOne: "",
-      description: [],
-      author: "",
-      album: "",
-      year: 0,
-      language: "",
-      currentYear: "",
-      genre: "",
-      thumbnail: "",
-      length: [],
-      pegi: 0,
-      tags: [],
-      tmpURL: "",
       isError: false,
       isSuccess: false,
       error: "",
@@ -321,7 +109,7 @@ export default {
       getBlobDuration(fileURL).then(duration => {
         let minutes = Math.floor(duration / 60);
         let seconds = Math.floor(duration - minutes * 60);
-        this.lengthOne = minutes + "min " + seconds + "s";
+        this.length = minutes + "min " + seconds + "s";
       });
     },
     handleAudioFiles: function(audioFiles) {
