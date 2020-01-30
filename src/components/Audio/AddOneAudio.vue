@@ -59,7 +59,7 @@
         <tr>
           <th>Wiek (PEGI)</th>
           <td>
-            <select name="pegi" v-model="pegi">
+            <select name="pegi" v-model="age_rate">
               <option value="0">Familijny</option>
               <option value="1">Wiek &#x3c;16</option>
               <option value="2">Wiek 16+</option>
@@ -100,7 +100,7 @@ import { mapActions } from "vuex";
 import getBlobDuration from "get-blob-duration";
 
 export default {
-  name: "AddOneMusic",
+  name: "AddOneAudio",
   data() {
     return {
       title: "",
@@ -114,13 +114,13 @@ export default {
       thumbnail: "",
       audioFile: "",
       length: "",
-      pegi: 0,
+      age_rate: 0,
       tags: "",
       tmpURL: ""
     };
   },
   methods: {
-    ...mapActions("music", ["clearInfo", "setInfo", "showInfo"]),
+    ...mapActions("audio", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSend: function() {
       //validation TODO
       this.tags = this.tags.split(",").map(x => x.trim());
@@ -132,6 +132,7 @@ export default {
         Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
       console.log(lengthInSeconds);
       this.clearInfo();
+      console.log("agerate", this.age_rate);
       let data = {
         title: this.title,
         author: this.author,
@@ -145,14 +146,14 @@ export default {
         description: this.description
       };
       this.$store
-        .dispatch("music/uploadMetaData", data)
+        .dispatch("audio/uploadMetaData", data)
         .then(result => {
           console.log("1", result);
           this.setInfo("Dane pliku: " + result.msg);
           const slugThumbnail = result.thmb;
           const slug = result.slg;
           this.$store
-            .dispatch("music/uploadThumbnail", {
+            .dispatch("audio/uploadThumbnail", {
               slug: slugThumbnail,
               thumbnail: this.thumbnail
             })
@@ -160,7 +161,7 @@ export default {
               console.log("2", result2);
               this.setInfo("Okładka utworu: " + result2.data.response);
               this.$store
-                .dispatch("music/uploadMusic", {
+                .dispatch("audio/uploadAudio", {
                   slug: slug,
                   file: this.audioFile
                 })
@@ -174,7 +175,7 @@ export default {
                   this.isSuccess = false;
                   console.log("4", res);
                   this.showInfo();
-                  this.$router.push("/admin/music");
+                  this.$router.push("/admin/audio");
                 });
             });
         })

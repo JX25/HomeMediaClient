@@ -49,7 +49,7 @@
               <input
                 type="file"
                 accept=".mp4, .x-m4v, video/*"
-                @change="handleMovieFile"
+                @change="handleVideoFile"
                 id="file"
                 ref="file"
               />
@@ -116,7 +116,7 @@ import getBlobDuration from "get-blob-duration";
 import { mapActions } from "vuex";
 
 export default {
-  name: "AddMovie",
+  name: "AddVideo",
   data() {
     return {
       currentYear: "",
@@ -140,7 +140,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("movie", ["clearInfo", "setInfo", "showInfo"]),
+    ...mapActions("video", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSend: function() {
       //validation
       this.actors = this.actors.split(",").map(x => x.trim());
@@ -166,13 +166,13 @@ export default {
         actors: this.actors
       };
       this.$store
-        .dispatch("movie/uploadMetaData", data)
+        .dispatch("video/uploadMetaData", data)
         .then(result => {
           console.log(result);
           this.setInfo("Dane pliku: " + result.msg);
           const slug = result.slg;
           this.$store
-            .dispatch("movie/uploadThumbnail", {
+            .dispatch("video/uploadThumbnail", {
               slug: slug,
               thumbnail: this.thumbnail
             })
@@ -180,7 +180,7 @@ export default {
               console.log("2", result2);
               this.setInfo("Miniatura wideo: " + result2.data.response);
               this.$store
-                .dispatch("movie/uploadMovie", { slug: slug, file: this.file })
+                .dispatch("video/uploadVideo", { slug: slug, file: this.file })
                 .then(finalResult => {
                   this.setInfo("Plik wideo: " + finalResult.data.response);
                   this.isSuccess = true;
@@ -191,7 +191,7 @@ export default {
                   this.isSuccess = false;
                   console.log("4", res);
                   this.showInfo();
-                  this.$router.push("/admin/movie");
+                  this.$router.push("/admin/video");
                 });
             });
         })
@@ -199,7 +199,7 @@ export default {
           console.log(error);
         });
     },
-    handleMovieFile: function() {
+    handleVideoFile: function() {
       this.file = this.$refs.file.files[0];
       let fileURL = URL.createObjectURL(this.file);
       getBlobDuration(fileURL).then(duration => {

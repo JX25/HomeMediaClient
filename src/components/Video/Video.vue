@@ -1,57 +1,57 @@
 <template>
   <div>
-    <b-modal id="MovieDetail" title="Szczegóły filmu">
+    <b-modal id="VideoDetail" title="Szczegóły filmu">
       <table class="table table-border table-responsive">
         <tbody>
           <tr>
             <th>Id</th>
-            <td>{{this.movie._id}}</td>
+            <td>{{this.video._id}}</td>
           </tr>
           <tr>
             <th>Tytuł</th>
-            <td>{{movie.title}}</td>
+            <td>{{video.title}}</td>
           </tr>
           <tr>
             <th>Rok powstania</th>
-            <td>{{movie.year}}</td>
+            <td>{{video.year}}</td>
           </tr>
           <tr>
             <th>Opis</th>
-            <td>{{movie.description}}</td>
+            <td>{{video.description}}</td>
           </tr>
           <tr>
             <td rowspan="2" colspan="2">
-                <img class="thumbnail" :src="image(movie.slug)" alt="miniatura filmu"/>
+                <img class="thumbnail" :src="image(video.slug)" alt="miniatura filmu"/>
             </td>
           </tr>
           <tr>
             <th>Gatunek</th>
-            <td>{{movie.genre}}</td>
+            <td>{{video.genre}}</td>
           </tr>
           <tr>
             <th>Język</th>
-            <td>{{movie.language}}</td>
+            <td>{{video.language}}</td>
           </tr>
           <tr>
             <th>Czas trwania (min)</th>
-            <td>{{Math.round(movie.length*100/60)/100}}</td>
+            <td>{{Math.round(video.length*100/60)/100}}</td>
           </tr>
           <tr>
             <th>Reżyser/Reżyserzy</th>
             <td>
-              <p v-for="director in this.movie.director" :key="director">{{director}}</p>
+              <p v-for="director in this.video.director" :key="director">{{director}}</p>
             </td>
           </tr>
           <tr>
             <th>Aktorzy</th>
             <td>
-              <p v-for="actor in this.movie.actors" :key="actor">{{actor}}</p>
+              <p v-for="actor in this.video.actors" :key="actor">{{actor}}</p>
             </td>
           </tr>
           <tr>
             <th>Słowa kluczowe</th>
             <td>
-              <p v-for="tag in this.movie.tags" :key="tag">{{tag}}</p>
+              <p v-for="tag in this.video.tags" :key="tag">{{tag}}</p>
             </td>
           </tr>
         </tbody>
@@ -65,14 +65,14 @@
 <script>
 import { address } from '../../store/api';
 export default {
-  name: "Movie",
-  props: ["movie"],
+  name: "Video",
+  props: ["video"],
   created() {
-    console.log(this.movie);
+    console.log(this.video);
   },
   methods: {
     image: function(slug) {
-      return address + "/api/v1/movie/stream-thumbnail/" + slug;
+      return address + "/api/v1/video/stream-thumbnail/" + slug;
     }
   }
 };

@@ -1,43 +1,43 @@
-import {movieApi} from '../api'
+import { audioApi } from "../api"
 
 export default {
     namespaced: true,
     state:{
-        movies: [],
-        movie: {},
-        movieToEdit: {},
-        uploadMovie: '',
-        uploadMovieThumbnail: '',
+        audios: [],
+        audio: {},
+        audioToEdit: {},
+        uploadAudio: '',
+        uploadAudioThumbnail: '',
         uploadMetaData: {},
         info: [],
         showInfo: false,
     },
     mutations:{
-        setMovies(state, movies){
-            state.movies = movies
+        setAudios(state, audios){
+            state.audios = audios
         },
-        setMovie(state, movie){
-            state.movie = movie
+        setAudio(state, audio){
+            state.audio = audio
         },
-        setMovieToUpload(state, data){
-            state.uploadMovie = data
+        setAudioToUpload(state, data){
+            state.uploadAudio = data
         },
-        setMovieThumbnailToUpload(state, data){
-            state.uploadMovieThumbnail = data
+        setAudioThumbnailToUpload(state, data){
+            state.uploadVideoThumbnail = data
         },
-        setMovieMetaData(state, data){
+        setAudioMetaData(state, data){
             state.uploadMetaData = data
         },
         clearUpload(state){
-            state.uploadMovie = ''
-            state.uploadMovieThumbnail = ''
+            state.uploadAudio = ''
+            state.uploadVideoThumbnail = ''
             state.uploadMetaData = ''
         },
-        setMovieToEdit(state, data){
-            state.movieToEdit = data
+        setAudioToEdit(state, audio){
+            state.audioToEdit = audio
         },
-        removeMovie(state, slug){
-            state.movies.filter(x => x.slug != slug)
+        removeAudio(state, slug){
+            state.audios.filter(x => x.slug != slug)
         },
         setInfo(state, info){
             state.info.push(info)
@@ -50,51 +50,53 @@ export default {
         }
     },
     getters:{
-        editMovie: state => {return state.movieToEdit},
-        getMovie: state => {return state.movie},
-        getMovieBySlug: (state, slug) => {return state.movies.filter(movie => {movie.slug === slug})},
-        movies: state => {return state.movies},
-        uploadMovie: state => {return state.uploadMovie},
-        uploadThumbnail: state => {return state.uploadMovieThumbnail},
+        audios: state => {return state.audios},
+        audio: state => {return state.audio},
+        videoBySlug: (state,slug) => {return state.audios.filter(audio => audio.slug == slug)},
+        editAudio: state => {return state.audioToEdit},
+        uploadAudio: state => {return state.uploadAudio},
+        uploadThumbnail: state => {return state.uploadAudioThumbnail},
         uploadMetaData: state => {return state.uploadMetaData},
         infoVisibility: state => {return state.showInfo},
-        movieInfo: state => {return state.info}
+        audioInfo: state => {return state.audioInfo}
     },
     actions:{
-        hideInfo : ({commit}) => {
+        hideInfo: ({commit}) =>{
             commit("infoVisible", false)
         },
-        showInfo : ({commit}) => {
+        showInfo: ({commit}) =>{
             commit("infoVisible", true)
         },
-        setInfo : ({commit}, info) => {
+        setInfo: ({commit}, info) =>{
             commit("setInfo", info)
         },
-        clearInfo : ({commit}) => {
+        clearInfo: ({commit}) => {
             commit("clearInfo")
         },
-        movieToEdit: ({commit}, movie) => {
-            commit("setMovieToEdit", movie)
+        audioDetail: ({commit}, audio) => {
+            commit("setAudio", audio)
         },
-        movieBySlug: ({commit}, slug) => {
+        audioToEdit: ({commit}, audio) =>{
+            commit("setAudioToEdit", audio)
+        },
+        audioBySlug: ({commit}, slug) =>{
             return new Promise( (res, rej) => {
-                movieApi.get(slug + '/detail', {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.get(slug + '/detail', {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    console.log(result.data.response)
-                    commit('setMovie', result.data.response)
+                    commit('setAudio', result.data.response)
                     res(result)
                 })
-                .catch(error => {
+                .catch(error =>{
                     rej(error)
                 })
             })
         },
-        allMovies: ({commit}) => {
+        getAllAudio: ({commit}) => {
             return new Promise( (res, rej) => {
-                movieApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
                         console.log(result.data.response)
-                        commit('setMovies', result.data.response)
+                        commit('setAudios', result.data.response)
                         res(result)
                     })
                     .catch(error => {
@@ -104,9 +106,9 @@ export default {
         },
         uploadMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                movieApi.post("", payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.post("", payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        commit('setMovieMetaData', result)
+                        commit('setAudioMetaData', result)
                         res(result.data.response)
                     })
                     .catch(error => {
@@ -116,10 +118,9 @@ export default {
         },
         updateMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                movieApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        console.log(result)
-                        commit('setMovieMetaData', result)
+                        commit('setAudioMetaData', result)
                         res(result.data.response)
                     })
                     .catch(error => {
@@ -131,9 +132,9 @@ export default {
             let formData = new FormData()
             formData.append("thumbnail", payload.thumbnail)
             return new Promise( (res, rej) => {
-                movieApi.patch('upload-thumbnail/'+payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.patch('upload-thumbnail/'+payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    commit('setMovieThumbnailToUpload', result)
+                    commit('setAudioThumbnailToUpload', result)
                     res(result)
                 })
                 .catch(error => {
@@ -141,13 +142,13 @@ export default {
                 })              
             })
         },
-        uploadMovie: ({commit}, payload)=>{
+        uploadAudio: ({commit}, payload)=>{
             let formData = new FormData()
             formData.append("file", payload.file)
             return new Promise( (res, rej) => {
-                movieApi.patch('upload/'+ payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.patch('upload/'+ payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    commit('setMovieToUpload', result)
+                    commit('setAudioToUpload', result)
                     res(result)
                 })
                 .catch(error => {
@@ -155,12 +156,12 @@ export default {
                 })              
             })
         },
-        deleteMovie: ({commit}, slug) => {
+        deleteAudio: ({commit}, slug) => {
             return new Promise( (res, rej) => {
-                movieApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
                     console.log(result)
-                    commit('removeMovie', slug)
+                    commit('removeAudio', slug)
                     res(result)
                 })
                 .catch(error => {
@@ -168,5 +169,5 @@ export default {
                 })
             })
         }
-    }
+    },
 }

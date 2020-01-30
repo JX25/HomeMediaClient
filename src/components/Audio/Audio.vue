@@ -1,54 +1,58 @@
 <template>
   <div>
-    <b-modal id="MusicDetail" title="Szczegóły pliku audio">
+    <b-modal id="AudioDetail" title="Szczegóły pliku audio">
       <table class="table table-border table-responsive">
         <tbody>
           <tr>
             <th>Id</th>
-            <td>{{this.music._id}}</td>
+            <td>{{this.audio._id}}</td>
           </tr>
           <tr>
             <th>Tytuł</th>
-            <td>{{music.title}}</td>
+            <td>{{audio.title}}</td>
           </tr>
           <tr>
             <th>Autor/Zespół</th>
-            <td>{{music.author}}</td>
+            <td>{{audio.author}}</td>
           </tr>
           <tr>
             <th>Album</th>
-            <td>{{music.album}}</td>
+            <td>{{audio.album}}</td>
           </tr>
           <tr>
             <th>Rok powstania</th>
-            <td>{{music.year}}</td>
+            <td>{{audio.year}}</td>
           </tr>
           <tr>
             <th>Opis</th>
-            <td>{{music.description}}</td>
+            <td>{{audio.description}}</td>
           </tr>
           <tr>
             <td rowspan="2" colspan="2">
-              <img class="thumbnail" :src="image(music.thumbnail)" alt="miniatura albumu" />
+              <img class="thumbnail" :src="image(audio.thumbnail)" alt="miniatura albumu" />
             </td>
           </tr>
           <tr>
             <th>Gatunek</th>
-            <td>{{music.genre}}</td>
+            <td>{{audio.genre}}</td>
           </tr>
           <tr>
             <th>Język</th>
-            <td>{{music.language}}</td>
+            <td>{{audio.language}}</td>
           </tr>
           <tr>
             <th>Czas trwania (min)</th>
-            <td>{{Math.round(music.length*100/60)/100}}</td>
+            <td>{{Math.round(audio.length*100/60)/100}}</td>
           </tr>
           <tr>
             <th>Słowa kluczowe</th>
             <td>
-              <p v-for="tag in this.music.tags" :key="tag">{{tag}}</p>
+              <p v-for="tag in this.audio.tags" :key="tag">{{tag}}</p>
             </td>
+          </tr>
+          <tr>
+            <th>Ograniczenie wiekowe [0-1-2]</th>
+            <td>{{audio.age_rate}}</td>
           </tr>
         </tbody>
       </table>
@@ -59,8 +63,8 @@
 <script>
 import { address } from "../../store/api";
 export default {
-  name: "Music",
-  props: ["music"],
+  name: "Audio",
+  props: ["audio"],
   methods: {
     image: function(thumbnailPath) {
       console.log(thumbnailPath, "1");
@@ -68,7 +72,7 @@ export default {
         console.log(thumbnailPath, "2");
         let parts = thumbnailPath.split("/");
         let slug = parts[parts.length - 1];
-        return address + "/api/v1/music/stream-thumbnail/" + slug
+        return address + "/api/v1/audio/stream-thumbnail/" + slug
       } else return ""
     },
   }
@@ -76,6 +80,7 @@ export default {
 </script>
 
 <style scoped>
+
 div >>> .modal-dialog {
   margin: auto !important;
   max-width: 90% !important;

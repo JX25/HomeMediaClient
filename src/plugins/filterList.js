@@ -1,4 +1,4 @@
-export function filterMovieList(list, params){
+export function filterVideoList(list, params){
     console.log("welcome", list, params)
     let tmpList =list
     .filter(x => inArray(x.title.toUpperCase(), params.title.toUpperCase()))
@@ -11,7 +11,7 @@ export function filterMovieList(list, params){
     return tmpList
 }
 
-export function filterMusicList(list, params){
+export function filterAudioList(list, params){
     let tmpList = list
         .filter(x=>inArray(x.title.toUpperCase(), params.title.toUpperCase()))
         .filter(x=>inArray(x.author.toUpperCase(), params.author.toUpperCase()))
@@ -26,23 +26,23 @@ export function filterMusicList(list, params){
 }
 
 
-function greaterThan(movieVal, paramVal) {
-//   console.log("1", movieVal >= paramVal, movieVal, paramVal)
+function greaterThan(videoVal, paramVal) {
+//   console.log("1", videoVal >= paramVal, videoVal, paramVal)
     if(paramVal === 0) return true
-    return movieVal >= paramVal
+    return videoVal >= paramVal
 }
 
-function lowerThan(movieVal, paramVal) {
+function lowerThan(videoVal, paramVal) {
 //    console.log(paramVal)
-//    console.log("2", movieVal <= paramVal, movieVal, paramVal)
+//    console.log("2", videoVal <= paramVal, videoVal, paramVal)
     if(paramVal == 0) return true
-    return movieVal <= paramVal
+    return videoVal <= paramVal
 }
 
-/*function equalValue(movieVal, paramVal) {
+/*function equalValue(videoVal, paramVal) {
 //    console.log(paramVal === '')
     if(paramVal === '') return true
-    return paramVal.toUpperCase() === movieVal.toUpperCase()
+    return paramVal.toUpperCase() === videoVal.toUpperCase()
 }*/
 
 function inArray(obj, paramVal) {

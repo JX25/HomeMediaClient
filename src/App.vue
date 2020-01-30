@@ -2,14 +2,14 @@
   <div id="app">
     <SiteMenu id="mn" />
     <SiteView id="vw" />
-    <MoviePlayer class="movie-player" />
+    <VideoPlayer class="video-player" />
     <SiteFooter id="ftr" />
   </div>
 </template>
 
 
 <script>
-import MoviePlayer from "./components/Movie/MoviePlayer";
+import VideoPlayer from "./components/Video/VideoPlayer";
 import SiteView from "./components/SiteView.vue";
 import SiteMenu from "./components/Menu/SiteMenu.vue";
 import SiteFooter from "./components/Footer/SiteFooter.vue";
@@ -19,7 +19,7 @@ export default {
     SiteView,
     SiteMenu,
     SiteFooter,
-    MoviePlayer
+    VideoPlayer
   }
 };
 </script>
@@ -58,7 +58,7 @@ body {
   z-index: -1;
 }
 
-.movie-player {
+.video-player {
   height: 480px;
   width: 640px;
   position: fixed !important;
@@ -68,7 +68,7 @@ body {
 }
 
 @media (max-width: 750px){
-  .movie-player{
+  .video-player{
     width: 50%;
   }
   }

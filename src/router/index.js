@@ -4,15 +4,15 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import SignIn from '../components/Login/SignIn.vue'
 import SignUp from '../components/Login/SignUp.vue'
-import MovieList from '../components/Movie/MovieList.vue'
-import Music from '../components/Music/Music.vue'
-import AddMusic from '../components/Music/AddMusic.vue'
-import MusicList from '../components/Music/MusicList.vue'
+import VideoList from '../components/Video/VideoList.vue'
+import Audio from '../components/Audio/Audio.vue'
+import AddAudio from '../components/Audio/AddAudio.vue'
+import AudioList from '../components/Audio/AudioList.vue'
 import Photo from '../components/Photo/Photo.vue'
 import UserSettings from '../components/User/UserSettings.vue'
-import AddMovie from '../components/Movie/AddMovie'
-import EditMovie from '../components/Movie/EditMovie'
-import EditMusic from '../components/Music/EditMusic'
+import AddVideo from '../components/Video/AddVideo'
+import EditVideo from '../components/Video/EditVideo'
+import EditAudio from '../components/Audio/EditAudio'
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,24 +37,24 @@ const routes = [
     component: About
   },
   {
-    path: '/admin/movie',
-    name: 'MovieList',
-    component: MovieList
+    path: '/admin/video',
+    name: 'VideoList',
+    component: VideoList
   },
   {
-    path: '/admin/music',
-    name: 'MusicList',
-    component: MusicList
+    path: '/admin/audio',
+    name: 'AudioList',
+    component: AudioList
   },
   {
-    path: '/admin/music/add',
-    name: 'AddMusic',
-    component: AddMusic
+    path: '/admin/audio/add',
+    name: 'AddAudio',
+    component: AddAudio
   },
   {
-    path: '/music',
-    name: 'Music',
-    component: Music
+    path: '/audio',
+    name: 'Audio',
+    component: Audio
   },
   {
     path: '/photo',
@@ -67,19 +67,19 @@ const routes = [
     component: UserSettings
   },
   {
-    path: '/admin/movie/add',
-    name: 'AddMovie',
-    component: AddMovie
+    path: '/admin/video/add',
+    name: 'AddVideo',
+    component: AddVideo
   },
   {
-    path: '/admin/movie/edit/:slug',
-    name: 'EditMovie',
-    component: EditMovie
+    path: '/admin/video/edit/:slug',
+    name: 'EditVideo',
+    component: EditVideo
   },
   {
-    path: '/admin/music/edit/:slug',
-    name: 'EditMusic',
-    component: EditMusic
+    path: '/admin/audio/edit/:slug',
+    name: 'EditAudio',
+    component: EditAudio
   },
 
 ]

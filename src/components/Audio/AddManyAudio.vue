@@ -29,7 +29,7 @@
         <tr>
           <th>Wiek (PEGI)</th>
           <td>
-            <select name="pegi" v-model="pegi">
+            <select name="pegi" v-model="age_rate">
               <option value="0">Familijny</option>
               <option value="1">Wiek &#x3c;16</option>
               <option value="2">Wiek 16+</option>
@@ -108,7 +108,7 @@ export default {
       author: "",
       currentYear: "",
       genre: "",
-      pegi: 0,
+      age_rate: 0,
       tmpURL: "",
       filesDetails: false,
       length: [],
@@ -120,7 +120,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("music", ["clearInfo", "setInfo", "showInfo"]),
+    ...mapActions("audio", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSendAlbum: function() {
       console.log("ACS", this.audioFiles);
       for (let i=0; i < this.audioFiles.length; ++i) {
@@ -172,14 +172,14 @@ export default {
         description: this.description[i]
       };
       this.$store
-        .dispatch("music/uploadMetaData", data)
+        .dispatch("audio/uploadMetaData", data)
         .then(result => {
           console.log("1", result);
           this.setInfo("Dane pliku: " + result.msg);
           const slugThumbnail = result.thmb;
           const slug = result.slg;
           this.$store
-            .dispatch("music/uploadThumbnail", {
+            .dispatch("audio/uploadThumbnail", {
               slug: slugThumbnail,
               thumbnail: this.thumbnail
             })
@@ -187,7 +187,7 @@ export default {
               console.log("2", result2);
               this.setInfo("Okładka utworu: " + result2.data.response);
               this.$store
-                .dispatch("music/uploadMusic", {
+                .dispatch("audio/uploadAudio", {
                   slug: slug,
                   file: this.audioFile
                 })
@@ -201,7 +201,7 @@ export default {
                   this.isSuccess = false;
                   console.log("4", res);
                   this.showInfo();
-                  this.$router.push("/admin/music");
+                  this.$router.push("/admin/audio");
                 });
             });
         })

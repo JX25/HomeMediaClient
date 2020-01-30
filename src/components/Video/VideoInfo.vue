@@ -2,7 +2,7 @@
   <div class="infoBox">
     <i class="icon far fa-times-circle fa-2x" @click="hideInfo()"></i>
     <ul>
-      <li v-for="(info, key) in movieInfo" :key="key">{{info}}</li>
+      <li v-for="(info, key) in videoInfo" :key="key">{{info}}</li>
     </ul>
   </div>
 </template>
@@ -10,12 +10,12 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "MovieInfo",
+  name: "VideoInfo",
   methods: {
-    ...mapActions("movie", ["hideInfo"])
+    ...mapActions("video", ["hideInfo"])
   },
   computed: {
-    ...mapGetters("movie", ["movieInfo"])
+    ...mapGetters("video", ["videoInfo"])
   }
 };
 </script>

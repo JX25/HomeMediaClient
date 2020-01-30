@@ -2,7 +2,7 @@
   <div class="infoBox">
     <i class="icon far fa-times-circle fa-2x" @click="hideInfo()"></i>
     <ul>
-      <li v-for="(info, key) in musicInfo" :key="key">{{info}}</li>
+      <li v-for="(info, key) in audioInfo" :key="key">{{info}}</li>
     </ul>
   </div>
 </template>
@@ -11,12 +11,12 @@
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
-    name: 'MusicInfo',
+    name: 'AudioInfo',
   methods: {
-    ...mapActions("music", ["hideInfo"])
+    ...mapActions("audio", ["hideInfo"])
   },
   computed: {
-    ...mapGetters("music", ["musicInfo"])
+    ...mapGetters("audio", ["audioInfo"])
   }
 }
 </script>

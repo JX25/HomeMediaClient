@@ -1,4 +1,4 @@
-//import {movieApi} from '../api'
+//import {videoApi} from '../api'
 
 export default {
     namespaced: true,
@@ -40,7 +40,7 @@ export default {
         }
     },
     getters:{
-        moviePlayer: state => {return state},
+        videoPlayer: state => {return state},
         getSrc: state => {return state.src},
         getShow: state => {return state.show},
         getPlay: state => {return state.play},

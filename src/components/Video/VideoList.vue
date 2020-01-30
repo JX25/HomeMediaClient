@@ -52,7 +52,7 @@
           placeholder="Do roku"
           v-model="params.yearMax"
         />
-        <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterMovies()">Wyszukaj</button>
+        <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterVideos()">Wyszukaj</button>
       </form>
       <table class="table table-hover table-striped col-md-12 content" v-if="listLoaded">
         <thead class="thead-light">
@@ -68,62 +68,62 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="movie in movieList" :key="movie.id">
+          <tr v-for="video in videoList" :key="video.id">
             <td>
-              <img :src="image(movie.slug)" width="100" height="100" alt="brak" />
+              <img :src="image(video.slug)" width="100" height="100" alt="brak" />
             </td>
-            <td>{{movie.title.toUpperCase()}}</td>
-            <td>{{movie.year}}</td>
-            <td>{{movie.language}}</td>
-            <td>{{movie.genre.toUpperCase()}}</td>
-            <td>{{Math.round(movie.length/60,0)}}:{{(movie.length%60)>=10 ? movie.length%60 : "0"+movie.length%60}}</td>
+            <td>{{video.title.toUpperCase()}}</td>
+            <td>{{video.year}}</td>
+            <td>{{video.language}}</td>
+            <td>{{video.genre.toUpperCase()}}</td>
+            <td>{{Math.round(video.length/60,0)}}:{{(video.length%60)>=10 ? video.length%60 : "0"+video.length%60}}</td>
             <td>
-              <button type="button" class="btn btn-success" @click="runPlayer(movie.slug)">Oglądaj</button>
-            </td>
-            <td>
-              <b-button v-b-modal.MovieDetail @click="movieInfo(movie)">Podgląd</b-button>
+              <button type="button" class="btn btn-success" @click="runPlayer(video.slug)">Oglądaj</button>
             </td>
             <td>
-              <button type="button" class="btn btn-primary" @click="editMovie(movie)">Edycja</button>
+              <b-button v-b-modal.VideoDetail @click="videoInfo(video)">Podgląd</b-button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" @click="editVideo(video)">Edycja</button>
             </td>
             <td>
               <button
                 type="button"
                 class="btn btn-danger"
-                @click="deleteMovie(movie.slug, movie.title)"
+                @click="deleteVideo(video.slug, video.title)"
               >Usuń</button>
             </td>
           </tr>
         </tbody>
       </table>
-      <!--<MoviePlayer class="movie-player" />-->
-      <MovieDetail :movie="this.targetMovie" />
-      <MovieInfo v-if="infoVisibility" />
+      <!--<VideoPlayer class="video-player" />-->
+      <VideoDetail :video="this.targetVideo" />
+      <VideoInfo v-if="infoVisibility" />
     </div>
-    <router-link to="movie/add">
-      <i id="addMovie" class="fas fa-plus-circle fa-3x"></i>
+    <router-link to="video/add">
+      <i id="addVideo" class="fas fa-plus-circle fa-3x"></i>
     </router-link>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import MovieDetail from "./Movie";
-import MovieInfo from "./MovieInfo";
-import {filterMovieList} from "../../plugins/filterList";
+import VideoDetail from "./Video";
+import VideoInfo from "./VideoInfo";
+import {filterVideoList} from "../../plugins/filterList";
 import { address } from "../../store/api";
 
 export default {
-  name: "MovieList",
+  name: "VideoList",
   components: {
-    MovieDetail,
-    MovieInfo,
+    VideoDetail,
+    VideoInfo,
   },
   data() {
     return {
-      movieList: [],
+      videoList: [],
       listLoaded: false,
-      targetMovie: {},
+      targetVideo: {},
       params: {
         title: "",
         keyword: "",
@@ -136,41 +136,41 @@ export default {
     };
   },
   methods: {
-    ...mapActions("movie", ["allMovies", "movieToEdit"]),
-    ...mapActions("moviePlayer", ["showVideoPlayer", "hideVideoPlayer"]),
-    deleteMovie: function(movieSlug, movieTitle) {
-      if (confirm("Czy na pewno chcesz usunąć film " + movieTitle + "?")) {
+    ...mapActions("video", ["allVideos", "videoToEdit"]),
+    ...mapActions("videoPlayer", ["showVideoPlayer", "hideVideoPlayer"]),
+    deleteVideo: function(videoSlug, videoTitle) {
+      if (confirm("Czy na pewno chcesz usunąć film " + videoTitle + "?")) {
         this.$store
-          .dispatch("movie/deleteMovie", movieSlug)
+          .dispatch("video/deleteVideo", videoSlug)
           .then(result => {
-            this.movieList = this.movieList.filter(x => x.slug != movieSlug);
-            console.log(movieSlug, this.movieList, result);
+            this.videoList = this.videoList.filter(x => x.slug != videoSlug);
+            console.log(videoSlug, this.videoList, result);
           })
           .catch(error => {
             console.log(error);
           });
       }
     },
-    filterMovies: function() {
+    filterVideos: function() {
       //WALIDACJA
-      let filteredMovies = filterMovieList(this.movies, this.params);
-      this.movieList = filteredMovies;
+      let filteredVideos = filterVideoList(this.videos, this.params);
+      this.videoList = filteredVideos;
     },
-    movieInfo: function(movie) {
-      this.targetMovie = movie;
-      this.$bvModal.show("MovieDetail");
+    videoInfo: function(video) {
+      this.targetVideo = video;
+      this.$bvModal.show("VideoDetail");
     },
     image: function(slug) {
       console.log(address);
-      return address + "/api/v1/movie/stream-thumbnail/" + slug;
+      return address + "/api/v1/video/stream-thumbnail/" + slug;
     },
     srcStream: function(slug) {
       console.log("XD", address);
-      return address + "/api/v1/movie/stream/" + slug;
+      return address + "/api/v1/video/stream/" + slug;
     },
-    editMovie: function(movie) {
-      this.movieToEdit(movie);
-      this.$router.push("/admin/movie/edit/" + movie.slug);
+    editVideo: function(video) {
+      this.videoToEdit(video);
+      this.$router.push("/admin/video/edit/" + video.slug);
     },
     runPlayer: function(slug) {
       let src = this.srcStream(slug);
@@ -181,21 +181,21 @@ export default {
     }
   },
   created() {
-    this.allMovies().then(result => {
+    this.allVideos().then(result => {
       console.log("load", result.data.response);
-      this.movieList = result.data.response;
+      this.videoList = result.data.response;
       this.listLoaded = true;
     });
   },
   computed: {
-    ...mapGetters("movie", ["movies", "infoVisibility"]),
-    ...mapGetters("moviePlayer", ["getSrc", "getShow"])
+    ...mapGetters("video", ["videos", "infoVisibility"]),
+    ...mapGetters("videoPlayer", ["getSrc", "getShow"])
   }
 };
 </script>
 
 <style scoped>
-#addMovie {
+#addVideo {
   position: fixed;
   bottom: 15px;
   right: 15px;
@@ -203,7 +203,7 @@ export default {
   color: rgba(24, 150, 41, 0.979);
 }
 
-#addMovie:hover {
+#addVideo:hover {
   color: rgba(37, 228, 63, 0.979);
   transition: 0.5s ease-out;
 }

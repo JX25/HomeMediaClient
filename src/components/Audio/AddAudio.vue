@@ -21,7 +21,7 @@ import AddOneAudio from "./AddOneAudio"
 import AddManyAudio from "./AddManyAudio"
 
 export default {
-  name: "AddMusic",
+  name: "AddAudio",
   components: {
     AddOneAudio,
     AddManyAudio
@@ -36,7 +36,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("music", ["clearInfo", "setInfo", "showInfo"]),
+    ...mapActions("audio", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSendAlbum: function() {
       let i = 0;
       for (i in this.$refs.audio.files.length) {
@@ -66,14 +66,14 @@ export default {
         description: this.description[i]
       };
       this.$store
-        .dispatch("music/uploadMetaData", data)
+        .dispatch("audio/uploadMetaData", data)
         .then(result => {
           console.log(result);
           this.setInfo("Dane pliku: " + result.msg);
           const slugThumbnail = result.thmb;
           const slug = result.slg;
           this.$store
-            .dispatch("music/uploadThumbnail", {
+            .dispatch("audio/uploadThumbnail", {
               slug: slugThumbnail,
               thumbnail: this.thumbnail
             })
@@ -81,7 +81,7 @@ export default {
               console.log("2", result2);
               this.setInfo("Okładka audio: " + result2.data.response);
               this.$store
-                .dispatch("music/uploadMusic", {
+                .dispatch("audio/uploadAudio", {
                   slug: slug,
                   file: this.audioFiles[i]
                 })
@@ -95,7 +95,7 @@ export default {
                   this.isSuccess = false;
                   console.log("4", res);
                   this.showInfo();
-                  this.$router.push("/admin/music");
+                  this.$router.push("/admin/audio");
                 });
             });
         })

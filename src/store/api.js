@@ -11,12 +11,12 @@ export const userApi = axios.create({
     baseURL: address + '/api/v1/user/'
 });
 
-export const movieApi = axios.create({
-    baseURL: address + '/api/v1/movie/'
+export const videoApi = axios.create({
+    baseURL: address + '/api/v1/video/'
 });
 
-export const musicApi = axios.create({
-    baseURL: address + '/api/v1/music/'
+export const audioApi = axios.create({
+    baseURL: address + '/api/v1/audio/'
 });
 
 export const photoApi = axios.create({

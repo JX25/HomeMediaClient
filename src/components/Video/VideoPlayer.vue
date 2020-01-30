@@ -2,56 +2,56 @@
   <div
     ref="videoContainer"
     v-if="getShow"
-    @keyup.space="play(!moviePlayer.play)"
+    @keyup.space="play(!videoPlayer.play)"
     @keyup.f="manageFullscreen()"
     @keyup.escape="closeFullscreen()"
     tabindex="0"
     @fullscreenchange="fullScreenChange()"
-    v-bind:class="moviePlayer.fullscreen ? 'MoviePlayerFullScreen' : 'MoviePlayer'"
+    v-bind:class="videoPlayer.fullscreen ? 'VideoPlayerFullScreen' : 'VideoPlayer'"
   >
     <video
-      :src="moviePlayer.src"
-      v-bind:class="moviePlayer.fullscreen ? 'videoFullscreen' : 'video'"
+      :src="videoPlayer.src"
+      v-bind:class="videoPlayer.fullscreen ? 'videoFullscreen' : 'video'"
       autoplay
       ref="video"
       @timeupdate="progress($event.target.currentTime)"
-      @click="play(!moviePlayer.play)"
+      @click="play(!videoPlayer.play)"
       @dblclick="manageFullscreen()"
     >
       <source type="video/mp4" />
     </video>
-    <div v-bind:class="moviePlayer.fullscreen ? 'TopBarFullscreen' : 'MenuBar TopBar row'">
+    <div v-bind:class="videoPlayer.fullscreen ? 'TopBarFullscreen' : 'MenuBar TopBar row'">
       <i
         class="icon fas fa-window-maximize fa-2x"
         @click="openFullscreen()"
-        v-if="!moviePlayer.fullscreen"
+        v-if="!videoPlayer.fullscreen"
       ></i>
       <i class="icon fas fa-window-minimize fa-2x" @click="closeFullscreen()" v-else></i>
       <i class="icon far fa-times-circle fa-2x" @click="hideVideoPlayer()"></i>
     </div>
     <div class="options-block">
-      <div v-bind:class="moviePlayer.fullscreen ? 'BotBarFullscreen row' : 'MenuBar BotBar row'">
-        <i class="icon fas fa-pause" @click="play(false)" v-if="moviePlayer.play"></i>
+      <div v-bind:class="videoPlayer.fullscreen ? 'BotBarFullscreen row' : 'MenuBar BotBar row'">
+        <i class="icon fas fa-pause" @click="play(false)" v-if="videoPlayer.play"></i>
         <i class="icon fas fa-play" @click="play(true)" v-else></i>
         &nbsp;
-        <div class="volume-control" @mouseover="moviePlayer.showVolume = true">
-          <i class="icon fas fa-volume-mute icon" v-if="moviePlayer.volume == 0"></i>
+        <div class="volume-control" @mouseover="videoPlayer.showVolume = true">
+          <i class="icon fas fa-volume-mute icon" v-if="videoPlayer.volume == 0"></i>
           <i
             class="icon fas fa-volume-down"
-            v-else-if="moviePlayer.volume > 0 && moviePlayer.volume <= 50"
+            v-else-if="videoPlayer.volume > 0 && videoPlayer.volume <= 50"
           ></i>
           <i class="icon fas fa-volume-up" v-else></i>
           <div class="vertical-volume-control">
             <input
-              @mouseleave="moviePlayer.showVolume = false"
+              @mouseleave="videoPlayer.showVolume = false"
               type="range"
               min="0"
               max="100"
-              v-model="moviePlayer.volume"
+              v-model="videoPlayer.volume"
               @input="changeVideoVolume(getVolume)"
               class="volume-slider"
-              v-bind:class="moviePlayer.fullscreen ? 'volume-sliderFullscreen' : 'volume-slider'"
-              v-if="moviePlayer.showVolume"
+              v-bind:class="videoPlayer.fullscreen ? 'volume-sliderFullscreen' : 'volume-slider'"
+              v-if="videoPlayer.showVolume"
             />
           </div>
         </div>
@@ -59,11 +59,11 @@
       <div
         ref="videoTime"
         @click="changeVideoTime($event)"
-        v-bind:class="moviePlayer.fullscreen ? 'progressFullscreen' : 'progress'"
+        v-bind:class="videoPlayer.fullscreen ? 'progressFullscreen' : 'progress'"
       >
         <div
           :style="{width: getProgress +'%'}"
-          v-bind:class="moviePlayer.fullscreen ? 'progress-barFullscreen' : 'progress-bar'"
+          v-bind:class="videoPlayer.fullscreen ? 'progress-barFullscreen' : 'progress-bar'"
         ></div>
       </div>
     </div>
@@ -74,9 +74,9 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "MoviePlayer",
+  name: "VideoPlayer",
   methods: {
-    ...mapActions("moviePlayer", [
+    ...mapActions("videoPlayer", [
       "hideVideoPlayer",
       "showFullscreen",
       "minimizeFullscreen",
@@ -106,14 +106,14 @@ export default {
     play: function(value) {
       if (value) {
         this.$refs.video.play();
-        this.moviePlayer.play = true;
+        this.videoPlayer.play = true;
       } else {
         this.$refs.video.pause();
-        this.moviePlayer.play = false;
+        this.videoPlayer.play = false;
       }
     },
     manageFullscreen: function() {
-      let value = !this.moviePlayer.fullscreen;
+      let value = !this.videoPlayer.fullscreen;
       value ? this.openFullscreen() : this.closeFullscreen();
     },
     closeFullscreen: function() {
@@ -143,13 +143,13 @@ export default {
     },
     fullScreenChange: function() {
       console.log("ASDDSADAS");
-      this.moviePlayer.fullscreen = false;
+      this.videoPlayer.fullscreen = false;
       this.minimizeFullscreen();
     }
   },
   computed: {
-    ...mapGetters("moviePlayer", [
-      "moviePlayer",
+    ...mapGetters("videoPlayer", [
+      "videoPlayer",
       "getFullscreen",
       "getShow",
       "getProgress",
@@ -196,7 +196,7 @@ export default {
   opacity: 1;
 }
 
-.MoviePlayer {
+.VideoPlayer {
   z-index: 5;
   bottom: -10%;
   position: relative;
@@ -204,7 +204,7 @@ export default {
   outline: none;
 }
 
-.MoviePlayerFullscreen {
+.VideoPlayerFullscreen {
   min-width: 90%;
   min-height: 90%;
   max-width: 100%;
@@ -352,12 +352,12 @@ span {
   background-color: blue;
 }
 @media (max-width: 500px) and (max-height: 751px){
-  .MoviePlayer{
+  .VideoPlayer{
     height: 35%;
   }
 }
 @media (max-width: 750px) and (max-height: 400px){
-  .MoviePlayer{
+  .VideoPlayer{
     width: 60%;
     height: 75%;
   }
@@ -365,7 +365,7 @@ span {
 }
 /*
 @media (max-width: 675px) and (-height: 475px) {
-  .MoviePlayer{
+  .VideoPlayer{
     position: absolute;
     width: 80%;
     left: 0px;

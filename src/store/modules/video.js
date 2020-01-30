@@ -1,43 +1,43 @@
-import { musicApi } from "../api"
+import {videoApi} from '../api'
 
 export default {
     namespaced: true,
     state:{
-        musics: [],
-        music: {},
-        musicToEdit: {},
-        uploadMusic: '',
-        uploadMusicThumbnail: '',
+        videos: [],
+        video: {},
+        videoToEdit: {},
+        uploadVideo: '',
+        uploadVideoThumbnail: '',
         uploadMetaData: {},
         info: [],
         showInfo: false,
     },
     mutations:{
-        setMusics(state, musics){
-            state.musics = musics
+        setVideos(state, videos){
+            state.videos = videos
         },
-        setMusic(state, music){
-            state.music = music
+        setVideo(state, video){
+            state.video = video
         },
-        setMusicToUpload(state, data){
-            state.uploadMusic = data
+        setVideoToUpload(state, data){
+            state.uploadVideo = data
         },
-        setMusicThumbnailToUpload(state, data){
-            state.uploadMovieThumbnail = data
+        setVideoThumbnailToUpload(state, data){
+            state.uploadVideoThumbnail = data
         },
-        setMusicMetaData(state, data){
+        setVideoMetaData(state, data){
             state.uploadMetaData = data
         },
         clearUpload(state){
-            state.uploadMusic = ''
-            state.uploadMovieThumbnail = ''
+            state.uploadVideo = ''
+            state.uploadVideoThumbnail = ''
             state.uploadMetaData = ''
         },
-        setMusicToEdit(state, music){
-            state.musicToEdit = music
+        setVideoToEdit(state, data){
+            state.videoToEdit = data
         },
-        removeMusic(state, slug){
-            state.musics.filter(x => x.slug != slug)
+        removeVideo(state, slug){
+            state.videos.filter(x => x.slug != slug)
         },
         setInfo(state, info){
             state.info.push(info)
@@ -50,53 +50,51 @@ export default {
         }
     },
     getters:{
-        musics: state => {return state.musics},
-        music: state => {return state.music},
-        movieBySlug: (state,slug) => {return state.musics.filter(music => music.slug == slug)},
-        editMusic: state => {return state.musicToEdit},
-        uploadMusic: state => {return state.uploadMusic},
-        uploadThumbnail: state => {return state.uploadMusicThumbnail},
+        editVideo: state => {return state.videoToEdit},
+        getVideo: state => {return state.video},
+        getVideoBySlug: (state, slug) => {return state.videos.filter(video => {video.slug === slug})},
+        videos: state => {return state.videos},
+        uploadVideo: state => {return state.uploadVideo},
+        uploadThumbnail: state => {return state.uploadVideoThumbnail},
         uploadMetaData: state => {return state.uploadMetaData},
         infoVisibility: state => {return state.showInfo},
-        musicInfo: state => {return state.musicInfo}
+        videoInfo: state => {return state.info}
     },
     actions:{
-        hideInfo: ({commit}) =>{
+        hideInfo : ({commit}) => {
             commit("infoVisible", false)
         },
-        showInfo: ({commit}) =>{
+        showInfo : ({commit}) => {
             commit("infoVisible", true)
         },
-        setInfo: ({commit}, info) =>{
+        setInfo : ({commit}, info) => {
             commit("setInfo", info)
         },
-        clearInfo: ({commit}) => {
+        clearInfo : ({commit}) => {
             commit("clearInfo")
         },
-        musicDetail: ({commit}, music) => {
-            commit("setMusic", music)
+        videoToEdit: ({commit}, video) => {
+            commit("setVideoToEdit", video)
         },
-        musicToEdit: ({commit}, music) =>{
-            commit("setMusicToEdit", music)
-        },
-        musicBySlug: ({commit}, slug) =>{
+        videoBySlug: ({commit}, slug) => {
             return new Promise( (res, rej) => {
-                musicApi.get(slug + '/detail', {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.get(slug + '/detail', {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    commit('setMusic', result.data.response)
+                    console.log(result.data.response)
+                    commit('setVideo', result.data.response)
                     res(result)
                 })
-                .catch(error =>{
+                .catch(error => {
                     rej(error)
                 })
             })
         },
-        getAllMusic: ({commit}) => {
+        allVideos: ({commit}) => {
             return new Promise( (res, rej) => {
-                musicApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
                         console.log(result.data.response)
-                        commit('setMusics', result.data.response)
+                        commit('setVideos', result.data.response)
                         res(result)
                     })
                     .catch(error => {
@@ -106,9 +104,9 @@ export default {
         },
         uploadMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                musicApi.post("", payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.post("", payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        commit('setMusicMetaData', result)
+                        commit('setVideoMetaData', result)
                         res(result.data.response)
                     })
                     .catch(error => {
@@ -118,9 +116,10 @@ export default {
         },
         updateMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                musicApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        commit('setMusicMetaData', result)
+                        console.log(result)
+                        commit('setVideoMetaData', result)
                         res(result.data.response)
                     })
                     .catch(error => {
@@ -132,9 +131,9 @@ export default {
             let formData = new FormData()
             formData.append("thumbnail", payload.thumbnail)
             return new Promise( (res, rej) => {
-                musicApi.patch('upload-thumbnail/'+payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.patch('upload-thumbnail/'+payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    commit('setMusicThumbnailToUpload', result)
+                    commit('setVideoThumbnailToUpload', result)
                     res(result)
                 })
                 .catch(error => {
@@ -142,13 +141,13 @@ export default {
                 })              
             })
         },
-        uploadMusic: ({commit}, payload)=>{
+        uploadVideo: ({commit}, payload)=>{
             let formData = new FormData()
             formData.append("file", payload.file)
             return new Promise( (res, rej) => {
-                musicApi.patch('upload/'+ payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.patch('upload/'+ payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    commit('setMusicToUpload', result)
+                    commit('setVideoToUpload', result)
                     res(result)
                 })
                 .catch(error => {
@@ -156,12 +155,12 @@ export default {
                 })              
             })
         },
-        deleteMusic: ({commit}, slug) => {
+        deleteVideo: ({commit}, slug) => {
             return new Promise( (res, rej) => {
-                musicApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
                     console.log(result)
-                    commit('removeMusic', slug)
+                    commit('removeVideo', slug)
                     res(result)
                 })
                 .catch(error => {
@@ -169,5 +168,5 @@ export default {
                 })
             })
         }
-    },
+    }
 }

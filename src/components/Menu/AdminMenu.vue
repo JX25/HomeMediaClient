@@ -13,10 +13,10 @@
               <div class="navi-title">Filmy</div>
             </template>
             <b-dropdown-item href="#">
-              <router-link to="/admin/movie">Przeglądaj</router-link>
+              <router-link to="/admin/video">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/movie/add">Dodaj nowy</router-link>
+              <router-link to="/admin/video/add">Dodaj nowy</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Muzyka" right>
@@ -25,10 +25,10 @@
               <div class="navi-title">Muzyka</div>
             </template>
             <b-dropdown-item href="#">
-              <router-link to="/admin/music/">Przeglądaj</router-link>
+              <router-link to="/admin/audio/">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/music/add">Dodaj muzykę</router-link>
+              <router-link to="/admin/audio/add">Dodaj muzykę</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Zdjęcia" right>

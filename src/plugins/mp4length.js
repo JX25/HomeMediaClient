@@ -8,11 +8,11 @@ export function mp4length(file){
         const start = buffer.indexOf(new Buffer('mvhd')) + 17;
         const timeScale = buffer.readUInt32BE(start, 4);
         const duration = buffer.readUInt32BE(start + 4, 4);
-        const movieLength = Math.floor(duration/timeScale);
+        const videoLength = Math.floor(duration/timeScale);
         output =  {
             time_scale: timeScale,
             duration: duration,
-            movie_length: movieLength
+            video_length: videoLength
         }
 
       });

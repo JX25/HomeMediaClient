@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import User from './modules/user';
-import Movie from './modules/movie';
-import moviePlayer from './modules/moviePlayer';
-import Music from './modules/music';
+import Video from './modules/video';
+import videoPlayer from './modules/videoPlayer';
+import Audio from './modules/audio';
 import Photo from './modules/photo';
 
 import createPersistedState from 'vuex-persistedstate'
@@ -16,9 +16,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     user: User,
-    movie: Movie,
-    moviePlayer: moviePlayer,
-    music: Music,
+    video: Video,
+    videoPlayer: videoPlayer,
+    audio: Audio,
     photo: Photo,
   },
   plugins: [
