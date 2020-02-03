@@ -79,9 +79,17 @@ export default {
 </script>
 
 <style scoped>
+div{
+  overflow: hidden;
+}
+
+div::-webkit-scrollbar{
+  display: none;
+}
+
 div >>> .modal-dialog {
   margin: auto!important;
-  max-width: 90% !important;
+  max-width: 100% !important;
   background-color: rgba(211, 32, 52, 0.6);
 }
 div >>> header {
@@ -120,5 +128,6 @@ div >>> .thumbnail{
   width: 25%;
   height: 25%;
 }
+
 }
 </style>

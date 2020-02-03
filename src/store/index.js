@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import User from './modules/user';
-import Video from './modules/video';
-import videoPlayer from './modules/videoPlayer';
-import Audio from './modules/audio';
-import Photo from './modules/photo';
+import User from './modules/user'
+import Video from './modules/video'
+import videoPlayer from './modules/videoPlayer'
+import Audio from './modules/audio'
+import AudioPlayer from './modules/audioPlayer'
+import Photo from './modules/photo'
 
 import createPersistedState from 'vuex-persistedstate'
 import * as Cookies from 'js-cookie'
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
     video: Video,
     videoPlayer: videoPlayer,
     audio: Audio,
+    audioPlayer: AudioPlayer,
     photo: Photo,
   },
   plugins: [

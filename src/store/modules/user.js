@@ -5,8 +5,8 @@ import {userApi} from '../api';
 export default {
     namespaced: true,
     state:{
-       token: localStorage.getItem('token') || '',
-       type: (localStorage.getItem('type') === "true") || 0, 
+       token:  '',
+       type: 0, 
        users: [],
     },
     mutations:{

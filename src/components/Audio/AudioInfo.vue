@@ -23,19 +23,24 @@ export default {
 
 <style scoped>
 .infoBox{
-    background-color: rgba(117, 117, 245, 0.5);
+    background-color: rgba(117, 117, 245, 0.85);
     margin: auto;
     width: 60%;
     min-height: 40px;
-    position: relative;
+    position: fixed;
     border-radius: 10px;
     z-index: 10;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 5px;
+    border: solid 2px rgba(33, 66, 33, 0.8)
 }
 ul {
     list-style-type: none;
 }
 li {
     display: block;
+    right: 10px;
     font-size: 16pt;
 }
 i {

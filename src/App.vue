@@ -3,13 +3,15 @@
     <SiteMenu id="mn" />
     <SiteView id="vw" />
     <VideoPlayer class="video-player" />
+    <AudioPlayer class="audio-player" />
     <SiteFooter id="ftr" />
   </div>
 </template>
 
 
 <script>
-import VideoPlayer from "./components/Video/VideoPlayer";
+import VideoPlayer from "./components/Video/VideoPlayer"
+import AudioPlayer from "./components/Audio/AudioPlayer"
 import SiteView from "./components/SiteView.vue";
 import SiteMenu from "./components/Menu/SiteMenu.vue";
 import SiteFooter from "./components/Footer/SiteFooter.vue";
@@ -19,7 +21,8 @@ export default {
     SiteView,
     SiteMenu,
     SiteFooter,
-    VideoPlayer
+    VideoPlayer,
+    AudioPlayer,
   }
 };
 </script>
@@ -62,8 +65,16 @@ body {
   height: 480px;
   width: 640px;
   position: fixed !important;
-
   left: 15px;
+  z-index: 10;
+}
+
+.audio-player{
+  width: 100%;
+  height: 150px;
+  position: fixed!important;
+  left: 0px;
+  bottom: 0px;
   z-index: 10;
 }
 
@@ -71,5 +82,5 @@ body {
   .video-player{
     width: 50%;
   }
-  }
+}
 </style>

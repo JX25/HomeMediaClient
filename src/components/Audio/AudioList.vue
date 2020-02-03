@@ -2,7 +2,7 @@
   <div>
     <h2>Lista utworów</h2>
     <div>
-      <form class="form-inline">
+      <form class="form-inline col-md-12 table-responsive">
         <input
           type="text"
           class="form-control mb-2 mr-sm-2"
@@ -69,8 +69,8 @@
         <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterAudio()">Wyszukaj</button>
         <button class="btn btn-secondary form-control mb-2 mr-sm-2" @click="clear()">Resetuj</button>
       </form>
-      <div class="table-responsive">
-        <table class="table" v-if="listLoaded">
+      <div>
+        <table class="table table-hover table-striped col-md-12 content" v-if="listLoaded">
           <tr>
             <th scope="col col-sm-2">#</th>
             <th scope="col col-sm-2">Nazwa utworu</th>
@@ -85,9 +85,9 @@
           </tr>
 
           <tbody>
-            <tr v-for="audio in audioList" :key="audio.id">
+            <tr v-for="(audio, index) in audioList" :key="index">
               <td>
-                <img :src="image(audio.thumbnail)" width="35" height="35" alt="brak" />
+                <img :src="image(audio.thumbnail)" width="100" height="100" alt="brak" />
               </td>
               <td title="Tytuł utworu">{{audio.title.toUpperCase()}}</td>
               <td title="Album utworu">{{audio.album}}</td>
@@ -99,7 +99,7 @@
                 title="Czas (min)"
               >{{Math.round(audio.length/60,0)}}:{{(audio.length%60)>=10 ? audio.length%60 : "0"+audio.length%60}}</td>
               <td>
-                <button type="button" class="btn btn-success" @click="runPlayer(audio.slug)">Odtwórz</button>
+                <button type="button" class="btn btn-success" @click="runPlayer(audio.slug, audio.thumbnail, index)">Odtwórz</button>
               </td>
               <td>
                 <button
@@ -167,12 +167,17 @@ export default {
   },
   methods: {
     ...mapActions("audio", ["getAllAudio", "audioToEdit", "audioDetail"]),
-    //...mapActions("audioPlayer", ["showAudioPlayer", "hideVideoPlayer"]),
+    ...mapActions("audioPlayer", ["showAudioPlayer", 
+                                  "hideAudioPlayer",
+                                  "changeSource",
+                                  "changeIndex",
+                                  "changeCoverSource"
+                                  ]),
     filterAudio: function() {
       let filteredAudio = filterAudioList(this.audios, this.params);
       this.audioList = filteredAudio;
     },
-    clear: function(){
+    clear: function() {
       this.params = {
         title: "",
         keyword: "",
@@ -183,8 +188,8 @@ export default {
         lengthMax: "",
         yearMin: "",
         yearMax: ""
-      }
-      this.filterAudio()
+      };
+      this.filterAudio();
     },
     image: function(thumbnailPath) {
       console.log(thumbnailPath, "1");
@@ -219,17 +224,21 @@ export default {
       this.audioToEdit(audio);
       this.$router.push("/admin/audio/edit/" + audio.slug);
     },
-    runPlayer: function(slug) {
+    runPlayer: function(slug, image, index) {
       let src = this.srcStream(slug);
-      if (this.getShow == true) {
+      if (this.audioPlayer.show == true) {
         this.hideAudioPlayer();
       } else {
-        this.showAudioPlayer(src);
+        this.changeCoverSource(this.image(image))
+        this.changeSource(src)
+        this.changeIndex(index)
+        this.showAudioPlayer()
       }
     }
   },
   computed: {
-    ...mapGetters("audio", ["audios", "infoVisibility", "audio"])
+    ...mapGetters("audio", ["audios", "infoVisibility", "audio"]),
+    ...mapGetters("audioPlayer",["audioPlayer"]),
     //...mapGetters("audioPlayer", ["getSrc", "getShow"])
   },
   created() {
@@ -243,6 +252,12 @@ export default {
 </script>
 
 <style scoped>
+form {
+  padding-top: 10px;
+  left: 9%;
+  width: 80%;
+}
+
 #addAudio {
   position: fixed;
   bottom: 15px;
@@ -254,6 +269,11 @@ export default {
 #addAudio:hover {
   color: rgba(37, 228, 63, 0.979);
   transition: 0.5s ease-out;
+}
+
+.table td{
+  vertical-align: middle;
+  padding: 5px;
 }
 
 img:hover {

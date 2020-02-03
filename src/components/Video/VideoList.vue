@@ -2,7 +2,7 @@
   <div>
     <h2>Lista filmów</h2>
     <div>
-      <form class="form-inline">
+      <form class="form-inline col-md-12 table-responsive">
         <input
           type="text"
           class="form-control mb-2 mr-sm-2"
@@ -195,6 +195,15 @@ export default {
 </script>
 
 <style scoped>
+form{
+  width: 80%;
+  left: 9%;
+}
+
+.table td{
+  vertical-align: middle;
+}
+
 #addVideo {
   position: fixed;
   bottom: 15px;

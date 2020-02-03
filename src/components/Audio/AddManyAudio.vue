@@ -123,9 +123,11 @@ export default {
     ...mapActions("audio", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSendAlbum: function() {
       console.log("ACS", this.audioFiles);
-      for (let i=0; i < this.audioFiles.length; ++i) {
-        this.validateAndSend(i);
-      }
+      for (let i = 0; i < this.audioFiles.length; ++i) {
+          this.validateAndSend(i);
+        }
+      this.showInfo();
+      this.$router.push("/admin/audio");
     },
     handleAudioFiles: function() {
       this.audioFiles = this.$refs.audios.files;
@@ -149,7 +151,7 @@ export default {
     },
     validateAndSend: function(i) {
       //validation TODO
-      let tags = []
+      let tags = [];
       tags = this.tags[i].split(",").map(x => x.trim());
       let lengthInSeconds = this.length[i].split(" ");
       for (let index in lengthInSeconds) {
@@ -175,7 +177,7 @@ export default {
         .dispatch("audio/uploadMetaData", data)
         .then(result => {
           console.log("1", result);
-          this.setInfo("Dane pliku: " + result.msg);
+          this.setInfo("Dane pliku audio#" + i + ": " + result.msg);
           const slugThumbnail = result.thmb;
           const slug = result.slg;
           this.$store
@@ -185,14 +187,18 @@ export default {
             })
             .then(result2 => {
               console.log("2", result2);
-              this.setInfo("Okładka utworu: " + result2.data.response);
+              this.setInfo(
+                "Okładka pliku audio#" + i + ": " + result2.data.response
+              );
               this.$store
                 .dispatch("audio/uploadAudio", {
                   slug: slug,
-                  file: this.audioFile
+                  file: this.audioFiles[i]
                 })
                 .then(finalResult => {
-                  this.setInfo("Plik audio: " + finalResult.data.response);
+                  this.setInfo(
+                    "Plik audio#" + i + ": " + finalResult.data.response
+                  );
                   this.isSuccess = true;
                   this.success = "final";
                   console.log("3", finalResult);
@@ -200,8 +206,6 @@ export default {
                 .finally(res => {
                   this.isSuccess = false;
                   console.log("4", res);
-                  this.showInfo();
-                  this.$router.push("/admin/audio");
                 });
             });
         })

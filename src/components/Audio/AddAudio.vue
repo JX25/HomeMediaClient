@@ -94,8 +94,8 @@ export default {
                 .finally(res => {
                   this.isSuccess = false;
                   console.log("4", res);
-                  this.showInfo();
-                  this.$router.push("/admin/audio");
+                  this.showInfo()
+                  this.$router.push("/admin/audio")
                 });
             });
         })

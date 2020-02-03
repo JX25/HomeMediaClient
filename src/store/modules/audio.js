@@ -47,6 +47,9 @@ export default {
         },
         clearInfo(state){
             state.info = []
+        },
+        updateAudioList(state, audio, index){
+            state.audios[index] = audio
         }
     },
     getters:{
@@ -58,7 +61,7 @@ export default {
         uploadThumbnail: state => {return state.uploadAudioThumbnail},
         uploadMetaData: state => {return state.uploadMetaData},
         infoVisibility: state => {return state.showInfo},
-        audioInfo: state => {return state.audioInfo}
+        audioInfo: state => {return state.info}
     },
     actions:{
         hideInfo: ({commit}) =>{
@@ -72,6 +75,9 @@ export default {
         },
         clearInfo: ({commit}) => {
             commit("clearInfo")
+        },
+        updateAudioList: ({commit}, audio, index) =>{
+            commit("updateAudioList", audio, index)
         },
         audioDetail: ({commit}, audio) => {
             commit("setAudio", audio)

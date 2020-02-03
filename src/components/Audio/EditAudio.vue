@@ -107,7 +107,8 @@ export default {
   data() {
     return {
       slug: this.$route.params.slug,
-      result: []
+      result: [],
+      indexOfAudio: 0,
     };
   },
   methods: {
@@ -116,7 +117,8 @@ export default {
       "clearInfo",
       "setInfo",
       "audioBySlug",
-      "audioToEdit"
+      "audioToEdit",
+      "updateAudioList",
     ]),
     validateAndUpdate: function() {
       //console.log(this.$refs.video.files[0] === undefined)
@@ -159,24 +161,34 @@ export default {
       }
     },
     updateAudio: function(meta, files) {
-      console.log(files)
+      console.log(files);
       meta.slug = slug(meta.title + "_" + meta.year + "_" + meta.author);
       meta.OLDslug = this.slug;
       this.clearInfo();
-      this.$store.dispatch("audio/updateMetaData", meta).then(result => {
-        this.result.push(result[0]);
-        this.setInfo("Dane pliku audio: " + result[0]);
-      });
-      if (files.thumbnail != undefined) {
-        this.$store.dispatch("audio/uploadThumbnail", files).then(result => {
-          this.setInfo("Miniatura: " + result.data.response);
+      this.$store
+        .dispatch("audio/updateMetaData", meta)
+        .then(result => {
+          this.result.push(result[0]);
+          this.setInfo("Dane pliku audio: " + result[0]);
+          
+          if (files.thumbnail != undefined) {
+            this.$store
+              .dispatch("audio/uploadThumbnail", files)
+              .then(result => {
+                this.setInfo("Miniatura: " + result.data.response);
+              });
+          }
+          if (files.file != undefined) {
+            this.$store.dispatch("audio/uploadAudio", files).then(result => {
+              this.setInfo("Plik wideo: " + result.data.response);
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.setInfo("Błąd: " + error);
         });
-      }
-      if (files.file != undefined) {
-        this.$store.dispatch("audio/uploadAudio", files).then(result => {
-          this.setInfo("Plik wideo: " + result.data.response);
-        });
-      }
+
       this.showInfo();
       this.$router.push("/admin/audio");
     },
@@ -188,6 +200,9 @@ export default {
     }
   },
   created() {
+    this.indexOfAudio = this.audios.findIndex(x=>{
+      return (x._id == this.editAudio._id)
+    })
     this.setAudio().then(() => {
       if (this.audioToEdit === undefined) {
         this.audioBySlug(this.slug);
@@ -197,7 +212,7 @@ export default {
     });
   },
   computed: {
-    ...mapGetters("audio", ["editAudio"])
+    ...mapGetters("audio", ["editAudio", "audios"])
   }
 };
 </script>

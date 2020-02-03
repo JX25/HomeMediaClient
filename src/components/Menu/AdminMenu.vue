@@ -1,7 +1,7 @@
 <template>
   <div id="menu">
     <b-navbar toggleable="lg" type="dark" variant="danger">
-      <b-navbar-brand href="#">HomeMedia-Admin</b-navbar-brand>
+      <b-navbar-brand href="#">Home Media Center - Admin Panel</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -9,7 +9,7 @@
         <b-navbar-nav class="auto">
           <b-nav-item-dropdown text="Filmy" right>
             <template slot="button-content">
-              <i class="fas fa-server fa-2x"></i>
+              <i class="fas fa-film fa-2x"></i>
               <div class="navi-title">Filmy</div>
             </template>
             <b-dropdown-item href="#">
@@ -21,7 +21,7 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Muzyka" right>
             <template slot="button-content">
-              <i class="fas fa-server fa-2x"></i>
+              <i class="fas fa-music fa-2x"></i>
               <div class="navi-title">Muzyka</div>
             </template>
             <b-dropdown-item href="#">
@@ -33,7 +33,7 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="Zdjęcia" right>
             <template slot="button-content">
-              <i class="fas fa-server fa-2x"></i>
+              <i class="fas fa-image fa-2x"></i>
               <div class="navi-title">Zdjęcia</div>
             </template>
             <b-dropdown-item href="#">
