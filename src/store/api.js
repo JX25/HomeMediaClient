@@ -3,8 +3,8 @@ import Vue from 'vue'
 import VueLocalStorage from 'vue-localstorage'
 Vue.use(VueLocalStorage)
 
-//export const address = 'http://192.168.0.81:8000'
-export const address = 'http://localhost:8000'
+export const address = 'http://192.168.0.81:8000'
+//export const address = 'https://localhost:8000'
 
 
 export const userApi = axios.create({

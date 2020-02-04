@@ -1,8 +1,7 @@
+//const fs = require('fs')
+
 module.exports = {
   "transpileDependencies": [
   ],
-  devServer: {
-    https: true
-  },
 
 }

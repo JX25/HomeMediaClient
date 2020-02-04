@@ -99,13 +99,17 @@
                 title="Czas (min)"
               >{{Math.round(audio.length/60,0)}}:{{(audio.length%60)>=10 ? audio.length%60 : "0"+audio.length%60}}</td>
               <td>
-                <button type="button" class="btn btn-success" @click="runPlayer(audio.slug, audio.thumbnail, index)">Odtwórz</button>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  @click="runPlayer(audio.slug, audio.thumbnail, index)"
+                >Odtwórz</button>
               </td>
               <td>
                 <button
                   type="button"
                   class="btn btn-warning"
-                  @click="addPlaylist(audio)"
+                  @click="toPlaylist(audio, index)"
                 >+ playlista</button>
               </td>
               <td>
@@ -167,12 +171,16 @@ export default {
   },
   methods: {
     ...mapActions("audio", ["getAllAudio", "audioToEdit", "audioDetail"]),
-    ...mapActions("audioPlayer", ["showAudioPlayer", 
-                                  "hideAudioPlayer",
-                                  "changeSource",
-                                  "changeIndex",
-                                  "changeCoverSource"
-                                  ]),
+    ...mapActions("audioPlayer", [
+      "showAudioPlayer",
+      "hideAudioPlayer",
+      "changeSource",
+      "changeIndex",
+      "changeCoverSource",
+      "startAudio",
+      "addToPlaylist",
+      "changePlaylistIndex",
+    ]),
     filterAudio: function() {
       let filteredAudio = filterAudioList(this.audios, this.params);
       this.audioList = filteredAudio;
@@ -226,19 +234,29 @@ export default {
     },
     runPlayer: function(slug, image, index) {
       let src = this.srcStream(slug);
-      if (this.audioPlayer.show == true) {
-        this.hideAudioPlayer();
-      } else {
-        this.changeCoverSource(this.image(image))
-        this.changeSource(src)
-        this.changeIndex(index)
-        this.showAudioPlayer()
-      }
+
+      this.changeCoverSource(this.image(image));
+      this.changeSource(src);
+      this.changeIndex(index);
+      this.showAudioPlayer();
+      this.startAudio();
+    },
+    toPlaylist: function(audio, index){
+        let data = {
+          src: this.srcStream(audio.slug),
+          coverSrc: this.image(audio.thumbnail),
+          id: audio._id
+        }
+        if(this.getPlaylist.length == 0) {
+          this.runPlayer(audio.slug, audio.thumbnail, index)
+          this.changePlaylistIndex(0)
+        }
+        this.addToPlaylist(data)
     }
   },
   computed: {
     ...mapGetters("audio", ["audios", "infoVisibility", "audio"]),
-    ...mapGetters("audioPlayer",["audioPlayer"]),
+    ...mapGetters("audioPlayer", ["audioPlayer", "getPlaylist"])
     //...mapGetters("audioPlayer", ["getSrc", "getShow"])
   },
   created() {
@@ -271,7 +289,7 @@ form {
   transition: 0.5s ease-out;
 }
 
-.table td{
+.table td {
   vertical-align: middle;
   padding: 5px;
 }

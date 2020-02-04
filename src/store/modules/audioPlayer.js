@@ -69,6 +69,14 @@ export default {
         },
         removeFromPlaylist(state, index){
             delete state.playlist[index]
+        },
+        shufflePlaylist(state){
+            for(let i = (state.playlist.length; i > 0; i--){
+                const j = Math.floor(Math.random() * i)
+                const temp = array[i]
+                array[i] = array[j]
+                array[j] = temp
+              }
         }
     },
     getters:{
@@ -120,21 +128,24 @@ export default {
             commit('setCurrentTime', 0),
             commit('setPlay', false)
         },
+        changeLoop: ({commit}, value) =>{
+            console.log("X5D")
+            commit('setLoop', value)
+        },
         changeVolume: ({commit}, volume) =>{
             commit('setVolume', volume)
         },
         changeIndex: ({commit}, index) =>{
             commit('setAudioIndex', index)
         },
+        changePlaylistIndex: ({commit}, index) =>{
+            commit('setCurrentPlaylistIndex', index)
+        },
         updateProgress: ({commit}, progress) =>{
             commit('setProgress', progress)
         },
-        addToPlaylist: ({commit}, audio) =>{
-            let newTrack = {
-                'src': audio.src,
-                '_id': audio._id
-            }
-            commit('addToPlaylist', newTrack)
+        addToPlaylist: ({commit}, data) =>{
+            commit('addToPlaylist', data)
         },
         removeFromPlaylist: ({commit}, index) =>{
            commit('removeFromPlaylist', index) 
@@ -142,14 +153,14 @@ export default {
         removePlaylist: ({commit},) =>{
             commit('setPlaylist', [])
         },
-        shufflePlaylist: ({commit}) =>{
+        shufflePlaylist: ({commit, state}) =>{
             commit('setRandom', true)
-            commit('setPlaylistInOrder', this.state.playlist)
+            commit('setPlaylistInOrder', state.playlist)
             commit('shufflePlaylist')
         },
-        unshufflePlaylist:({commit}) => {
+        unshufflePlaylist:({commit, state}) => {
             commit('setRandom', false)
-            commit('setPlaylist', this.state.playlistInOrder)
+            commit('setPlaylist', state.playlistInOrder)
         }
     }
 }

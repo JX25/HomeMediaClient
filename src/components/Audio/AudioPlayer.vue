@@ -13,19 +13,19 @@
     <img :src="audioPlayer.coverSrc" class="cover" />
     <div class="audio-controls">
       <div class="top-control">
-        <b>Teraz odtwarzane:</b>
-        {{audios[getAudioIndex].title}} - from {{audios[getAudioIndex].album}} by {{audios[getAudioIndex].author}} ({{audios[getAudioIndex].year}})
+        <b>{{audios[getAudioIndex].title}}</b>
+        - {{audios[getAudioIndex].album}} by {{audios[getAudioIndex].author}} ({{audios[getAudioIndex].year}})
       </div>
       <div class="mid-control">
-        <i class="fas fa-play-circle fa-4x" v-if="!audioPlayer.play" @click="play()"></i>
-        <i class="fas fa-pause-circle fa-4x" @click="play" v-else></i>
+        <i class="fas fa-play-circle fa-2x" v-if="!audioPlayer.play" @click="play()"></i>
+        <i class="fas fa-pause-circle fa-2x" @click="play()" v-else></i>
         <span class="volume-control" @mouseenter="showVolume()" @click="showVolume()">
-          <i class="fas fa-volume-up fa-4x" v-if="audioPlayer.volume > 50"></i>
+          <i class="fas fa-volume-up fa-2x" v-if="audioPlayer.volume > 50"></i>
           <i
-            class="fas fa-volume-down fa-4x"
+            class="fas fa-volume-down fa-2x"
             v-else-if="audioPlayer.volume <= 50 && audioPlayer.volume > 50"
           ></i>
-          <i class="fas fa-volume-mute fa-4x" v-else></i>
+          <i class="fas fa-volume-mute fa-2x" v-else></i>
           <input
             type="range"
             class="volume-slider"
@@ -38,41 +38,44 @@
             @input="changeVolume(volume)"
           />
         </span>
-        <i class="fas fa-chevron-circle-left fa-3x" @click="swipe(-1)"></i>
-        <i class="fas fa-chevron-circle-right fa-3x" @click="swipe(1)"></i>
-        <i class="fas fa-stop-circle fa-3x" @click="stopAudio"></i>
+        <i class="fas fa-chevron-circle-left fa-2x" @click="swipe(-1)"></i>
+        <i class="fas fa-chevron-circle-right fa-2x" @click="swipe(1)"></i>
+        <i class="fas fa-stop-circle fa-2x" @click="stop()"></i>
 
         <span class="toRight">
           <i
-            class="fas fa-random fa-3x"
+            class="fas fa-random fa-2x"
             :class="audioPlayer.random ? 'clicked':'notclicked'"
             @click="shuffle"
           ></i>
-          <i class="fas fa-chevron-down fa-3x"></i>
-          <i class="fas fa-window-close fa-3x" @click="close()"></i>
+          <i class="fas fa-infinity fa-2x" 
+          :class="audioPlayer.loop ? 'clicked':'notclicked'"
+          @click="loop()"></i>
+          <i class="fas fa-window-close fa-2x" @click="close()"></i>
         </span>
       </div>
       <div class="bot-control">
         <span class="toLeft">
           {{current}}/{{duration}}
-          <div class="progress" ref="audioTime" @click="changeTime($event)">
-            <div class="currentProgress" :style="{width: getProgress()+ '%'}"></div>
+          <div class="progress" ref="audioTime" @click="changeAudioTime($event)">
+            <div class="currentProgress" :style="{width: getProgress + '%'}"></div>
           </div>
         </span>
         <span class="toRight">
-          <button class="btn btn-info">Wczytaj...</button>
-          <button class="btn btn-success">Zapisz...</button>
-          <button class="btn btn-primary">Modyfikuj...</button>
+          <button class="button">wczytaj</button>
+          <button class="button">zapisz</button>
+          <button class="button">modyfikuj</button>
         </span>
       </div>
     </div>
     <audio
       ref="audio"
-      @timeupdate="updateProgress($event.target.currentTime)"
-      @ended="change(1)"
+      @timeupdate="progress($event.target.currentTime)"
+      @ended="swipe(1)"
       autoplay
+      :src="audioPlayer.src"
     >
-      <source :src="audioPlayer.src" type="audio/mpeg" />
+      <source type="audio/mpeg" />
     </audio>
   </div>
 </template>
@@ -83,24 +86,126 @@ export default {
   name: "AudioPlayer",
   data() {
     return {
-      current: 0,
-      duration: 0
+      current: "0:00",
+      duration: "0:00"
     };
   },
   methods: {
-    ...mapActions("audioPlayer", []),
+    ...mapActions("audioPlayer", [
+      "startAudio",
+      "pauseAudio",
+      "hideAudioPlayer",
+      "updateProgress",
+      "changePlaylistIndex",
+      "changeIndex",
+      "changeSource",
+      "changeCoverSource",
+      "stopAudio",
+      "changeLoop",
+      "unshufflePlaylist",
+      "shufflePlaylist"
+    ]),
     ...mapActions("audio", []),
-    play: function() {},
-    volume: function() {},
-    swipe: function() {},
+    play: function() {
+      if (!this.audioPlayer.play) {
+        this.startAudio();
+        this.$refs.audio.play();
+      } else {
+        this.pauseAudio();
+        this.$refs.audio.pause();
+      }
+    },
+    loop: function(){
+                  console.log("X56D", this.audioPlayer.loop)
+      this.changeLoop(!this.audioPlayer.loop)
+    },
+    volume: function(value) {
+      console.log(value);
+    },
+    swipe: function(value) {
+      if(this.audioPlayer.playlist.length == 0) return
+      let newIndex = this.audioPlayer.currentPlaylistIndex + value;
+      if (this.audioPlayer.loop) {
+        if (newIndex == -1) {
+          newIndex = this.audioPlayer.playlist.length - 1;
+        } else if (newIndex >= this.audioPlayer.playlist.length) {
+          newIndex = 0;
+        }
+      } else {
+        if (newIndex == -1) {
+          newIndex = 0;
+        } else if (newIndex >= this.audioPlayer.playlist.length) {
+          newIndex = this.audioPlayer.playlist.length - 1;
+        }
+      }
+      let audioIndex = this.audios.map(
+        x => x._id == this.audioPlayer.playlist[newIndex].id
+      ).indexOf(true);
+      this.changePlaylistIndex(newIndex);
+      this.changeIndex(audioIndex);
+      console.log(newIndex, audioIndex);
+      this.changeSource(this.audioPlayer.playlist[newIndex].src);
+      this.changeCoverSource(this.audioPlayer.playlist[newIndex].coverSrc)
+      this.$refs.audio.currentTime = 0
+      this.startAudio()
+    },  
     showVolume: function() {},
     changeTime: function() {},
-    stopAudio: function() {},
-    getProgress: function() {},
-    shuffle: function() {}
+    stop: function() {
+      this.$refs.audio.currentTime = 0
+      this.$refs.audio.pause()
+      this.stopAudio()
+    },
+    progress: function(currTime) {
+      try {
+        let full = this.$refs.audio.duration || 0;
+        let currFull = this.$refs.audio.currentTime || 0;
+        this.current =
+          Math.floor(currFull / 60, 0) +
+          ":" +
+          (currFull % 60 >= 10
+            ? Math.floor(currFull % 60, 0)
+            : "0" + Math.floor(currFull % 60, 0));
+        this.duration =
+          Math.floor(full / 60, 0) +
+          ":" +
+          (full % 60 >= 10
+            ? Math.floor(full % 60, 0)
+            : "0" + Math.floor(full % 60, 0));
+        this.updateProgress((currTime * 100) / this.$refs.audio.duration);
+        
+      } catch (error) {
+        console.log(error);
+        return 0;
+      }
+    },
+    changeAudioTime: function(event) {
+      let timeline = this.$refs.audioTime.clientWidth;
+      let timelinePart = event.layerX;
+      let duration = this.$refs.audio.duration;
+      let currentTime = (timelinePart / timeline) * duration;
+      this.$refs.audio.currentTime = currentTime;
+    },
+    shuffle: function() {
+      if(this.audioPlayer.random){
+        this.unshufflePlaylist()
+      }else{
+        this.shufflePlaylist()
+      }
+    },
+    close: function() {
+      this.$refs.audio.pause();
+      this.$refs.audio.currentTime = 0;
+      this.hideAudioPlayer();
+      this.stopAudio();
+    }
   },
   computed: {
-    ...mapGetters("audioPlayer", ["audioPlayer", "getAudioIndex"]),
+    ...mapGetters("audioPlayer", [
+      "audioPlayer",
+      "getAudioIndex",
+      "getProgress"
+    ]),
     ...mapGetters("audio", ["audios"])
   },
   created() {}
@@ -109,12 +214,13 @@ export default {
 
 <style scoped>
 .audioPlayer {
-  height: 150px;
+  height: 100px;
   background-color: rgba(0, 0, 0, 0.8);
 }
 .cover {
-  width: 150px;
-  height: 150px;
+  float: left;
+  width: 100px;
+  height: 100px;
   position: fixed;
   left: 0px;
   z-index: 1000;
@@ -124,70 +230,84 @@ export default {
   transition: 0.2s ease-in;
 }
 .audio-controls {
-  left: 150px;
+  width: 100%;
+  left: 100px;
   bottom: 0px;
   position: fixed;
-  min-width: 160px;
-  width: 95%;
-  min-height: 150px;
+  height: 100px;
   z-index: 11;
 }
 .top-control {
-  position: relative;
-  color: white;
-  text-align: left;
-  padding-left: 15px;
-  top: 0px;
-  background-color: rgba(0, 102, 255, 0.7);
-  height: 25px;
-  z-index: 10;
-}
-.top-control i {
-}
-.mid-control i {
   padding-left: 25px;
-  padding-top: 5px;
-  color: rgba(30, 30, 155, 0.2);
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 .mid-control {
-  position: relative;
-  padding-left: 15px;
-  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
   text-align: left;
-  background-color: rgba(0, 102, 255, 1);
-  height: 75px;
-}
-.bot-control {
+  padding-left: 25px;
   color: white;
-  background-color: rgba(0, 102, 255, 1);
-  bottom: 0px;
-  padding-left: 15px;
-  position: relative;
   height: 50px;
 }
+
+.mid-control i {
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.mid-control .toRight {
+  position: relative;
+  float: right;
+  top: -10px;
+  right: 5.5%;
+}
+
+.bot-control {
+  height: 25px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.bot-control .toRight {
+  float: right;
+  position: relative;
+  right: 110px;
+  bottom: 5px;
+}
+
+.button {
+  font-size: 10pt;
+  color: white;
+  width: 75px;
+  background-color: rgba(59, 61, 68, 0.9);
+  border-color: rgba(0, 0, 0, 1);
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
 .notclicked {
   opacity: 0.1;
 }
 .clicked {
   opacity: 1 !important;
-  color: #00000055 !important;
+  color: rgba(255, 255, 255, 1) !important;
 }
 .toRight {
-  padding-top: 10px;
   position: fixed;
   right: 15px;
   padding-top: 5px;
   bottom: 10px;
 }
-.mid-control .toRight{
-  bottom: 60px;
+.mid-control .toRight {
+  bottom: 75px;
 }
 .toLeft {
-  position: fixed;
-  left: 0px;
-  left: 155px;
-  min-width: 50%;
-  max-width: 50%;
+  position: relative;
+  left: 10px;
+  float: left;
+  width: 70%;
+  bottom: 5px;
 }
 .progress {
   width: 100%;

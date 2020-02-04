@@ -71,11 +71,12 @@ body {
 
 .audio-player{
   width: 100%;
-  height: 150px;
+  height: 100px;
+  background-color: rgba(255,255,255,1);
   position: fixed!important;
   left: 0px;
   bottom: 0px;
-  z-index: 10;
+  z-index: 50;
 }
 
 @media (max-width: 750px){

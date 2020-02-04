@@ -31,7 +31,7 @@ export default {
     actions:{
         login: ({commit}, user) => {
             return new Promise( (res, rej) => {
-                userApi.post('login', user, {headers: {'Content-Type':'application/json'}})
+                userApi.post('login', user, {headers: {'Content-Type':'application/json'}, useCredentials: true})
                     .then(result => {
                         const token = result.data.response.token
                         const type = result.data.response.type
