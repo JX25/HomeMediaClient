@@ -1,3 +1,5 @@
+import shuffle from '../../plugins/shuffle'
+
 export default {
     namespaced: true,
     state:{
@@ -61,22 +63,22 @@ export default {
         setPlaylist(state, playlist){
             state.playlist = playlist
         },
-        setPlaylistInOrder(state, playlist){
-            state.playlistInOrder = playlist
+        setPlaylistInOrder(state){
+            state.playlistInOrder = [...state.playlist]
         },
         addToPlaylist(state, audio){
+            if(state.random) state.playlistInOrder.push(audio)
             state.playlist.push(audio)
         },
         removeFromPlaylist(state, index){
             delete state.playlist[index]
         },
-        shufflePlaylist(state){
-            for(let i = (state.playlist.length; i > 0; i--){
-                const j = Math.floor(Math.random() * i)
-                const temp = array[i]
-                array[i] = array[j]
-                array[j] = temp
-              }
+        randomizePlaylist(state){
+            state.playlist = shuffle(state.playlist)
+        },
+        unRandomizePlaylist(state){
+            state.playlist = [...state.playlistInOrder]
+            state.playlistInOrder = []
         }
     },
     getters:{
@@ -86,7 +88,7 @@ export default {
         getShow: state =>{return state.show},
         getMinimized: state =>{return state.minimized},
         getPlay: state =>{return state.play},
-        getVolume: state =>{return state.volume},
+        volume: state =>{return state.volume},
         getDuration: state =>{return state.duration},
         getCurrentTime: state =>{return state.currentTime},
         getProgress: state =>{return state.progress},
@@ -108,8 +110,9 @@ export default {
         hideAudioPlayer: ({commit}) =>{
             commit('setShow', false)
         },
-        showVolume: ({commit}) =>{
-            let show = !this.state.showVolume
+        showVolume: ({commit,state}) =>{
+            console.log(show)
+            let show = !state.showVolume
             commit('setShowVolume', show)
         },
         minimizeAudioPlayer: ({commit},) =>{
@@ -153,14 +156,16 @@ export default {
         removePlaylist: ({commit},) =>{
             commit('setPlaylist', [])
         },
-        shufflePlaylist: ({commit, state}) =>{
+        shufflePlaylist: ({commit}) =>{
             commit('setRandom', true)
-            commit('setPlaylistInOrder', state.playlist)
-            commit('shufflePlaylist')
+            commit('randomizePlaylist')
         },
-        unshufflePlaylist:({commit, state}) => {
+        copyPlaylist: ({commit}) => {
+            commit('setPlaylistInOrder')
+        },
+        unshufflePlaylist:({commit}) => {
             commit('setRandom', false)
-            commit('setPlaylist', state.playlistInOrder)
+            commit('unRandomizePlaylist')
         }
     }
 }

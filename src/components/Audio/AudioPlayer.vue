@@ -3,8 +3,8 @@
     ref="audioContainer"
     v-if="audioPlayer.show"
     @keyup.space="play(!audioPlayer.play)"
-    @keyup.up="volume(5)"
-    @keyup.down="volume(-5)"
+    @keyup.up="updateVolume(volume + 5)"
+    @keyup.down="updateVolume(volume - 5)"
     @keyup.left="swipe(-1)"
     @keyup.right="swipe(1)"
     tabindex="0"
@@ -19,38 +19,38 @@
       <div class="mid-control">
         <i class="fas fa-play-circle fa-2x" v-if="!audioPlayer.play" @click="play()"></i>
         <i class="fas fa-pause-circle fa-2x" @click="play()" v-else></i>
-        <span class="volume-control" @mouseenter="showVolume()" @click="showVolume()">
+        <span class="volume-control" @mouseenter="audioPlayer.showVolume = true" @click="audioPlayer.showVolume = true">
           <i class="fas fa-volume-up fa-2x" v-if="audioPlayer.volume > 50"></i>
-          <i
-            class="fas fa-volume-down fa-2x"
-            v-else-if="audioPlayer.volume <= 50 && audioPlayer.volume > 50"
-          ></i>
+          <i class="fas fa-volume-down fa-2x" v-else-if="audioPlayer.volume <= 50 && audioPlayer.volume > 1"></i>
           <i class="fas fa-volume-mute fa-2x" v-else></i>
+          <span v-if="audioPlayer.showVolume" style="margin-left: 15px;"></span>
           <input
             type="range"
             class="volume-slider"
             min="0"
             max="100"
-            v-if="showVolume()"
+            v-if="audioPlayer.showVolume"
             value="100"
-            @mouseleave="hideVolume()"
-            v-model="volume"
-            @input="changeVolume(volume)"
+            @mouseleave="audioPlayer.showVolume = false"
+            v-model="audioPlayer.volume"
+            @input="updateVolume(volume)"
           />
         </span>
         <i class="fas fa-chevron-circle-left fa-2x" @click="swipe(-1)"></i>
         <i class="fas fa-chevron-circle-right fa-2x" @click="swipe(1)"></i>
         <i class="fas fa-stop-circle fa-2x" @click="stop()"></i>
-
+        
         <span class="toRight">
           <i
             class="fas fa-random fa-2x"
             :class="audioPlayer.random ? 'clicked':'notclicked'"
-            @click="shuffle"
+            @click="shuffle()"
           ></i>
-          <i class="fas fa-infinity fa-2x" 
-          :class="audioPlayer.loop ? 'clicked':'notclicked'"
-          @click="loop()"></i>
+          <i
+            class="fas fa-infinity fa-2x"
+            :class="audioPlayer.loop ? 'clicked':'notclicked'"
+            @click="loop()"
+          ></i>
           <i class="fas fa-window-close fa-2x" @click="close()"></i>
         </span>
       </div>
@@ -103,7 +103,10 @@ export default {
       "stopAudio",
       "changeLoop",
       "unshufflePlaylist",
-      "shufflePlaylist"
+      "shufflePlaylist",
+      "copyPlaylist",
+      "changeVolume",
+      "showVolume"
     ]),
     ...mapActions("audio", []),
     play: function() {
@@ -115,15 +118,18 @@ export default {
         this.$refs.audio.pause();
       }
     },
-    loop: function(){
-                  console.log("X56D", this.audioPlayer.loop)
-      this.changeLoop(!this.audioPlayer.loop)
+    loop: function() {
+      console.log("X56D", this.audioPlayer.loop);
+      this.changeLoop(!this.audioPlayer.loop);
     },
-    volume: function(value) {
-      console.log(value);
+    updateVolume: function(volume) {
+      let newVolume = volume > 100 ? 100 : volume < 0 ? 0 : volume
+      this.changeVolume(newVolume);
+      this.$refs.audio.volume = newVolume/100.0;
     },
+    showVolume: function() {},
     swipe: function(value) {
-      if(this.audioPlayer.playlist.length == 0) return
+      if (this.audioPlayer.playlist.length == 0) return;
       let newIndex = this.audioPlayer.currentPlaylistIndex + value;
       if (this.audioPlayer.loop) {
         if (newIndex == -1) {
@@ -138,23 +144,20 @@ export default {
           newIndex = this.audioPlayer.playlist.length - 1;
         }
       }
-      let audioIndex = this.audios.map(
-        x => x._id == this.audioPlayer.playlist[newIndex].id
-      ).indexOf(true);
+      let audioIndex = this.audios
+        .map(x => x._id == this.audioPlayer.playlist[newIndex].id)
+        .indexOf(true);
       this.changePlaylistIndex(newIndex);
       this.changeIndex(audioIndex);
-      console.log(newIndex, audioIndex);
       this.changeSource(this.audioPlayer.playlist[newIndex].src);
-      this.changeCoverSource(this.audioPlayer.playlist[newIndex].coverSrc)
-      this.$refs.audio.currentTime = 0
-      this.startAudio()
-    },  
-    showVolume: function() {},
-    changeTime: function() {},
+      this.changeCoverSource(this.audioPlayer.playlist[newIndex].coverSrc);
+      this.$refs.audio.currentTime = 0;
+      this.startAudio();
+    },
     stop: function() {
-      this.$refs.audio.currentTime = 0
-      this.$refs.audio.pause()
-      this.stopAudio()
+      this.$refs.audio.currentTime = 0;
+      this.$refs.audio.pause();
+      this.stopAudio();
     },
     progress: function(currTime) {
       try {
@@ -173,7 +176,6 @@ export default {
             ? Math.floor(full % 60, 0)
             : "0" + Math.floor(full % 60, 0));
         this.updateProgress((currTime * 100) / this.$refs.audio.duration);
-        
       } catch (error) {
         console.log(error);
         return 0;
@@ -187,10 +189,12 @@ export default {
       this.$refs.audio.currentTime = currentTime;
     },
     shuffle: function() {
-      if(this.audioPlayer.random){
-        this.unshufflePlaylist()
-      }else{
-        this.shufflePlaylist()
+      console.log(this.audioPlayer.random);
+      if (this.audioPlayer.random) {
+        this.unshufflePlaylist();
+      } else {
+        this.copyPlaylist();
+        this.shufflePlaylist();
       }
     },
     close: function() {
@@ -204,11 +208,14 @@ export default {
     ...mapGetters("audioPlayer", [
       "audioPlayer",
       "getAudioIndex",
-      "getProgress"
+      "getProgress",
+      "volume"
     ]),
     ...mapGetters("audio", ["audios"])
   },
-  created() {}
+  created() {
+    this.$refs.audio.volume = 1;
+  }
 };
 </script>
 
@@ -286,6 +293,10 @@ export default {
   margin-left: 10px;
 }
 
+.button:hover {
+  background-color: rgba(79,81,88,0.9);
+}
+
 .notclicked {
   opacity: 0.1;
 }
@@ -328,9 +339,15 @@ export default {
   opacity: 1;
 }
 
+.volume-control{
+  max-width: fit-content;
+  height: fit-content;
+}
+
 .volume-slider {
   position: relative;
-  bottom: 20px;
+  bottom: 10px;
+  right: 10px;
   -webkit-appearance: none;
   height: 3px;
   background: #d3d3d3;
@@ -350,7 +367,7 @@ export default {
   appearance: none;
   width: 25px;
   height: 25px;
-  background: rgba(30, 30, 155, 1);
+  background: rgb(90, 90, 241);
   cursor: pointer;
   border-radius: 50%;
 }
@@ -359,7 +376,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: rgba(30, 30, 155, 1);
+  background: rgb(90, 90, 241);
   cursor: pointer;
 }
 </style>

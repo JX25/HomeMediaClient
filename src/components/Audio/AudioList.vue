@@ -272,7 +272,7 @@ export default {
 <style scoped>
 form {
   padding-top: 10px;
-  left: 9%;
+  left: 6%;
   width: 80%;
 }
 
