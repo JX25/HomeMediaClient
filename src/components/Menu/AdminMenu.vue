@@ -37,10 +37,10 @@
               <div class="navi-title">Zdjęcia</div>
             </template>
             <b-dropdown-item href="#">
-              <router-link to="/admin/photo">Przeglądaj</router-link>
+              <router-link to="/admin/image">Przeglądaj</router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link to="/admin/add/photo/">Dodaj zdjęcia</router-link>
+              <router-link to="/admin/image/add">Dodaj zdjęcia</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item>

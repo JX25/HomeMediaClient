@@ -19,9 +19,16 @@
       <div class="mid-control">
         <i class="fas fa-play-circle fa-2x" v-if="!audioPlayer.play" @click="play()"></i>
         <i class="fas fa-pause-circle fa-2x" @click="play()" v-else></i>
-        <span class="volume-control" @mouseenter="audioPlayer.showVolume = true" @click="audioPlayer.showVolume = true">
+        <span
+          class="volume-control"
+          @mouseenter="audioPlayer.showVolume = true"
+          @click="audioPlayer.showVolume = truew"
+        >
           <i class="fas fa-volume-up fa-2x" v-if="audioPlayer.volume > 50"></i>
-          <i class="fas fa-volume-down fa-2x" v-else-if="audioPlayer.volume <= 50 && audioPlayer.volume > 1"></i>
+          <i
+            class="fas fa-volume-down fa-2x"
+            v-else-if="audioPlayer.volume <= 50 && audioPlayer.volume > 1"
+          ></i>
           <i class="fas fa-volume-mute fa-2x" v-else></i>
           <span v-if="audioPlayer.showVolume" style="margin-left: 15px;"></span>
           <input
@@ -39,7 +46,7 @@
         <i class="fas fa-chevron-circle-left fa-2x" @click="swipe(-1)"></i>
         <i class="fas fa-chevron-circle-right fa-2x" @click="swipe(1)"></i>
         <i class="fas fa-stop-circle fa-2x" @click="stop()"></i>
-        
+
         <span class="toRight">
           <i
             class="fas fa-random fa-2x"
@@ -123,9 +130,9 @@ export default {
       this.changeLoop(!this.audioPlayer.loop);
     },
     updateVolume: function(volume) {
-      let newVolume = volume > 100 ? 100 : volume < 0 ? 0 : volume
+      let newVolume = volume > 100 ? 100 : volume < 0 ? 0 : volume;
       this.changeVolume(newVolume);
-      this.$refs.audio.volume = newVolume/100.0;
+      this.$refs.audio.volume = newVolume / 100.0;
     },
     showVolume: function() {},
     swipe: function(value) {
@@ -214,7 +221,11 @@ export default {
     ...mapGetters("audio", ["audios"])
   },
   created() {
-    this.$refs.audio.volume = 1;
+    try {
+      this.$refs.audio.volume = this.audioPlayer.volume / 100;
+    } catch (error) {
+      console.log('waiting for setting up audio');
+    }
   }
 };
 </script>
@@ -247,7 +258,7 @@ export default {
 .top-control {
   padding-left: 25px;
   text-align: left;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
   color: white;
 }
 .mid-control {
@@ -294,7 +305,7 @@ export default {
 }
 
 .button:hover {
-  background-color: rgba(79,81,88,0.9);
+  background-color: rgba(79, 81, 88, 0.9);
 }
 
 .notclicked {
@@ -339,7 +350,7 @@ export default {
   opacity: 1;
 }
 
-.volume-control{
+.volume-control {
   max-width: fit-content;
   height: fit-content;
 }

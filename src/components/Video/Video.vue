@@ -120,7 +120,8 @@ div >>> .thumbnail{
   right: 0;
   top: 0;
   width: 50%;
-  height: 50%;
+  height: auto;
+  max-height: 90%;
 }
 
 @media (max-width: 800px) {
