@@ -19,8 +19,8 @@ export const audioApi = axios.create({
     baseURL: address + '/api/v1/audio/'
 });
 
-export const photoApi = axios.create({
-    baseURL: address + '/api/v1/photo/'
+export const imageApi = axios.create({
+    baseURL: address + '/api/v1/image/'
 });
 
 export const serverApi = axios.create({
@@ -36,3 +36,8 @@ export function clearToken() {
     delete applicationCache.defaults.headers.common["Authorization"]
     Vue.localStorage.clear()
 }
+
+export function authHeader(){
+    return {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}}
+}
+

@@ -6,7 +6,7 @@ import Video from './modules/video'
 import videoPlayer from './modules/videoPlayer'
 import Audio from './modules/audio'
 import AudioPlayer from './modules/audioPlayer'
-import Photo from './modules/photo'
+import Image from './modules/image'
 
 import createPersistedState from 'vuex-persistedstate'
 import * as Cookies from 'js-cookie'
@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     videoPlayer: videoPlayer,
     audio: Audio,
     audioPlayer: AudioPlayer,
-    photo: Photo,
+    image: Image,
   },
   plugins: [
     createPersistedState({

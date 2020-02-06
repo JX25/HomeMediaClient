@@ -110,10 +110,8 @@ export default {
         hideAudioPlayer: ({commit}) =>{
             commit('setShow', false)
         },
-        showVolume: ({commit,state}) =>{
-            console.log(show)
-            let show = !state.showVolume
-            commit('setShowVolume', show)
+        showVolume: ({commit}, value) =>{
+            commit('setShowVolume', value)
         },
         minimizeAudioPlayer: ({commit},) =>{
             commit('setMinimized', true)
