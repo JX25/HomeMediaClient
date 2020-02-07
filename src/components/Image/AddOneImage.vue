@@ -118,8 +118,6 @@ export default {
         height: this.height,
         description: this.description
       }
-      console.log(data)
-      console.log("XDDDD")
       this.$store.dispatch("image/uploadMetaData", data).then(result => {
           console.log("333", result)
         this.setInfo("Dane pliku: " + result.msg);
@@ -159,7 +157,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .btn {
   position: relative;
   left: 50%;

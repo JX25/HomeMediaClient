@@ -1,13 +1,14 @@
 <template>
   <div id="menu">
     <b-navbar toggleable="lg" type="dark" variant="danger">
-      <b-navbar-brand href="#">Home Media Center - Admin Panel</b-navbar-brand>
+      <b-navbar-brand href="#">
+        Home Media Center <h6>Admin Panel</h6></b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="auto">
-          <b-nav-item-dropdown text="Filmy" right>
+          <b-nav-item-dropdown text="Filmy" left>
             <template slot="button-content">
               <i class="fas fa-film fa-2x"></i>
               <div class="navi-title">Filmy</div>
@@ -19,7 +20,7 @@
               <router-link to="/admin/video/add">Dodaj nowy</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Muzyka" right>
+          <b-nav-item-dropdown text="Muzyka" left>
             <template slot="button-content">
               <i class="fas fa-music fa-2x"></i>
               <div class="navi-title">Muzyka</div>
@@ -31,7 +32,7 @@
               <router-link to="/admin/audio/add">Dodaj muzykę</router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Zdjęcia" right>
+          <b-nav-item-dropdown text="Zdjęcia" left>
             <template slot="button-content">
               <i class="fas fa-image fa-2x"></i>
               <div class="navi-title">Zdjęcia</div>
@@ -116,8 +117,9 @@ a:hover {
 }
 #nav-collapse {
   position: absolute;
-  right: 30px;
+  right: 1%;
 }
 }
+
 
 </style>
