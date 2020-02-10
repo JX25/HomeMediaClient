@@ -2,48 +2,32 @@
   <div id="menu">
     <b-navbar toggleable="lg" type="dark" variant="danger">
       <b-navbar-brand href="#">
-        Home Media Center <h6>Admin Panel</h6></b-navbar-brand>
+        Home Media Center
+        <h6>Admin Panel</h6>
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="auto">
-          <b-nav-item-dropdown text="Filmy" left>
-            <template slot="button-content">
+          <b-nav-item>
+            <router-link to="/admin/video">
               <i class="fas fa-film fa-2x"></i>
-              <div class="navi-title">Filmy</div>
-            </template>
-            <b-dropdown-item href="#">
-              <router-link to="/admin/video">Przeglądaj</router-link>
-            </b-dropdown-item>
-            <b-dropdown-item href="#">
-              <router-link to="/admin/video/add">Dodaj nowy</router-link>
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Muzyka" left>
-            <template slot="button-content">
+              <div class="navi-title">Wideo</div>
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/admin/audio">
               <i class="fas fa-music fa-2x"></i>
-              <div class="navi-title">Muzyka</div>
-            </template>
-            <b-dropdown-item href="#">
-              <router-link to="/admin/audio/">Przeglądaj</router-link>
-            </b-dropdown-item>
-            <b-dropdown-item href="#">
-              <router-link to="/admin/audio/add">Dodaj muzykę</router-link>
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Zdjęcia" left>
-            <template slot="button-content">
+              <div class="navi-title">Audio</div>
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/admin/image">
               <i class="fas fa-image fa-2x"></i>
-              <div class="navi-title">Zdjęcia</div>
-            </template>
-            <b-dropdown-item href="#">
-              <router-link to="/admin/image">Przeglądaj</router-link>
-            </b-dropdown-item>
-            <b-dropdown-item href="#">
-              <router-link to="/admin/image/add">Dodaj zdjęcia</router-link>
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
+              <div class="navi-title">Grafika</div>
+            </router-link>
+          </b-nav-item>
           <b-nav-item>
             <router-link to="/admin/users">
               <i class="fas fa-users fa-2x"></i>
@@ -102,24 +86,23 @@ a:hover {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.5);
 }
-.navbar{
-    z-index: 1;
+.navbar {
+  z-index: 150;
 }
 .navi-title {
   font-size: 15px;
 }
-@media (min-width: 995px){
-.navbar {
-  padding-top: 20px;
-  height: 100px;
-  position: relative;
-  padding-bottom: 2px;
+@media (min-width: 995px) {
+  .navbar {
+      z-index: 1000;
+    padding-top: 5px;
+    height: 100px;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  #nav-collapse {
+    position: absolute;
+    right: 1%;
+  }
 }
-#nav-collapse {
-  position: absolute;
-  right: 1%;
-}
-}
-
-
 </style>

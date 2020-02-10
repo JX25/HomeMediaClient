@@ -92,7 +92,7 @@ const routes = [
     component: AddImage
   },
   {
-    path: '/admin/image/edit',
+    path: '/admin/image/edit/:slug',
     name: 'EditImage',
     component: EditImage
   },

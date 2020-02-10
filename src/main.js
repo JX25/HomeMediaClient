@@ -12,11 +12,14 @@ import BootstrapVue from 'bootstrap-vue'
 import VueLocalStorage from 'vue-localstorage'
 import VModal from 'vue-js-modal'
 import 'vue-awesome/icons'
+
+import Vue2TouchEvents from 'vue2-touch-events'
 require('dotenv').config('.env')
 
 Vue.use(BootstrapVue)
 Vue.use(VueLocalStorage)
 Vue.use(VModal)
+Vue.use(Vue2TouchEvents)
 
 
 Vue.config.productionTip = false

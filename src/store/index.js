@@ -9,7 +9,6 @@ import AudioPlayer from './modules/audioPlayer'
 import Image from './modules/image'
 
 import createPersistedState from 'vuex-persistedstate'
-import * as Cookies from 'js-cookie'
 
 Vue.use(Vuex)
 
@@ -24,10 +23,7 @@ const store = new Vuex.Store({
     image: Image,
   },
   plugins: [
-    createPersistedState({
-      getState: (key) => Cookies.getJSON(key),
-      setState: (key, state) => Cookies.set(key, state, {expires: 3, secure: true})
-    })
+    createPersistedState()
   ]
 })
 

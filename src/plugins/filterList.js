@@ -25,16 +25,39 @@ export function filterAudioList(list, params){
         return tmpList
 }
 
+export function filterImageList(list, params){
+    console.log(params)
+    let from = 0
+    let to = 0
+    if(params.dateFrom != ""){
+        from = params.dateFrom.getTime()/1000
+    }
+    if(params.dateTo != ""){
+        to = params.dateFrom.getTime()/1000
+    }
+    console.log(from, to)
+    let tmpList = list
+    .filter(x => inArray(x.collections.toUpperCase(), params.collection.toUpperCase()))
+    .filter(x => inArray(x.tags, params.keyword))
+    .filter(x=>greaterThan(x.timestamp,from))
+    .filter(x=>lowerThan(x.timestamp, to))
+    .filter(x=>greaterThan(x.width, params.widthMin))
+    .filter(x=>lowerThan(x.width, params.widthMax))
+    .filter(x=>greaterThan(x.height, params.heightMin))
+    .filter(x=>lowerThan(x.height, params.heightMax))
+    return tmpList
+}
+
 
 function greaterThan(videoVal, paramVal) {
-//   console.log("1", videoVal >= paramVal, videoVal, paramVal)
+  console.log("1", videoVal >= paramVal, videoVal, paramVal)
     if(paramVal === 0) return true
     return videoVal >= paramVal
 }
 
 function lowerThan(videoVal, paramVal) {
 //    console.log(paramVal)
-//    console.log("2", videoVal <= paramVal, videoVal, paramVal)
+   console.log("2", videoVal <= paramVal, videoVal, paramVal)
     if(paramVal == 0) return true
     return videoVal <= paramVal
 }

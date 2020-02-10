@@ -2,7 +2,9 @@
   <div>
     <h2>Lista filmów</h2>
     <div>
-      <form class="form-inline col-md-12 table-responsive">
+      <form class="form-inline col-md-12 table-responsive"
+        prevent.submit
+      >
         <input
           type="text"
           class="form-control mb-2 mr-sm-2"
@@ -68,7 +70,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="video in videoList" :key="video.id">
+          <tr v-for="video in videoList.slice(0, videoLimit)" :key="video.id">
             <td>
               <img :src="image(video.slug)" width="100" height="100" alt="brak" />
             </td>
@@ -100,6 +102,7 @@
       <VideoDetail :video="this.targetVideo" />
       <VideoInfo v-if="infoVisibility" />
     </div>
+    <b-button @click="loadMore" v-if="videoLimit < videoList.length">Więcej</b-button>
     <router-link to="video/add">
       <i id="addVideo" class="fas fa-plus-circle fa-3x"></i>
     </router-link>
@@ -121,6 +124,7 @@ export default {
   },
   data() {
     return {
+      videoLimit: 25,
       videoList: [],
       listLoaded: false,
       targetVideo: {},
@@ -155,10 +159,16 @@ export default {
       //WALIDACJA
       let filteredVideos = filterVideoList(this.videos, this.params);
       this.videoList = filteredVideos;
+      this.videoLimit = 25
     },
     videoInfo: function(video) {
       this.targetVideo = video;
       this.$bvModal.show("VideoDetail");
+    },
+    loadMore: function() {
+      let length = this.videoList.length;
+      if (this.videoLimit >= length) this.videoLimit = length;
+      else this.videoLimit += 25;
     },
     image: function(slug) {
       console.log(address);

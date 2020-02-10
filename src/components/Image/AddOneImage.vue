@@ -57,7 +57,16 @@
               <b-textarea v-model="description" type="textarea"></b-textarea>
             </td>
           </tr>
-
+          <tr>
+            <th>Kategoria wiekowa</th>
+            <td>
+              <b-select v-model="age_rate">
+                <option value="0">Dla wszystkich</option>
+                <option value="1">do 16</option>
+                <option value="2">16+</option>
+              </b-select>
+            </td>
+          </tr>
           <tr>
             <th>Wysokość (px)</th>
             <td>
@@ -94,6 +103,7 @@ export default {
       tags: "",
       file: "",
       description: "",
+      age_rate: 0,
       img: "",
       loaded: false,
       width: "",
@@ -105,7 +115,7 @@ export default {
     validateAndSend: function() {
       //VALIDATE TODO
       this.tags = this.tags.split(",").map(x => x.trim());
-      this.timestamp = new Date(this.timestamp).getTime() / 1000;
+      this.timestamp = new Date(this.timestamp).getTime();
       this.collection = this.collection.trim();
       //SEND
       this.clearInfo();
@@ -116,7 +126,8 @@ export default {
         collection: this.collection,
         width: this.width,
         height: this.height,
-        description: this.description
+        description: this.description,
+        age_rate: this.age_rate,
       }
       this.$store.dispatch("image/uploadMetaData", data).then(result => {
           console.log("333", result)

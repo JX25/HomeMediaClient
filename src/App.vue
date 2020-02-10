@@ -2,6 +2,7 @@
   <div id="app">
     <SiteMenu id="mn" />
     <SiteView id="vw" />
+    <AccessDenied else />
     <VideoPlayer class="video-player" />
     <AudioPlayer class="audio-player" />
     <SiteFooter id="ftr" />
@@ -10,11 +11,14 @@
 
 
 <script>
-import VideoPlayer from "./components/Video/VideoPlayer"
-import AudioPlayer from "./components/Audio/AudioPlayer"
+import VideoPlayer from "./components/Video/VideoPlayer";
+import AudioPlayer from "./components/Audio/AudioPlayer";
 import SiteView from "./components/SiteView.vue";
+
 import SiteMenu from "./components/Menu/SiteMenu.vue";
 import SiteFooter from "./components/Footer/SiteFooter.vue";
+import { mapGetters } from "vuex";
+
 export default {
   name: "app",
   components: {
@@ -22,7 +26,10 @@ export default {
     SiteMenu,
     SiteFooter,
     VideoPlayer,
-    AudioPlayer,
+    AudioPlayer
+  },
+  computed: {
+    ...mapGetters("user", ["type"])
   }
 };
 </script>
@@ -69,18 +76,18 @@ body {
   z-index: 10;
 }
 
-.audio-player{
+.audio-player {
   width: 100%;
   height: 100px;
-  background-color: rgba(255,255,255,1);
-  position: fixed!important;
+  background-color: rgba(255, 255, 255, 1);
+  position: fixed !important;
   left: 0px;
   bottom: 0px;
   z-index: 50;
 }
 
-@media (max-width: 750px){
-  .video-player{
+@media (max-width: 750px) {
+  .video-player {
     width: 50%;
   }
 }

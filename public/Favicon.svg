@@ -1,0 +1,28 @@
+<svg width="640" height="640" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <defs>
+  <linearGradient y2="0" x2="1" y1="0.425781" x1="0.417969" id="svg_40">
+   <stop offset="0" stop-color="#000000"/>
+   <stop offset="1" stop-color="#ffffff"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="url(#svg_40)" id="canvas_background" height="642" width="642" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke="#000" transform="rotate(28 525.4525756835938,113.61850738525385) " id="svg_6" d="m615.940932,223.794761c0,3.391631 -2.538488,6.139444 -5.671786,6.139444l-36.320576,0c-3.133286,0 -5.671786,-2.747802 -5.671786,-6.139444l0,-83.526959c0,-3.391374 2.5385,-6.139444 5.671786,-6.139444l36.320576,0c3.133298,0 5.671786,2.74807 5.671786,6.139444l0,83.526959zm-134.468844,0c0,3.391631 -2.538995,6.139444 -5.671786,6.139444l-36.321071,0c-3.132803,0 -5.671786,-2.747802 -5.671786,-6.139444l0,-83.526959c0,-3.391374 2.538983,-6.139444 5.671786,-6.139444l36.321071,0c3.132791,0 5.671786,2.74807 5.671786,6.139444l0,83.526959zm43.880186,-226.491953c-65.72393,0 -119.076527,57.229524 -119.895891,128.155635l20.807657,0c0.674712,-58.621208 44.772117,-105.919709 99.088234,-105.919709c54.316117,0 98.413546,47.298502 99.080378,105.919709l20.807162,0c-0.811013,-70.926111 -54.179309,-128.155635 -119.887541,-128.155635l0,0zm-119.727216,193.124638l20.43009,0l0,-65.099567l-20.43009,0l0,65.099567zm218.638932,-65.108324l0,65.099847l21.184717,0l0,-65.099847l-21.184717,0z" stroke-width="10" fill="#ff0000"/>
+  <path stroke="#000" transform="rotate(-167 0,0) " id="svg_7" d="m-241.01446,388.55347c371.8584,31.35899 743.71673,-31.35899 1115.57506,0l0,-56.44618c-371.85833,-31.35899 -743.71666,31.35899 -1115.57506,0l0,56.44618z" stroke-opacity="null" stroke-width="15" fill="#ce4646"/>
+  <path stroke="#000" transform="rotate(29 127.10311126709014,406.6793518066405) " id="svg_9" d="m-1.732374,305.658215l0,202.04226l257.670973,0l0,-202.04226l-257.670973,0zm217.111653,184.700315l-176.552333,0l0,-167.358369l176.552333,0l0,167.358369zm-133.607171,-101.771981c13.608845,0 24.650523,-10.466683 24.650523,-23.366847c0,-12.90921 -11.041678,-23.366847 -24.650523,-23.366847c-13.618388,0 -24.650523,10.466683 -24.650523,23.366847c0,12.900164 11.032135,23.366847 24.650523,23.366847zm124.073345,20.354396l-46.924747,-44.481141l-66.011486,62.573937l-18.294639,-17.341946l-26.263352,24.895688l0,46.724647l157.494225,0l0,-72.371187z" stroke-opacity="null" stroke-width="10" fill="#ff0000"/>
+  <rect rx="25" stroke="#000" id="svg_14" height="175.999999" width="247.999996" y="397.4375" x="348.5" stroke-opacity="null" stroke-width="10" fill="#ff0000"/>
+  <path transform="rotate(90 486.6525268554688,488.06842041015625) " id="svg_15" d="m431.652521,534.568413l55.000004,-93.000008l55.000004,93.000008l-110.000008,0z" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#000000"/>
+  <text stroke="#000" transform="matrix(5.529519557952881,0,0,1,-2604.9691620245576,0) " xml:space="preserve" text-anchor="start" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, serif" font-size="96" id="svg_21" y="327.4375" x="532.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#000000"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="120" id="svg_22" y="146.4375" x="29.5" stroke-opacity="null" stroke-width="2" stroke="#000" fill="#ff0000">Home</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="120" id="svg_23" y="261.4375" x="134.5" stroke-opacity="null" stroke-width="2" stroke="#000" fill="#ff0000">Media</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="120" id="svg_24" y="361.4375" x="263.5" stroke-opacity="null" stroke-width="2" stroke="#000" fill="#ff0000">Center</text>
+ </g>
+</svg>

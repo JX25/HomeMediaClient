@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-modal id="AudioDetail" title="Szczegóły pliku audio">
+      <img class="thumbnail" :src="image(audio.thumbnail)" alt="miniatura albumu" />
       <table class="table table-border table-responsive">
         <tbody>
           <tr>
@@ -27,11 +28,7 @@
             <th>Opis</th>
             <td>{{audio.description}}</td>
           </tr>
-          <tr>
-            <td rowspan="2" colspan="2">
-              <img class="thumbnail" :src="image(audio.thumbnail)" alt="miniatura albumu" />
-            </td>
-          </tr>
+
           <tr>
             <th>Gatunek</th>
             <td>{{audio.genre}}</td>
@@ -80,6 +77,19 @@ export default {
 </script>
 
 <style scoped>
+#AudioDetail{
+  width: fit-content;
+}
+
+img{
+  float: right;
+  height: 100%;
+}
+
+table{
+  float: left;
+}
+
 
 div >>> .modal-dialog {
   margin: auto !important;

@@ -24,8 +24,12 @@ export default {
         setUploadImage(state, data){
             state.uploadImage = data
         },
-        setUploadMetaData(state, data){
+        setImageMetaData(state, data){
             state.uploadMetaData = data
+        },
+        removeImage(state, image){
+            let i = state.images.map(x => {return x._id}).indexOf(image._id)
+            delete state.images[i]
         },
         clearUpload(state){
             state.uploadImage = ''
@@ -44,7 +48,7 @@ export default {
     },
     getters:{
         editImage: state => {return state.imageToEdit},
-        getImage: state => {return state.image},
+        image: state => {return state.image},
         images: state => {return state.images},
         imageBySlug: (state, slug) => {return state.images.filter(image => {image.slug === slug})},
         uploadImage: state => {return state.uploadImage},
@@ -65,8 +69,11 @@ export default {
         clearInfo : ({commit}) => {
             commit("clearInfo")
         },
-        imageToEdit: ({commit}, video) => {
-            commit("setImageToEdit", video)
+        imagePreview: ({commit}, image) => {
+            commit("setImage", image)
+        },
+        imageToEdit: ({commit}, image) => {
+            commit("setImageToEdit", image)
         },
         imageBySlug: ({commit}, slug) => {
             return new Promise((res, rej) => {
@@ -135,12 +142,12 @@ export default {
                     })
             })
         },
-        deleteImage: ({commit}, slug) => {
+        deleteImage: ({commit}, image) => {
             return new Promise((res, rej) => {
-                imageApi.delete(slug, authHeader())
+                imageApi.delete(image.slug, authHeader())
                     .then(result => {
                         console.log(result)
-                        commit('removeImage', slug)
+                        commit('removeImage', image)
                         res(result)
                     })
                     .catch(error => {

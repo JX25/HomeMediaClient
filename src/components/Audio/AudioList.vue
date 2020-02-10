@@ -66,8 +66,8 @@
           placeholder="Do roku..."
           v-model="params.yearMax"
         />
-        <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterAudio()">Wyszukaj</button>
-        <button class="btn btn-secondary form-control mb-2 mr-sm-2" @click="clear()">Resetuj</button>
+        <button class="btn btn-info form-control mb-2 mr-sm-2" type="button" @click="filterAudio()">Wyszukaj</button>
+        <button class="btn btn-secondary form-control mb-2 mr-sm-2" type="button" @click="clear()">Resetuj</button>
       </form>
       <div>
         <table class="table table-hover table-striped col-md-12 content" v-if="listLoaded">
@@ -85,7 +85,7 @@
           </tr>
 
           <tbody>
-            <tr v-for="(audio, index) in audioList" :key="index">
+            <tr v-for="(audio, index) in audioList.slice(0, audioLimit)" :key="index">
               <td>
                 <img :src="image(audio.thumbnail)" width="100" height="100" alt="brak" />
               </td>
@@ -128,6 +128,7 @@
             </tr>
           </tbody>
         </table>
+        <b-button @click="loadMore" v-if="audioLimit < audioList.length">Więcej</b-button>
       </div>
       <AudioDetail :audio="this.audio" />
       <AudioInfo v-if="infoVisibility" />
@@ -153,6 +154,7 @@ export default {
   },
   data() {
     return {
+      audioLimit: 25,
       audioList: [],
       listLoaded: false,
       targetAudio: {},
@@ -179,7 +181,7 @@ export default {
       "changeCoverSource",
       "startAudio",
       "addToPlaylist",
-      "changePlaylistIndex",
+      "changePlaylistIndex"
     ]),
     filterAudio: function() {
       let filteredAudio = filterAudioList(this.audios, this.params);
@@ -198,6 +200,11 @@ export default {
         yearMax: ""
       };
       this.filterAudio();
+    },
+    loadMore: function() {
+      let length = this.audioList.length;
+      if (this.audioLimit >= length) this.audioLimit = length;
+      else this.audioLimit += 25;
     },
     image: function(thumbnailPath) {
       console.log(thumbnailPath, "1");
@@ -241,23 +248,22 @@ export default {
       this.showAudioPlayer();
       this.startAudio();
     },
-    toPlaylist: function(audio, index){
-        let data = {
-          src: this.srcStream(audio.slug),
-          coverSrc: this.image(audio.thumbnail),
-          id: audio._id
-        }
-        if(this.getPlaylist.length == 0) {
-          this.runPlayer(audio.slug, audio.thumbnail, index)
-          this.changePlaylistIndex(0)
-        }
-        this.addToPlaylist(data)
+    toPlaylist: function(audio, index) {
+      let data = {
+        src: this.srcStream(audio.slug),
+        coverSrc: this.image(audio.thumbnail),
+        id: audio._id
+      };
+      if (this.getPlaylist.length == 0) {
+        this.runPlayer(audio.slug, audio.thumbnail, index);
+        this.changePlaylistIndex(0);
+      }
+      this.addToPlaylist(data);
     }
   },
   computed: {
     ...mapGetters("audio", ["audios", "infoVisibility", "audio"]),
     ...mapGetters("audioPlayer", ["audioPlayer", "getPlaylist"])
-    //...mapGetters("audioPlayer", ["getSrc", "getShow"])
   },
   created() {
     this.getAllAudio().then(result => {

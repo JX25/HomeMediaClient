@@ -8,6 +8,16 @@
             <input type="text" v-model="collection" />
           </td>
         </tr>
+          <tr>
+            <th>Kategoria wiekowa</th>
+            <td>
+              <b-select v-model="age_rate">
+                <option value="0">Dla wszystkich</option>
+                <option value="1">do 16</option>
+                <option value="2">16+</option>
+              </b-select>
+            </td>
+          </tr>
         <tr>
           <th>Zdjęcia / Pliki graficzne</th>
           <td>
@@ -101,7 +111,8 @@ export default {
       height: [],
       width: [],
       loaded: [],
-      filesDetails: false
+      filesDetails: false,
+      age_rate: 0,
     };
   },
   methods: {
@@ -117,7 +128,7 @@ export default {
     send: function(index){
       //VALIDATE
       this.tags[index] = this.tags[index].split(",").map(x => x.trim())
-      this.timestamp[index] = new Date(this.timestamp[index]).getTime() / 1000
+      this.timestamp[index] = new Date(this.timestamp[index]).getTime()
       this.title[index].trim()
       this.collection.trim()
       let data = {
@@ -127,7 +138,8 @@ export default {
         collection: this.collection,
         width: this.width[index],
         height: this.height[index],
-        description: this.description[index]  
+        description: this.description[index],
+        age_rate: this.age_rate,
       }
       this.$store.dispatch("image/uploadMetaData", data)
         .then(result => {
