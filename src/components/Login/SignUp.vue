@@ -4,19 +4,20 @@
     <form>
       <div>
       <b-form-group>
-        <b-form-input type="text" v-model="form.nickname" placeholder="Nazwa konta..."> </b-form-input>
+        <b-form-input type="text" v-model="nickname" placeholder="Nazwa konta..."> </b-form-input>
+
      </b-form-group>
       <b-form-group>
-        <b-form-input type="mail" v-model="form.email" placeholder="Email..."> </b-form-input>
+        <b-form-input type="mail" v-model="email" placeholder="Email..."> </b-form-input>
      </b-form-group>
       <b-form-group>
-        <b-form-input type="password" v-model="form.password1" placeholder="Hasło..."> </b-form-input>
+        <b-form-input type="password" v-model="password1" placeholder="Hasło..."> </b-form-input>
      </b-form-group>
       <b-form-group>
-        <b-form-input type="password" v-model="form.password2" placeholder="Powtórz hasło..."> </b-form-input>
+        <b-form-input type="password" v-model="password2" placeholder="Powtórz hasło..."> </b-form-input>
      </b-form-group>
       <b-form-group>
-        <b-form-input type="date" v-model="form.birthDay" placeholder="Data urodzenia..."> </b-form-input>
+        <b-form-input type="date" v-model="birthDay" placeholder="Data urodzenia..."> </b-form-input>
      </b-form-group>
       <b-form-group>
         <b-button variant="success" @click.prevent="register()">Zarejestruj się</b-button>
@@ -27,32 +28,40 @@
 </template>
 
 <script>
+
+
+
 export default {
   name: "SignUp",
   data: () => ({
-    form: {
-      active: false,
       nickname: '',
       email: '',
       password1: '',
       password2: '',
-      birthDay: ''
-    }
+      birthDay: '',
+      YEARS13: 315569260,
+      YEARS16: 504910816,
   }),
   methods: {
-    register: function() {     
+    register: function() {    
+      let seconds = new Date().getTime()/1000 - this.birthDay.getTime()/1000
+      let age_rate = 0
+      if(seconds < this.YEARS13) age_rate = 0
+      else if(seconds < this.YEARS16) age_rate = 1
+      else age_rate = 2
       this.$store.dispatch("user/register",{
-        nickname: this.form.nickname,
-        password: this.form.password1,
-        email: this.form.email,
-        age_rate: this.age_rate
+        nickname: this.nickname,
+        password1: this.password1,
+        password2: this.password2,
+        email: this.email,
+        age_rate: age_rate
       }).then(result => {
         if(result.status === 200){
           this.info = "Użytkownik został utworzony pomyślnie\nMożesz się teraz zalogować"
           this.showInfo = true
           setTimeout( () => {
               this.$router.push('/sign_in')
-          }, 1000)
+          }, 500)
         }
       }).catch(error => {
         console.log(error)
@@ -66,6 +75,7 @@ export default {
 </script>
 
 <style scoped>
+
 .register-form{
   position: relative;
   top: 50%;
@@ -85,7 +95,7 @@ form{
   padding: 1em;
 }
 button{
-  max-width: 600px;
-  min-width: 300px;
+  position: realtive;
+  width: 97%;
 }
 </style>

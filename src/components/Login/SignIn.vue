@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="login-form">
     <h1>Panel logowania</h1>
     <div class="error-box" v-if="this.error">{{this.errorContent}}</div>
     <div class="success-box" v-if="this.success">{{this.successContent}}</div>
     <form>
+      <div>
       <b-form-group>
         <b-form-input v-model="nickname" placeholder="Login..."> </b-form-input>
      </b-form-group>
@@ -13,6 +14,7 @@
       <b-form-group>
         <b-button variant="primary" @click.prevent="login()" :disabled="allowSend">Zaloguj się</b-button>
       </b-form-group>
+      </div>
     </form>
   </div>
 </template>
@@ -58,9 +60,9 @@ export default {
 </script>
 
 <style scoped>
-div{
-  position: absolute;
-  top: 50%;
+.login-form{
+  position: relative;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -77,8 +79,8 @@ form{
   padding: 1em;
 }
 button{
-  max-width: 600px;
-  min-width: 300px;
+  width: 97%;
+
 }
 
 .error-box{

@@ -36,7 +36,6 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
-
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -44,14 +43,28 @@ export default {
 
 }
 #site-menu {
-
+  display:block;
 }
 #site-view {
-  height: 80vh;
+  height: 90vh;
 }
 #footer {
-
+  margin-top: 10%;
+  display: block;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
 }
+
+@media only screen and(max-width:800px){
+  #footer{
+    display: none;
+  }
+  #site-view{
+    margin-top: 11%;
+  }
+}
+
 
 .video-player {
   height: 480px;
