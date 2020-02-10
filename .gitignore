@@ -5,7 +5,8 @@ src/config
 # local env files
 .env.local
 .env.*.local
-
+#testing
+public/witcher.mp4
 # Log files
 npm-debug.log*
 yarn-debug.log*

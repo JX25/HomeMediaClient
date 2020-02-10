@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>ABOUT</h1>
+    <h1>O wykonanych aplikacjach</h1>
     <p>
       Pellentesque habitant morbi tristique senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor

@@ -26,7 +26,5 @@ export default {
 </script>
 
 <style scoped>
-#menu{
-    height: 120px;
-}
+
 </style>

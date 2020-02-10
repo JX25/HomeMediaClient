@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <SiteMenu id="mn" />
-    <SiteView id="vw" />
-    <AccessDenied else />
+    <SiteMenu id="site-menu" />
+    <SiteView id="site-view" />
     <VideoPlayer class="video-player" />
     <AudioPlayer class="audio-player" />
-    <SiteFooter id="ftr" />
+    <SiteFooter id="footer" />
   </div>
 </template>
 
@@ -38,34 +37,20 @@ export default {
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  min-height: 100%;
-  position: relative;
+
 }
-#mn {
-  padding-bottom: 20px;
+#site-menu {
+
 }
-#vw {
-  padding-bottom: 100px;
-  min-height: 91vh;
+#site-view {
+  height: 80vh;
 }
-#ftr {
-  width: 100%;
-  position: relative;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
+#footer {
+
 }
 
 .video-player {

@@ -1,39 +1,28 @@
 <template>
-  <div>
-    <h1>Załóż konto</h1>
+  <div class="register-form">
+    <h1>Rejestracja konta</h1>
     <form>
       <div>
-        <label for>Nazwa użytkownika</label>
-        <input type="text" v-model="form.nickname" />
-      </div>
-      <div>
-        <label for>Email użytkownika</label>
-        <input type="email" v-model="form.email" />
-      </div>
-      <div>
-        <label for>Hasło</label>
-        <input type="password" v-model="form.password1" />
-      </div>
-      <div>
-        <label for>Powtórz hasło</label>
-        <input type="password" v-model="form.password2" />
-      </div>
-      <div>
-        <label for>Data urodzenia</label>
-        <input type="number" v-model="form.birthDay" />
-      </div>
-      <div>
-        <button @click.prevent="register()">Zarejestruj się</button>
+      <b-form-group>
+        <b-form-input type="text" v-model="form.nickname" placeholder="Nazwa konta..."> </b-form-input>
+     </b-form-group>
+      <b-form-group>
+        <b-form-input type="mail" v-model="form.email" placeholder="Email..."> </b-form-input>
+     </b-form-group>
+      <b-form-group>
+        <b-form-input type="password" v-model="form.password1" placeholder="Hasło..."> </b-form-input>
+     </b-form-group>
+      <b-form-group>
+        <b-form-input type="password" v-model="form.password2" placeholder="Powtórz hasło..."> </b-form-input>
+     </b-form-group>
+      <b-form-group>
+        <b-form-input type="date" v-model="form.birthDay" placeholder="Data urodzenia..."> </b-form-input>
+     </b-form-group>
+      <b-form-group>
+        <b-button variant="success" @click.prevent="register()">Zarejestruj się</b-button>
+      </b-form-group>
       </div>
     </form>
-    <div v-if="showError">
-      <ul>
-        <li v-for="error in errors" :key="error.id">{{ error }}</li>
-      </ul>
-    </div>
-    <div v-if="showInfo">
-      {{this.info}}
-    </div>
   </div>
 </template>
 
@@ -42,25 +31,16 @@ export default {
   name: "SignUp",
   data: () => ({
     form: {
+      active: false,
       nickname: '',
       email: '',
       password1: '',
       password2: '',
       birthDay: ''
-    },
-    errors: [],
-    showError: false,
-    info: '',
-    showInfo: false
+    }
   }),
-  components: {},
   methods: {
-    register: function() {
-      this.errors = []
-      let isOK = this.checkForm()
-      if(!isOK){
-          this.showError = true
-      }
+    register: function() {     
       this.$store.dispatch("user/register",{
         nickname: this.form.nickname,
         password: this.form.password1,
@@ -78,35 +58,34 @@ export default {
         console.log(error)
       })
     },
-    checkForm: function (){
-      let status = true
-      //nickname
-      if(this.form.nickname.length < 4){
-        this.errors.push("Nick za mało liter")
-        status = false
-      }
-      //email
-
-      //password
-      if(this.form.password1 != this.form.password2){
-        this.errors.push("Hasła są różne")
-        status = false
-      }
-
-      //birthDay
-      if(this.form.birthDay < 12) this.age_rate = 0
-      else if(this.form.birthday >= 12 && this.form.birthday <= 16) this.age_rate = 1
-      else this.age_rate = 2
-      return status
+    log: function(){
+      console.log("ABC")
     }
   }
 };
 </script>
 
-<style>
-.form-box {
+<style scoped>
+.register-form{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-label {
-  padding: 5px;
+
+div h1{
+  padding-top: 7vh!important;
+  padding: 10px;
+  text-align: center;
+}
+form{
+  margin: auto;
+  max-width: 600px;
+  min-width: 300px;
+  padding: 1em;
+}
+button{
+  max-width: 600px;
+  min-width: 300px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="guest-menu">
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand href="#">
         <router-link to="/home">MediaCenter</router-link>
