@@ -7,6 +7,7 @@ import videoPlayer from './modules/videoPlayer'
 import Audio from './modules/audio'
 import AudioPlayer from './modules/audioPlayer'
 import Image from './modules/image'
+import Server from './modules/server'
 
 import createPersistedState from 'vuex-persistedstate'
 
@@ -21,6 +22,7 @@ const store = new Vuex.Store({
     audio: Audio,
     audioPlayer: AudioPlayer,
     image: Image,
+    server: Server,
   },
   plugins: [
     createPersistedState()

@@ -1,4 +1,4 @@
-import {videoApi} from '../api'
+import {videoApi, authHeader} from '../api'
 
 export default {
     namespaced: true,
@@ -78,7 +78,7 @@ export default {
         },
         videoBySlug: ({commit}, slug) => {
             return new Promise( (res, rej) => {
-                videoApi.get(slug + '/detail', {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.get(slug + '/detail', authHeader())
                 .then(result => {
                     console.log(result.data.response)
                     commit('setVideo', result.data.response)

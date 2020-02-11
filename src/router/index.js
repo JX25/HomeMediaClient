@@ -18,7 +18,8 @@ import EditImage from '../components/Image/EditImage.vue'
 import UserSettings from '../components/User/UserSettings.vue'
 import SignIn from '../components/Login/SignIn.vue'
 import SignUp from '../components/Login/SignUp.vue'
-
+//SERVER
+import ServerInfo from '../components/Server/ServerInfo.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -96,7 +97,12 @@ const routes = [
     name: 'EditImage',
     component: EditImage
   },
-
+  //SERVER
+  {
+    path: '/admin/server',
+    name: 'ServerInfo',
+    component: ServerInfo
+  }
 
 ]
 

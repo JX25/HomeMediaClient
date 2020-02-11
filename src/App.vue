@@ -40,20 +40,16 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  overflow-y: scroll;
 }
 #site-menu {
   display:block;
 }
 #site-view {
-  height: 90vh;
+  min-height: 85.7vh;
 }
 #footer {
-  margin-top: 10%;
-  display: block;
-  position: absolute;
-  width: 100%;
-  bottom: 0px;
+
 }
 
 @media only screen and(max-width:800px){

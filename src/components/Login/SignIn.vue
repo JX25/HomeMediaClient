@@ -42,8 +42,8 @@ export default {
           console.log(result)
           this.successContent = result.message
           setTimeout( () => {
-            this.$router.push('Home')
-          }, 1500)
+            this.$router.push('Home?status=login')
+          }, 100)
         })
         .catch(error => {
           this.error = true
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
   allowSend: function(){
-      return (this.nickname.length<3 ||  this.password.length<6)
+      return (this.nickname.length<3 ||  this.password.length<3)
     }
   },
 };
@@ -62,9 +62,8 @@ export default {
 <style scoped>
 .login-form{
   position: relative;
-  top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
 }
 
 div h1{

@@ -79,6 +79,8 @@ export default {
 </script>
 <style scoped>
 a {
+  padding-left: 10px;
+  text-align: center;
   text-decoration: none;
   color: #fff;
 }
@@ -87,14 +89,14 @@ a:hover {
   color: rgba(255, 255, 255, 0.5);
 }
 .navbar {
-  z-index: 150;
+  z-index: 15ew0;
 }
 .navi-title {
   font-size: 15px;
 }
 @media (min-width: 995px) {
   .navbar {
-      z-index: 1000;
+    z-index: 1000;
     padding-top: 5px;
     height: 100px;
     position: relative;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="about">
     <h1>O wykonanych aplikacjach</h1>
     <p>
       Pellentesque habitant morbi tristique senectus et netus
@@ -15,7 +15,7 @@
       eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt
       quis, accumsan porttitor, facilisis luctus, metus
     </p>
-        <p>
+    <p>
       Pellentesque habitant morbi tristique senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor
       quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
@@ -38,5 +38,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.about{
+  position: relative;
+  margin: 2em;
+}
+h1{
+  color: rgba(127,211,193,0.9);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 </style>

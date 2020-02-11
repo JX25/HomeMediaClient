@@ -318,7 +318,6 @@ export default {
   position: fixed;
   bottom: 15px;
   right: 15px;
-
   color: rgba(24, 150, 41, 0.979);
 }
 
@@ -419,8 +418,8 @@ export default {
 #imageConfig {
   z-index: 100;
   position: relative;
-  right: -140px;
-  top: -235px;
+  left: 280px;
+  top: -90px;
   color: rgba(255, 255, 255, 0.3);
 }
 
@@ -432,19 +431,18 @@ export default {
 #imageConfigClose {
   z-index: 100;
   position: relative;
-  right: -140px;
-  top: -475px;
+  left: 280px;
+  top: -330px;
   color: rgba(255, 255, 255, 0.3);
 }
 
 #imageConfigClose:hover {
   cursor: pointer;
-
   color: rgba(255, 255, 255, 0.8);
 }
 
 .image-menu {
-  float: left;
+
   position: relative;
   width: 320px;
   height: 240px;
@@ -454,6 +452,7 @@ export default {
 
 .image-menu button {
   top: 25px;
+  left: 15%;
   width: 200px;
   position: relative;
 }
