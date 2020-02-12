@@ -21,28 +21,34 @@ export default {
 </script>
 
 <style scoped>
-.infoBox{
-    background-color: rgba(117, 117, 245, 0.5);
-    margin: auto;
-    width: 60%;
-    min-height: 40px;
-    position: relative;
-    border-radius: 10px;
-    z-index: 10;
+.infoBox {
+  position: fixed;
+  bottom: 10px;
+  padding-right: 30px;
+  width: 100%!important;
+  left: 0;
+  background-color: rgba(15, 27, 21, 0.8);
+  margin: auto;
+  min-height: fit-content;
+  overflow-wrap: break-word;
+  border-radius: 10px;
+  z-index: 150;
 }
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 li {
-    display: block;
-    font-size: 16pt;
+  display: block;
+  color:white;
+  font-size: 12pt;
 }
 i {
-    position: absolute;
-    right: 5px;
-    top: 5px;
+  color:white;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
-i:hover{
-    cursor: pointer;
+i:hover {
+  cursor: pointer;
 }
 </style>

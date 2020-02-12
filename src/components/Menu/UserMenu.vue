@@ -9,29 +9,35 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item>
-            <router-link to="/video">Filmy</router-link>
+            <router-link to="/video">
+              <i class="fas fa-film fa-2x"></i>
+              <div class="navi-title">Wideo</div>
+            </router-link>
           </b-nav-item>
           <b-nav-item>
-            <router-link to="/audio">Muzyka</router-link>
+            <router-link to="/audio">
+              <i class="fas fa-music fa-2x"></i>
+              <div class="navi-title">Audio</div>
+            </router-link>
           </b-nav-item>
           <b-nav-item>
-            <router-link to="/photo">Zdjęcia</router-link>
+            <router-link to="/image">
+              <i class="fas fa-image fa-2x"></i>
+              <div class="navi-title">Grafika</div>
+            </router-link>
           </b-nav-item>
 
-          <b-nav-item-dropdown text="Ustawienia" right>
-            <b-dropdown-item href="#">
-              <router-link to="/user/edit">Edycja konto</router-link>
-            </b-dropdown-item>
-            <b-dropdown-item href="#">
-              <router-link to="/user/">---</router-link>
-            </b-dropdown-item>
-            <b-dropdown-item href="#">
-              <router-link to="/user/delete">Usuń konto</router-link>
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-
           <b-nav-item>
-            <b @click="logout">Wylogowanie</b>
+            <router-link to="/image">
+              <i class="fas fa-cog fa-2x"></i>
+              <div class="navi-title">Ustawienia</div>
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <b @click="logout">
+              <i class="fas fa-sign-out-alt fa-2x"></i>
+              <div class="navi-title">Wyloguj</div>
+            </b>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -53,11 +59,35 @@ export default {
 </script>
 <style scoped>
 a {
+  padding-left: 10px;
+  text-align: center;
   text-decoration: none;
   color: #fff;
 }
-a:hover{
+a:hover {
   text-decoration: none;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
+}
+.navbar {
+  z-index: 15;
+}
+.navi-title {
+  position:relative;
+  left: 5px;
+  font-size: 15px;
+  text-align:center;
+}
+@media (min-width: 995px) {
+  .navbar {
+    z-index: 1000;
+    padding-top: 5px;
+    height: 100px;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  #nav-collapse {
+    position: absolute;
+    right: 1%;
+  }
 }
 </style>

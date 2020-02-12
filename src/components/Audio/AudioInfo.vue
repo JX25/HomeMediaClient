@@ -23,10 +23,11 @@ export default {
 
 <style scoped>
 .infoBox{
-    background-color: rgba(117, 117, 245, 0.85);
+    background-color: rgba(31, 22, 15, 0.85);
     margin: auto;
-    width: 60%;
-    min-height: 40px;
+    width: 100%;
+    color: white;
+    min-height: fit-content;
     position: fixed;
     border-radius: 10px;
     z-index: 10;
@@ -41,7 +42,7 @@ ul {
 li {
     display: block;
     right: 10px;
-    font-size: 16pt;
+    font-size: 10pt;
 }
 i {
     position: absolute;

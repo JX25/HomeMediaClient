@@ -1,18 +1,15 @@
 <template>
   <div class="fullscreen" ref="box">
-    <vue-p5 
-    @setup="setup"
-    @draw="draw"
+    <div
+
     v-if="state == 'logout'"
     class="logout"
     >
       <h1>Home Media Center</h1>
       <h2>Konto zostało wylogowane</h2>
-    </vue-p5>
-    <vue-p5
-    @setup="setup"
-    @draw="draw"   
-    @resize="setup" 
+    </div>
+    <div
+
      class="login" v-else-if="state == 'login'">
       <h1>Home Media Center</h1>
       <h2>Zalogowano na konto: </h2>
@@ -22,28 +19,27 @@
         <div><p>Materiały audio</p></div>
         <div><p>Materiały graficzne</p></div>
       </div>
-    </vue-p5>
-    <vue-p5 
-    @setup="setup"
-    @draw="draw"
+    </div>
+    <div 
+
     class="home-page" v-else>
         <h1>Home Media Center</h1>
         <h2>Zaloguj się, aby korzystać z dostępnych materiałów</h2>
-    </vue-p5>
+    </div>
     </div>
 </template>
 
 <script>
-import VueP5 from "vue-p5"
+
 import { mapGetters } from 'vuex'
 export default {
     name: 'Home',
     components:{
-      'vue-p5': VueP5,
+
     },
     data() {
       return {
-        state: this.$route.query.state,
+        state: this.$route.query.status,
         particles: [],
         particlesLength: 0,
       }

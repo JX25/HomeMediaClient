@@ -1,60 +1,71 @@
 <template>
   <form @submit.prevent="validateAndSendAlbum">
-    <table class="table">
+    <table class="table col-12 col-sm-12 col-sx-12 col-md-10 col-lg-10 col-xl-10">
       <tbody>
         <tr>
           <th>Nazwa albumu</th>
           <td>
-            <input type="text" v-model="album" />
+            <b-form-input type="text" v-model="album"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Autor</th>
           <td>
-            <input type="text" v-model="author" />
+            <b-form-input type="text" v-model="author"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Rok</th>
           <td>
-            <input type="number" :max="currentYear" :min="1900" v-model="year" />
+            <b-form-input type="number" :max="currentYear" :min="1900" v-model="year"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Gatunek</th>
           <td>
-            <input type="text" v-model="genre" />
+            <b-form-input type="text" v-model="genre"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Wiek (PEGI)</th>
           <td>
-            <select name="pegi" v-model="age_rate">
+            <b-form-select name="pegi" v-model="age_rate">
               <option value="0">Familijny</option>
               <option value="1">Wiek &#x3c;16</option>
               <option value="2">Wiek 16+</option>
-            </select>
+            </b-form-select>
           </td>
         </tr>
         <tr>
           <th>Okładka</th>
           <td>
-            <input
-              type="file"
-              accept="image/jpeg image/png"
-              @change="handleThumbnailFile"
+            <b-form-file
+              accept=".jpeg, .jpg"
               ref="thumbnail"
-            />
+              @change="handleThumbnailFile"
+              placeholder="nowa miniatura..."
+              drop-placeholder="Upuść plik tutaj..."
+            ></b-form-file>
           </td>
         </tr>
         <tr>
           <th>Pliki</th>
           <td>
-            <input type="file" accept="audio/*" @change="handleAudioFiles" ref="audios" multiple />
+            <b-form-file
+              accept="audio/*"
+              ref="audios"
+              @change="handleAudioFiles"
+              placeholder="nowe audio..."
+              drop-placeholder="Upuść plik tutaj..."
+              multiple
+            ></b-form-file>
           </td>
         </tr>
         <template v-if="filesDetails">
-          <template v-for="(audio, index) in this.$refs.audios.files" class="fileDetails">
+          <template
+            v-for="(audio, index) in this.$refs.audios.$refs.input.files"
+            class="fileDetails"
+          >
             <tr class="fileDetailName" :key="audio.name">
               <th>Plik #{{index + 1}}</th>
               <td>{{audio.name}}</td>
@@ -62,7 +73,7 @@
             <tr :key="audio.title">
               <th>Tytuł</th>
               <td>
-                <input type="text" v-model="title[index]" />
+                <b-form-input type="text" v-model="title[index]" ></b-form-input>
               </td>
             </tr>
             <tr :key="audio.description">
@@ -70,13 +81,13 @@
 
               <td>
                 <v-icon name="beer"></v-icon>
-                <textarea name="description" cols="30" rows="1" v-model="description[index]"></textarea>
+                <b-form-textarea name="description" cols="30" rows="1" v-model="description[index]"></b-form-textarea>
               </td>
             </tr>
             <tr :key="audio.length">
               <th>Długość</th>
               <td>
-                <input type="text" disabled v-model="length[index]" />
+                <b-form-input type="text" disabled v-model="length[index]"></b-form-input>
               </td>
             </tr>
             <tr :key="audio.tags">
@@ -85,7 +96,7 @@
                 <sub>a,b</sub>
               </th>
               <td>
-                <input type="text" v-model="tags[index]" />
+                <b-form-input type="text" v-model="tags[index]"></b-form-input>
               </td>
             </tr>
           </template>
@@ -124,13 +135,13 @@ export default {
     validateAndSendAlbum: function() {
       console.log("ACS", this.audioFiles);
       for (let i = 0; i < this.audioFiles.length; ++i) {
-          this.validateAndSend(i);
-        }
+        this.validateAndSend(i);
+      }
       this.showInfo();
       this.$router.push("/admin/audio");
     },
     handleAudioFiles: function() {
-      this.audioFiles = this.$refs.audios.files;
+      this.audioFiles = this.$refs.audios.$refs.input.files;
       for (let i = 0; i <= this.audioFiles.length - 1; ++i) {
         this.handleAudioFile(this.audioFiles[i], i);
       }
@@ -147,7 +158,7 @@ export default {
       });
     },
     handleThumbnailFile: function() {
-      this.thumbnail = this.$refs.thumbnail.files[0];
+      this.thumbnail = this.$refs.thumbnail.$refs.input.files[0];
     },
     validateAndSend: function(i) {
       //validation TODO
@@ -217,5 +228,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

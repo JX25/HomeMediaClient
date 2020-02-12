@@ -1,62 +1,100 @@
 <template>
-  <div>
-    <h2>Lista filmów</h2>
+  <div id="videos">
+    <center>
+      <h2>Lista filmów</h2>
+    </center>
     <div>
-      <form class="form-inline col-md-12 table-responsive"
-        prevent.submit
-      >
-        <input
-          type="text"
-          class="form-control mb-2 mr-sm-2"
-          id="title"
-          placeholder="Nazwa filmu"
-          v-model="params.title"
-        />
-        <input
-          type="text"
-          class="form-control mb-2 mr-sm-2"
-          id="keyword"
-          placeholder="Słowa kluczowe"
-          v-model="params.keyword"
-        />
-        <input
-          type="text"
-          class="form-control mb-2 mr-sm-2"
-          id="genre"
-          placeholder="Gatunek"
-          v-model="params.genre"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2 col-xs-2"
-          id="lengthMin"
-          placeholder="Długość od min"
-          v-model="params.lengthMin"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2"
-          id="lengthMax"
-          placeholder="Długość do min"
-          v-model="params.lengthMax"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2"
-          id="yearMin"
-          placeholder="Od roku"
-          v-model="params.yearMin"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2"
-          id="yearMax"
-          placeholder="Do roku"
-          v-model="params.yearMax"
-        />
-        <button class="btn btn-info form-control mb-2 mr-sm-2" @click="filterVideos()">Wyszukaj</button>
-      </form>
-      <table class="table table-hover table-striped col-md-12 content" v-if="listLoaded">
+      <center>
+        <div class="tablist">
+          <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+              <b-button
+                block
+                href="#"
+                v-b-toggle.accordion-1
+                variant="dark info"
+                class="filterButton"
+              ><i class="far fa-caret-square-down fa-2x"></i><span>Wyszukiwarka</span></b-button>
+            </b-card-header>
+            <b-collapse
+              id="accordion-1"
+              hide
+              accordion="accordion-body collapse"
+              role="tabpanel"
+            >
+              <b-card-body>
+                <b-form
+                  class="form-inline col-md-12 col-lg-12 col-xl-12 table-responsive"
+                  @submit.prevent="filterVideos()"
+                >
+                  <input
+                    type="text"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    placeholder="Nazwa filmu"
+                    v-model="params.title"
+                  />
+                  <input
+                    type="text"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    placeholder="Słowa kluczowe"
+                    v-model="params.keyword"
+                  />
+                  <input
+                    type="text"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="genre"
+                    placeholder="Gatunek"
+                    v-model="params.genre"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="lengthMin"
+                    placeholder="Długość od min"
+                    v-model="params.lengthMin"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="lengthMax"
+                    placeholder="Długość do min"
+                    v-model="params.lengthMax"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="yearMin"
+                    placeholder="Od roku"
+                    v-model="params.yearMin"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="yearMax"
+                    placeholder="Do roku"
+                    v-model="params.yearMax"
+                  />
+                  <b-button
+                    class="btn btn-info form-control mb-2 mr-sm-2 col-12 col-sm-12 col-sx-12 col-md-2"
+                    type="submit"
+                  >Wyszukaj</b-button>
+                  <b-button
+                    class="btn btn-info form-control mb-2 mr-sm-2 col-12 col-sm-12 col-sx-12 col-md-2"
+                    @click="reset()"
+                    type="reset"
+                  >RESET</b-button>
+                  <b-button
+                    class="btn btn-secondary form-control mb-2 mr-sm-2 col-12 col-sm-12 col-sx-12 col-md-2"
+                    @click="reload()"
+                    type="button"
+                  >Przeładuj</b-button>
+                </b-form>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+        </div>
+      </center>
+      <table class="table table-striped col-md-12 col-lg-12 col-xl-12 content" v-if="listLoaded">
         <thead class="thead-light">
           <tr>
             <th scope="col col-sm-2">#</th>
@@ -72,7 +110,7 @@
         <tbody>
           <tr v-for="video in videoList.slice(0, videoLimit)" :key="video.id">
             <td>
-              <img :src="image(video.slug)" width="100" height="100" alt="brak" />
+              <img :src="image(video.slug)" width="32" height="32" alt="brak" />
             </td>
             <td>{{video.title.toUpperCase()}}</td>
             <td>{{video.year}}</td>
@@ -104,7 +142,7 @@
     </div>
     <b-button @click="loadMore" v-if="videoLimit < videoList.length">Więcej</b-button>
     <router-link to="video/add">
-      <i id="addVideo" class="fas fa-plus-circle fa-3x"></i>
+      <i id="addVideo" class="fas fa-plus fa-3x"></i>
     </router-link>
   </div>
 </template>
@@ -113,14 +151,14 @@
 import { mapActions, mapGetters } from "vuex";
 import VideoDetail from "./Video";
 import VideoInfo from "./VideoInfo";
-import {filterVideoList} from "../../plugins/filterList";
+import { filterVideoList } from "../../plugins/filterList";
 import { address } from "../../store/api";
 
 export default {
   name: "VideoList",
   components: {
     VideoDetail,
-    VideoInfo,
+    VideoInfo
   },
   data() {
     return {
@@ -136,7 +174,7 @@ export default {
         lengthMax: "",
         yearMin: "",
         yearMax: ""
-      },
+      }
     };
   },
   methods: {
@@ -155,11 +193,26 @@ export default {
           });
       }
     },
+    reset: function() {
+      this.params = {
+        title: "",
+        keyword: "",
+        genre: "",
+        lengthMin: "",
+        lengthMax: "",
+        yearMin: "",
+        yearMax: ""
+      };
+      this.filterVideos();
+    },
+    reload: function() {
+      this.$router.go();
+    },
     filterVideos: function() {
       //WALIDACJA
       let filteredVideos = filterVideoList(this.videos, this.params);
       this.videoList = filteredVideos;
-      this.videoLimit = 25
+      this.videoLimit = 25;
     },
     videoInfo: function(video) {
       this.targetVideo = video;
@@ -187,7 +240,7 @@ export default {
       if (this.getShow == true) {
         this.hideVideoPlayer();
       }
-        this.showVideoPlayer(src);
+      this.showVideoPlayer(src);
     }
   },
   created() {
@@ -205,13 +258,34 @@ export default {
 </script>
 
 <style scoped>
-form{
-  width: 80%;
-  left: 9%;
+#videos{
+  width: 100%!important;
+  position:realtive;
 }
 
-.table td{
+center {
+  margin-top: 2em;
+}
+.table {
+  margin-top: 25px;
+  position: relative;
+  width: 100%!important;
+}
+form {
+  width: 100%;
+  margin: auto;
+  text-align:center;
+  position: relative;
+}
+
+.table td {
   vertical-align: middle;
+}
+
+.table tr {
+  border: none;
+  width: 100%;
+  height: fit-content;
 }
 
 #addVideo {
@@ -228,11 +302,32 @@ form{
 }
 
 img:hover {
-  transform: scale(2);
+  transform: scale(5);
   transform-origin: center;
   transition: 0.3s ease-in;
   border-radius: 10px;
 }
+@media (max-width: 768px){
+  form{
+    width: 80%;
+  }
+  table{
+    position: relative;
+    width: 100%!important;
+  }
+}
+
+@media (max-width: 360px){
+  table{
+    left: -1.0em;
+    width: 100%!important
+  }
+  td{
+    position: relative;
+  }
+}
+
+
 @media (max-width: 1350px) {
   tr {
     display: grid;
@@ -261,5 +356,29 @@ button:hover {
 
 .actions {
   width: 250px;
+}
+
+.filterButton {
+  width: fit-content;
+}
+
+.filterButton span{
+  position: relative;
+  left: 5px;
+  top: -5px;
+}
+
+
+.mb-1 {
+  border: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.mb-1 header {
+  background-color: rgba(255, 255, 255);
+  border: 0px;
+  text-shadow: none;
+  text-align: left;
 }
 </style>

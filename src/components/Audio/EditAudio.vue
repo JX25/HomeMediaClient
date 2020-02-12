@@ -1,100 +1,109 @@
 <template>
-  <div>
-    <form @submit.prevent="validateAndUpdate">
-      <table class="table">
+  <div class="editAudio col-12 col-xs-12 col-sm-12 col-md-12 col-xl-12">
+    <div class="header">
+      <h2>Edycja danych pliku audio</h2>
+    </div>
+    <b-form @submit.prevent="validateAndUpdate">
+      <table class="table table-hover">
         <tbody>
           <tr>
             <th>Tytuł</th>
             <td>
-              <input type="text" v-model="editAudio.title" />
+              <b-form-input v-model="editAudio.title"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Album</th>
             <td>
-              <input type="text" v-model="editAudio.album" />
+              <b-form-input v-model="editAudio.album"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Autor/Zespół</th>
             <td>
-              <input type="text" v-model="editAudio.author" />
+              <b-form-input v-model="editAudio.author"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Opis</th>
             <td>
-              <input type="text" v-model="editAudio.description" />
+              <b-form-input v-model="editAudio.description"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Rok</th>
             <td>
-              <input type="text" v-model="editAudio.year" />
+              <b-form-input type="number" v-model="editAudio.year"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Gatunek</th>
             <td>
-              <input type="text" v-model="editAudio.genre" />
+              <b-form-input v-model="editAudio.genre"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Wiek</th>
             <td>
-              <select type="text" v-model="editAudio.age_rate" selected="editAudio.age_rate">
+              <b-form-select v-model="editAudio.age_rate" selected="editAudio.age_rate">
                 <option value="0">Familijny</option>
                 <option value="1">do 16lat</option>
                 <option value="2">powyżej 16lat</option>
-              </select>
+              </b-form-select>
             </td>
           </tr>
           <tr>
             <th>Język</th>
             <td>
-              <input type="text" v-model="editAudio.language" />
+              <b-form-input v-model="editAudio.language"></b-form-input>
             </td>
           </tr>
 
           <tr>
             <th>Słowa kluczowe</th>
             <td>
-              <input type="text" v-model="editAudio.tags" />
+              <b-form-input v-model="tags"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Miniatura</th>
             <td>
-              <input type="file" accept=".jpeg, .jpg, .png" id="thumbnail" ref="thumbnail" />
+              <b-form-file
+                accept=".jpeg, .jpg"
+                ref="thumbnail"
+                placeholder="nowa miniatura..."
+                drop-placeholder="Upuść plik tutaj..."
+              ></b-form-file>
             </td>
           </tr>
           <tr>
             <th>Plik audio</th>
             <td>
-              <input type="file" accept="audio/*" @change="fileHandle()" id="audio" ref="audio" />
+              <b-form-file
+                accept="audio/*"
+                @change="fileHandle()"
+                ref="audio"
+                placeholder="nowy plik audio..."
+                drop-pl
+                aceholder="Upuść plik tutaj..."
+              ></b-form-file>
             </td>
           </tr>
 
           <tr>
             <th>Długość utworu [s]</th>
             <td>
-              <input type="text" v-model="editAudio.length" disabled />
+              <b-form-input v-model="editAudio.length" disabled></b-form-input>
             </td>
           </tr>
 
           <tr>
-            <td>
-              <input
-                type="button"
-                @click="validateAndUpdate"
-                class="btn btn-primary"
-                value="Zakutalizuj"
-              />
-            </td>
+            <td></td>
           </tr>
         </tbody>
       </table>
-    </form>
+      <input @click="validateAndUpdate" class="btn btn-primary submit" value="Zakutalizuj" />
+    </b-form>
   </div>
 </template>
 
@@ -109,6 +118,7 @@ export default {
       slug: this.$route.params.slug,
       result: [],
       indexOfAudio: 0,
+      tags: ''
     };
   },
   methods: {
@@ -118,7 +128,7 @@ export default {
       "setInfo",
       "audioBySlug",
       "audioToEdit",
-      "updateAudioList",
+      "updateAudioList"
     ]),
     validateAndUpdate: function() {
       //console.log(this.$refs.video.files[0] === undefined)
@@ -126,7 +136,7 @@ export default {
       //if(!validate) {}
       let metadata = {};
       console.log("DBD", this.editAudio.tags);
-      metadata.tags = this.editAudio.tags[0].split(",").map(obj => obj.trim());
+      metadata.tags = this.tags.split(",").map(obj => obj.trim());
       metadata.title = this.editAudio.title;
       metadata.description = this.editAudio.description;
       metadata.year = this.editAudio.year;
@@ -138,14 +148,14 @@ export default {
       metadata.length = this.editAudio.length;
       // files
       let files = {};
-      files.file = this.$refs.audio.files[0];
-      files.thumbnail = this.$refs.thumbnail.files[0];
+      files.file = this.$refs.audio.$refs.input.files[0];
+      files.thumbnail = this.$refs.thumbnail.$refs.input.files[0];
       files.slug = slug(
         this.editAudio.title +
           "_" +
           this.editAudio.year +
           "_" +
-          this.editAudio.author
+          this.editAudio.album
       );
 
       this.updateAudio(metadata, files);
@@ -162,7 +172,7 @@ export default {
     },
     updateAudio: function(meta, files) {
       console.log(files);
-      meta.slug = slug(meta.title + "_" + meta.year + "_" + meta.author);
+      meta.slug = slug(meta.title + "_" + meta.year + "_" + meta.album);
       meta.OLDslug = this.slug;
       this.clearInfo();
       this.$store
@@ -170,7 +180,7 @@ export default {
         .then(result => {
           this.result.push(result[0]);
           this.setInfo("Dane pliku audio: " + result[0]);
-          
+
           if (files.thumbnail != undefined) {
             this.$store
               .dispatch("audio/uploadThumbnail", files)
@@ -193,16 +203,17 @@ export default {
       this.$router.push("/admin/audio");
     },
     fileHandle: function() {
-      let fileURL = URL.createObjectURL(this.$refs.video.files[0]);
+      let fileURL = URL.createObjectURL(this.$refs.audio.$refs.input.files[0]);
       getBlobDuration(fileURL).then(duration => {
         this.audio.length = parseInt(duration);
       });
     }
   },
   created() {
-    this.indexOfAudio = this.audios.findIndex(x=>{
-      return (x._id == this.editAudio._id)
-    })
+    this.tags = this.editAudio.tags.join(",")
+    this.indexOfAudio = this.audios.findIndex(x => {
+      return x._id == this.editAudio._id;
+    });
     this.setAudio().then(() => {
       if (this.audioToEdit === undefined) {
         this.audioBySlug(this.slug);
@@ -218,4 +229,46 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  position: realtive;
+  width: 100vw !important;
+  text-align: center;
+}
+
+.editAudio {
+  padding: 0;
+  margin: 0px;
+  top: 1em;
+  padding-bottom: 2em;
+  width: 100% !important;
+}
+
+
+
+.table {
+  width: 100vw !important;
+  position: relative;
+  top: 1em;
+}
+
+th {
+  left: 0px;
+  width: fit-content;
+  font-size: 1em;
+  text-align: left;
+  max-width: 15vw;
+  font-size: 13pt;
+}
+
+td {
+  width: 100vw;
+  padding: 0px;
+}
+
+.submit {
+  position: relative;
+  left: 0.2em;
+  top: 0.5em;
+  width: 96vw !important;
+}
 </style>

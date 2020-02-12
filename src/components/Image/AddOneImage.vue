@@ -1,28 +1,25 @@
 <template>
   <div>
-    <form @submit.prevent="validateAndSend">
-      <table class="table col-md-10">
+    <b-form @submit.prevent="validateAndSend">
+      <table class="table col-12 col-sm-12 col-sx-12 col-md-10 col-lg-10 col-xl-10">
         <tbody>
           <tr>
             <th>Tytuł zdjęcia</th>
             <td>
-              <b-input v-model="title" type="text" />
+              <b-form-input v-model="title" type="text"></b-form-input>
             </td>
           </tr>
           <tr>
-            <th>
-              Czas zrobienia zdjęcia
-              <input type="checkbox" class="form-check-input" />
-            </th>
+            <th>Czas zrobienia zdjęcia</th>
 
             <td>
-              <b-input v-model="timestamp" type="text" disabled />
+              <b-form-input v-model="timestamp" type="text" disabled></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Album/Kolekcja</th>
             <td>
-              <b-input v-model="collection" type="text" />
+              <b-form-input v-model="collection" type="text"></b-form-input>
             </td>
           </tr>
           <tr>
@@ -31,7 +28,7 @@
               <sub>a,b</sub>
             </th>
             <td>
-              <b-input v-model="tags" type="text" />
+              <b-form-input v-model="tags" type="text"></b-form-input>
             </td>
           </tr>
           <tr>
@@ -43,7 +40,7 @@
                     type="file"
                     class="custom-file-input"
                     ref="imageFile"
-                    accept=".png, .jpeg, .jpg, .tiff"
+                    accept=".jpeg, .jpg"
                     @change="handleImageFile"
                   />
                   <label class="custom-file-label" for="inputGroupFile02">Wybierz plik...</label>
@@ -54,38 +51,38 @@
           <tr>
             <th>Opis</th>
             <td>
-              <b-textarea v-model="description" type="textarea"></b-textarea>
+              <b-form-textarea v-model="description" type="textarea"></b-form-textarea>
             </td>
           </tr>
           <tr>
             <th>Kategoria wiekowa</th>
             <td>
-              <b-select v-model="age_rate">
+              <b-form-select v-model="age_rate">
                 <option value="0">Dla wszystkich</option>
                 <option value="1">do 16</option>
                 <option value="2">16+</option>
-              </b-select>
+              </b-form-select>
             </td>
           </tr>
           <tr>
             <th>Wysokość (px)</th>
             <td>
-              <b-input type="text" v-model="height" disabled />
+              <b-form-input type="text" v-model="height" disabled></b-form-input>
             </td>
           </tr>
 
           <tr>
             <th>Szerokość (px)</th>
             <td>
-              <b-input type="text" v-model="width" disabled />
+              <b-form-input type="text" v-model="width" disabled></b-form-input>
             </td>
           </tr>
           <tr>
-            <button class="btn btn-primary">Dodaj plik</button>
+            <b-button class="btn btn-primary" type="submit">Dodaj plik</b-button>
           </tr>
         </tbody>
       </table>
-    </form>
+    </b-form>
     <img :src="img.src" v-if="loaded" />
   </div>
 </template>
@@ -127,10 +124,10 @@ export default {
         width: this.width,
         height: this.height,
         description: this.description,
-        age_rate: this.age_rate,
-      }
+        age_rate: this.age_rate
+      };
       this.$store.dispatch("image/uploadMetaData", data).then(result => {
-          console.log("333", result)
+        console.log("333", result);
         this.setInfo("Dane pliku: " + result.msg);
         const slug = result.slg;
         this.$store
@@ -139,9 +136,17 @@ export default {
             file: this.file
           })
           .then(result2 => {
-            this.setInfo("Miniatura grafiki: " + result2.data.response);
+            this.setInfo("Wysłanie grafiki: " + result2.data.response);
           })
           .finally(() => {
+            this.showInfo();
+            this.$router.push("/admin/image");
+          })
+          .catch(error => {
+            console.log(error);
+            this.setInfo(
+              "Błąd w wysyłaniu pliku i danych " + error.response.status
+            );
             this.showInfo();
             this.$router.push("/admin/image");
           });

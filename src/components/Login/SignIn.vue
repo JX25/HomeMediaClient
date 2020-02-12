@@ -3,7 +3,7 @@
     <h1>Panel logowania</h1>
     <div class="error-box" v-if="this.error">{{this.errorContent}}</div>
     <div class="success-box" v-if="this.success">{{this.successContent}}</div>
-    <form>
+    <form @submit.prevent="login()">
       <div>
       <b-form-group>
         <b-form-input v-model="nickname" placeholder="Login..."> </b-form-input>
@@ -12,7 +12,7 @@
         <b-form-input type="password" v-model="password" placeholder="Hasło..."> </b-form-input>
       </b-form-group>
       <b-form-group>
-        <b-button variant="primary" @click.prevent="login()" :disabled="allowSend">Zaloguj się</b-button>
+        <b-button variant="primary"  type="submit" :disabled="allowSend">Zaloguj się</b-button>
       </b-form-group>
       </div>
     </form>
@@ -46,8 +46,20 @@ export default {
           }, 100)
         })
         .catch(error => {
+          let code = error.response.status
           this.error = true
-          this.errorContent = error
+          switch(code){
+            case 401:
+            case 404:
+              this.errorContent = "Nie można się zalogować na takiego użytkownika"
+              break
+            case 500:
+              this.errorContent = "Problem z serwerem, nie można się zalogować"
+              break
+            default:
+              this.erroContent = "Nieznany błąd, nie można się zalogować"
+              break
+          }
         })
     },
   },
@@ -84,14 +96,14 @@ button{
 
 .error-box{
   position: relative;
-  top: 10px;
-  width: 50%;
+  width: 100%;
+  text-align: center;
   color: red;
 }
 .success-box{
   position: relative;
-  top: 10px;
-  width: 50%;
+  width: 100%;
+  text-align: center;
   color: green;
 }
 </style>

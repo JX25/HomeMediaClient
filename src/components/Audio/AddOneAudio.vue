@@ -1,76 +1,83 @@
 <template>
   <form @submit.prevent="validateAndSend(0)">
-    <table class="table col-10">
+    <table class="table col-12 col-sm-12 col-sx-12 col-md-10 col-lg-10 col-xl-10">
       <tbody>
         <tr>
           <th>Tytuł</th>
           <td>
-            <input type="text" v-model="title" />
+            <b-form-input type="text" v-model="title"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Autor</th>
           <td>
-            <input type="text" v-model="author" />
+            <b-form-input type="text" v-model="author"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Album</th>
           <td>
-            <input type="text" v-model="album" />
+            <b-form-input type="text" v-model="album"></b-form-input>
           </td>
         </tr>
 
         <tr>
           <th>Rok</th>
           <td>
-            <input type="number" :max="currentYear" :min="1900" v-model="year" />
+            <b-form-input type="number" :max="currentYear" :min="1900" v-model="year"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Gatunek</th>
           <td>
-            <input type="text" v-model="genre" />
+            <b-form-input type="text" v-model="genre"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Okładka</th>
           <td>
-            <input
-              type="file"
-              accept="image/jpeg image/png"
-              @change="handleThumbnailFile"
+            <b-form-file
+              accept=".jpeg, .jpg"
               ref="thumbnail"
-            />
+              @change="handleThumbnailFile"
+              placeholder="nowa miniatura..."
+              drop-placeholder="Upuść plik tutaj..."
+            ></b-form-file>
           </td>
         </tr>
         <tr>
           <th>Plik</th>
           <td>
-            <input type="file" accept="audio/*" @change="handleAudioFile" ref="audio" />
+            <b-form-file
+              accept="audio/*"
+              ref="audio"
+              @change="handleAudioFile"
+              placeholder="nowe audio..."
+              drop-placeholder="Upuść plik tutaj..."
+            ></b-form-file>
           </td>
         </tr>
         <tr>
           <th>Długość</th>
           <td>
-            <input type="text" disabled v-model="length" />
+            <b-form-input type="text" disabled v-model="length"></b-form-input>
           </td>
         </tr>
         <tr>
-          <th>Wiek (PEGI)</th>
+          <th>Ograniczenia wiekowe</th>
           <td>
-            <select name="pegi" v-model="age_rate">
+            <b-form-select v-model="age_rate">
               <option value="0">Familijny</option>
               <option value="1">Wiek &#x3c;16</option>
               <option value="2">Wiek 16+</option>
-            </select>
+            </b-form-select>
           </td>
         </tr>
 
         <tr>
           <th>Język</th>
           <td>
-            <input type="text" v-model="language" />
+            <b-form-input type="text" v-model="language"></b-form-input>
           </td>
         </tr>
         <tr>
@@ -79,14 +86,14 @@
             <sub>a,b</sub>
           </th>
           <td>
-            <input type="text" v-model="tags" />
+            <b-form-input type="text" v-model="tags"></b-form-input>
           </td>
         </tr>
         <tr>
           <th>Opis utworu</th>
           <td>
             <v-icon name="beer"></v-icon>
-            <textarea name="description" id cols="30" rows="1" v-model="description"></textarea>
+            <b-form-textarea name="description" id cols="30" rows="1" v-model="description"></b-form-textarea>
           </td>
         </tr>
       </tbody>
@@ -122,7 +129,6 @@ export default {
   methods: {
     ...mapActions("audio", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSend: function() {
-      //validation TODO
       this.tags = this.tags.split(",").map(x => x.trim());
       let lengthInSeconds = this.length.split(" ");
       for (let index in lengthInSeconds) {
@@ -184,7 +190,7 @@ export default {
         });
     },
     handleAudioFile: function() {
-      this.audioFile = this.$refs.audio.files[0];
+      this.audioFile = this.$refs.audio.$refs.input.files[0];
       let fileURL = URL.createObjectURL(this.audioFile);
       getBlobDuration(fileURL).then(duration => {
         let minutes = Math.floor(duration / 60);
@@ -193,7 +199,7 @@ export default {
       });
     },
     handleThumbnailFile: function() {
-      this.thumbnail = this.$refs.thumbnail.files[0];
+      this.thumbnail = this.$refs.thumbnail.$refs.input.files[0];
     }
   },
   created() {
@@ -203,7 +209,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .fileDetails {
   transition: 0.3s ease-in;
   position: flex;
@@ -214,6 +220,37 @@ export default {
 }
 .table {
   margin: auto;
-  width: 80% !important;
+  left: 1em;
+  right: 1em;
+  width: 95vw !important;
+}
+
+.btn {
+  position: relative;
+  width: 98vw !important;
+  margin: auto;
+  bottom: 1em;
+}
+
+@media (max-width: 768px) {
+  form {
+    width: 100% !important;
+    position: absolute;
+    left: 0px;
+  }
+  .table {
+    width: 92vw !important;
+  }
+  th {
+    position: relative;
+    left: 0px;
+    font-size: 1em;
+    text-align: left;
+    width: 15vw;
+    font-size: 15pt;
+  }
+  td {
+    width: 85vw;
+  }
 }
 </style>

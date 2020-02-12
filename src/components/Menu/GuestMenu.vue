@@ -10,15 +10,22 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item>
-            <router-link to="/sign_in">Logowanie</router-link>
+            <router-link to="/sign_in">
+              <i class="fas fa-sign-in-alt fa-2x"></i>
+              <div class="navi-title">Logowanie</div>
+            </router-link>
           </b-nav-item>
 
           <b-nav-item>
-            <router-link to="/sign_up">Rejestracja</router-link>
+            <router-link to="/sign_up">
+            <i class="fas fa-user-plus fa-2x"></i>
+            <div class="navi-title">Rejestracja</div></router-link>
           </b-nav-item>
 
-          <b-nav-item >
-            <router-link to="/about">O projekcie</router-link>
+          <b-nav-item>
+            <router-link to="/about">
+            <i class="fas fa-tasks fa-2x"></i>
+            <div class="navi-title">O projekcie</div></router-link>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -33,11 +40,35 @@ export default {
 </script>
 <style scoped>
 a {
+  padding-left: 10px;
+  text-align: center;
   text-decoration: none;
   color: #fff;
 }
-a:hover{
+a:hover {
   text-decoration: none;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
+}
+.navbar {
+  z-index: 15;
+}
+.navi-title {
+    position:relative;
+  left: 5px;
+  font-size: 15px;
+  text-align:center;
+}
+@media (min-width: 995px) {
+  .navbar {
+    z-index: 1000;
+    padding-top: 5px;
+    height: 100px;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  #nav-collapse {
+    position: absolute;
+    right: 1%;
+  }
 }
 </style>

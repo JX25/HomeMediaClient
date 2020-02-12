@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h3>Dodawanie nowego utworu muzycznego</h3>
-    <b-tabs content-class="col md-6 mt-12">
-      <b-tab title="Dodaj pojedynczy utwór" active>
+  <div class="add-audio">
+    <h3>Dodawanie nowego audio</h3>
+    <b-tabs content-class="col md-6 mt-12" align="center">
+      <b-tab title="Jeden..." active>
         <AddOneAudio />
       </b-tab>
-      <b-tab title="Dodaj cały album">
+      <b-tab title="Wiele...">
         <AddManyAudio />
       </b-tab>
     </b-tabs>
@@ -34,5 +34,14 @@ export default {
 </script>
 
 <style scoped>
+.add-audio{
+  position: relative;
+  width: 100%!important;
+  top: 0.5em;
+  padding-bottom: 2em;
+}
 
+h3{
+  text-align:center;
+}
 </style>

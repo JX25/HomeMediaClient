@@ -1,21 +1,21 @@
 <template>
   <form @submit.prevent="validateAndSendAlbum">
-    <table class="table">
+    <table class="table col-12 col-sm-12 col-sx-12 col-md-10 col-lg-10 col-xl-10">
       <tbody>
         <tr>
           <th>Nazwa albumu</th>
           <td>
-            <input type="text" v-model="collection" />
+            <b-form-input type="text" v-model="collection"></b-form-input>
           </td>
         </tr>
           <tr>
             <th>Kategoria wiekowa</th>
             <td>
-              <b-select v-model="age_rate">
+              <b-form-select v-model="age_rate">
                 <option value="0">Dla wszystkich</option>
                 <option value="1">do 16</option>
                 <option value="2">16+</option>
-              </b-select>
+              </b-form-select>
             </td>
           </tr>
         <tr>
@@ -43,19 +43,19 @@
             </tr>
             <tr :key="imgs[index]">
               <td>
-                <img :src="imgs[index].src" width="300px" />
+                <img :src="imgs[index].src" width="30" height="30" />
               </td><td>{{image.name}}</td>
             </tr>
             <tr :key="image.title">
               <th>Tytuł</th>
               <td>
-                <input type="text" v-model="title[index]" />
+                <b-form-input type="text" v-model="title[index]"></b-form-input>
               </td>
             </tr>
             <tr :key="image.timestamp">
               <th>Data zrobienia zdjęcia</th>
               <td>
-                <input type="text" v-model="timestamp[index]" disabled />
+                <b-form-input type="text" v-model="timestamp[index]" disabled></b-form-input>
               </td>
             </tr>
             <tr :key="index">
@@ -64,25 +64,25 @@
                 <sub>a,b</sub>
               </th>
               <td>
-                <input type="text" v-model="tags[index]" />
+                <b-form-input type="text" v-model="tags[index]"></b-form-input>
               </td>
             </tr>
             <tr :key="index">
               <th>Opis</th>
               <td>
-                <textarea type="text" v-model="description[index]"></textarea>
+                <b-form-textarea type="text" v-model="description[index]"></b-form-textarea>
               </td>
             </tr>
             <tr :key="index">
               <th>Wysokość (px)</th>
               <td>
-                <input type="text" v-model="height[index]" disabled/>
+                <b-form-input type="text" v-model="height[index]" disabled></b-form-input>
               </td>
             </tr>
             <tr :key="index">
               <th>Szerokość (px)</th>
               <td>
-                <input type="text" v-model="width[index]" disabled/>
+                <b-form-input type="text" v-model="width[index]" disabled></b-form-input>
               </td>
             </tr>
           </template>
@@ -179,7 +179,13 @@ export default {
 
 <style scoped>
 img{
-  width: 250px;
+  width: 150px;
   height: auto;
+}
+table{
+  position: relative;
+}
+td{
+  width: fit-content;
 }
 </style>

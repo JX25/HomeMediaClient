@@ -8,49 +8,49 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 export default {
-    name: 'ImageInfo',
+  name: "ImageInfo",
   methods: {
     ...mapActions("image", ["hideInfo"])
   },
   computed: {
     ...mapGetters("image", ["imageInfo"])
   }
-}
+};
 </script>
 
 <style scoped>
-
-
-.infoBox{
-    background-color: rgba(117, 117, 245, 0.85);
-    margin: auto;
-    min-width: 60%;
-    max-width: 90%;
-    min-height: 40px;
-    position: fixed;
-    border-radius: 10px;
-    z-index: 100;
-    left: 50%;
-    transform: translate(-50%);
-    bottom: 5px;
-    border: solid 2px rgba(33, 66, 33, 0.8)
+.infoBox {
+  background-color: rgba(55, 162, 11, 0.85);
+  margin: auto;
+  width: 100%;
+  min-height: fit-content;
+  position: fixed;
+  color: white;
+  border-radius: 10px;
+  z-index: 100;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 5px;
+  border: solid 2px rgba(33, 66, 33, 0.8);
 }
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 li {
-    display: block;
-    right: 10px;
-    font-size: 16pt;
+  display: block;
+  position:relative;
+  right: 15px;
+
+  font-size: 12pt;
 }
 i {
-    position: absolute;
-    right: 5px;
-    top: 5px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
-i:hover{
-    cursor: pointer;
+i:hover {
+  cursor: pointer;
 }
 </style>

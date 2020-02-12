@@ -1,83 +1,118 @@
 <template>
-  <div>
+  <div id="graphics">
+    <center>
+      <h2>Lista plików graficznych</h2>
+    </center>
+
     <div>
-      <form class="form-inline col-md-12 table-responsive">
-        <input
-          type="text"
-          class="form-control mb-2 mr-sm-2"
-          id="collection"
-          placeholder="Kolekcja..."
-          v-model="params.collection"
-        />
-        <date-picker v-model="params.dateFrom" :placeholder="`Data od...`"></date-picker>
-        <date-picker v-model="params.dateTo" :placeholder="`Data do...`"></date-picker>
-        <input
-          type="text"
-          class="form-control mb-2 mr-sm-2"
-          id="keyword"
-          placeholder="Słowa kluczowe..."
-          v-model="params.keyword"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2"
-          id="maxWidth"
-          placeholder="Max szerokość w px..."
-          v-model="params.maxWidth"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2"
-          id="minWidth"
-          placeholder="Min szerokość w px..."
-          v-model="params.minWidth"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2 col-xs-2"
-          id="maxHeight"
-          placeholder="Max wysokość w px..."
-          v-model="params.maxHeight"
-        />
-        <input
-          type="number"
-          class="form-control mb-2 mr-sm-2 col-xs-2"
-          id="minHeight"
-          placeholder="Min wysokość w px..."
-          v-model="params.minHeight"
-        />
-        <button
-          class="btn btn-info form-control mb-2 mr-sm-2"
-          type="button"
-          @click="filterImage()"
-        >Wyszukaj</button>
-        <button
-          class="btn btn-secondary form-control mb-2 mr-sm-2"
-          @click="clear()"
-          type="button"
-        >Resetuj</button>
-        <button
-          class="btn btn-secondary form-control mb-2 mr-sm-2"
-          @click="reload()"
-          type="button"
-        >Przeładuj</button>
-      </form>
+      <center>
+        <div class="tablist">
+          <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+              <b-button
+                block
+                href="#"
+                v-b-toggle.accordion-1
+                variant="dark info"
+                class="filterButton"
+              ><i class="far fa-caret-square-down fa-2x"></i><span>Wyszukiwarka</span></b-button>
+            </b-card-header>
+            <b-collapse
+              id="accordion-1"
+              hide
+              accordion="accordion-body collapse"
+              role="tabpanel"
+            >
+              <b-card-body>
+                <form class="form-inline col-md-12 table-responsive">
+                  <input
+                    type="text"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="collection"
+                    placeholder="Kolekcja..."
+                    v-model="params.collection"
+                  />
+                  <date-picker v-model="params.dateFrom" :placeholder="`Data od...`"
+      
+                  ></date-picker>
+                  <date-picker v-model="params.dateTo" :placeholder="`Data do...`"
+     
+                  ></date-picker>
+                  <input
+                    type="text"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="keyword"
+                    placeholder="Słowa kluczowe..."
+                    v-model="params.keyword"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="maxWidth"
+                    placeholder="Max szerokość w px..."
+                    v-model="params.maxWidth"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="minWidth"
+                    placeholder="Min szerokość w px..."
+                    v-model="params.minWidth"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="maxHeight"
+                    placeholder="Max wysokość w px..."
+                    v-model="params.maxHeight"
+                  />
+                  <input
+                    type="number"
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    id="minHeight"
+                    placeholder="Min wysokość w px..."
+                    v-model="params.minHeight"
+                  />
+                  <b-button
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    type="button"
+                    @click="filterImage()"
+                  >Wyszukaj</b-button>
+                  <b-button
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    @click="clear()"
+                    type="button"
+                  >Resetuj</b-button>
+                  <b-button
+                    class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
+                    @click="reload()"
+                    type="button"
+                  >Przeładuj</b-button>
+                </form>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+        </div>
+      </center>
     </div>
-    <div class="image-list" 
-    @keyup.left="swipe(-1)"
-    @keyup.right="swipe(1)"
-    tabindex="0"
-    @touchstart="touchStart()"
-    @touchmove="touchMove()"
-    @touchend="touchEnd()"
+
+    <div></div>
+    <div
+      class="image-list"
+      @keyup.left="swipe(-1)"
+      @keyup.right="swipe(1)"
+      tabindex="0"
+      @touchstart="touchStart()"
+      @touchmove="touchMove()"
+      @touchend="touchEnd()"
     >
       <div class="fullscreen" v-if="showGallery">
-          <img
+        <img
           :key="currentSrc"
           :src="streamImage(currentSrc)"
           v-touch:swipe.left="swipe(-1)"
           v-touch:swipe.right="swipe(1)"
-        />     
+        />
 
         <i
           class="close gallery-btn fas fa-window-close"
@@ -139,7 +174,7 @@
       <ImageInfo v-if="infoVisibility" />
     </div>
     <router-link to="/admin/image/add">
-      <i id="addImage" class="fas fa-plus-circle fa-3x"></i>
+      <i id="addImage" class="fas fa-plus fa-3x"></i>
     </router-link>
   </div>
 </template>
@@ -162,10 +197,10 @@ export default {
   data() {
     return {
       touch: {
-      startX: 0,
-      startY: 0,
-      endX: 0,
-      endY: 0,
+        startX: 0,
+        startY: 0,
+        endX: 0,
+        endY: 0
       },
       imageLimit: 25,
       showGallery: false,
@@ -194,23 +229,23 @@ export default {
       "imagePreview",
       "imageToEdit"
     ]),
-    touchStart: function(){
-      console.log("e",event)
-      this.touch.startX = event.touches[0].clientX
-      this.touch.startY = event.touches[0].clientY
-      console.log(this.touch)
+    touchStart: function() {
+      console.log("e", event);
+      this.touch.startX = event.touches[0].clientX;
+      this.touch.startY = event.touches[0].clientY;
+      console.log(this.touch);
     },
-    touchMove: function(){
-      console.log("ee",event)
-      this.touch.endX = event.touches[0].clientX
-      this.touch.endY = event.touches[0].clientY
-      console.log(this.touch)
+    touchMove: function() {
+      console.log("ee", event);
+      this.touch.endX = event.touches[0].clientX;
+      this.touch.endY = event.touches[0].clientY;
+      console.log(this.touch);
     },
-    touchEnd: function(){
-      let swipeValue = this.touch.endX - this.touch.startX
-      console.log(swipeValue)
-      if(swipeValue > 0 && swipeValue > 100) this.swipe(1)
-      if(swipeValue <0 && swipeValue < -100) this.swipe(-1)
+    touchEnd: function() {
+      let swipeValue = this.touch.endX - this.touch.startX;
+      console.log(swipeValue);
+      if (swipeValue > 0 && swipeValue > 100) this.swipe(1);
+      if (swipeValue < 0 && swipeValue < -100) this.swipe(-1);
     },
     reload: function() {
       this.$router.go();
@@ -320,11 +355,15 @@ export default {
   right: 15px;
   color: rgba(24, 150, 41, 0.979);
 }
-
+#addImage:hover {
+  color: rgba(37, 228, 63, 0.979);
+  transition: 0.5s ease-out;
+}
 .image-list {
   position: realtive;
   outline: none !important;
   border: 0px;
+  padding-bottom: 2em;
 }
 ::-webkit-scrollbar {
   display: none;
@@ -442,7 +481,6 @@ export default {
 }
 
 .image-menu {
-
   position: relative;
   width: 320px;
   height: 240px;
@@ -470,5 +508,36 @@ export default {
 
 .rotate-image i:hover {
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+.mx-datepicker{
+  width: 340px;
+  padding-bottom: 15px;
+  padding-right: 20px;
+}
+
+
+.filterButton {
+  width: fit-content;
+}
+
+.filterButton span{
+  position: relative;
+  left: 5px;
+  top: -5px;
+}
+
+
+.mb-1 {
+  border: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.mb-1 header {
+  background-color: rgba(255, 255, 255);
+  border: 0px;
+  text-shadow: none;
+  text-align: left;
 }
 </style>

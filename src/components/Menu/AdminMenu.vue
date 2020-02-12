@@ -72,7 +72,7 @@ export default {
     logout: function() {
       localStorage.clear();
       this.$store.dispatch("user/clear");
-      this.$router.push("/home");
+      this.$router.push("/home?status=logout");
     }
   }
 };
@@ -89,10 +89,13 @@ a:hover {
   color: rgba(255, 255, 255, 0.5);
 }
 .navbar {
-  z-index: 15ew0;
+  z-index: 15;
 }
 .navi-title {
+    position:relative;
+  left: 5px;
   font-size: 15px;
+  text-align:center;
 }
 @media (min-width: 995px) {
   .navbar {
