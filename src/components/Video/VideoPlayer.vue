@@ -34,7 +34,9 @@
         <i class="icon fas fa-pause" @click="play(false)" v-if="videoPlayer.play"></i>
         <i class="icon fas fa-play" @click="play(true)" v-else></i>
         &nbsp;
-        <div class="volume-control" @mouseover="videoPlayer.showVolume = true">
+        <div class="volume-control" @mouseover="videoPlayer.showVolume = true"
+          @click="videoPlayer.showVolume = !videoPlayer.showVolume"
+        >
           <i class="icon fas fa-volume-mute icon" v-if="videoPlayer.volume == 0"></i>
           <i
             class="icon fas fa-volume-down"
@@ -55,6 +57,9 @@
             />
           </div>
         </div>
+        <div
+          v-bind:class="videoPlayer.fullscreen ? 'time-status-fullscreen' : 'time-status' "
+        >{{current}}/{{duration}}</div>
       </div>
       <div
         ref="videoTime"
@@ -75,6 +80,12 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "VideoPlayer",
+  data() {
+    return {
+      current: "00:00",
+      duration: "00:00"
+    };
+  },
   methods: {
     ...mapActions("videoPlayer", [
       "hideVideoPlayer",
@@ -92,6 +103,20 @@ export default {
     },
     progress: function(currTime) {
       try {
+        let full = this.$refs.video.duration || 0;
+        let currFull = this.$refs.video.currentTime || 0;
+        this.current =
+          Math.floor(currFull / 60, 0) +
+          ":" +
+          (currFull % 60 >= 10
+            ? Math.floor(currFull % 60, 0)
+            : "0" + Math.floor(currFull % 60, 0));
+        this.duration =
+          Math.floor(full / 60, 0) +
+          ":" +
+          (full % 60 >= 10
+            ? Math.floor(full % 60, 0)
+            : "0" + Math.floor(full % 60, 0));
         this.updateProgress((currTime * 100) / this.$refs.video.duration);
       } catch (error) {
         console.log(error);
@@ -162,30 +187,46 @@ export default {
 <style scoped>
 .options-block {
   display: flex;
-  bottom: 65px;
+  bottom: 60px;
   left: 15px;
   color: blue;
 }
-
+.volume-control{
+  position: relative;
+  right: 5px;
+}
 .volume-slider {
-  position: fixed;
-  left: 0px;
-  bottom: 7%;
+  position: absolute;
+  left: -40px;
+  bottom: 40px;
   -webkit-appearance: slider-vertical;
-  min-height: 100px;
-  max-height: 150px;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  min-height: 60px;
+  max-height: 100px;
   opacity: 1;
 }
-
+.volume-slider:hover {
+  opacity: 1;
+}
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
   height: 25px;
-  background: #4caf50;
+  background: rgb(90, 90, 241);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.volume-slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgb(90, 90, 241);
   cursor: pointer;
 }
-
 .volume-sliderFullscreen {
   position: fixed;
   left: -15px;
@@ -198,10 +239,13 @@ export default {
 
 .VideoPlayer {
   z-index: 5;
-  bottom: -10%;
-  position: relative;
+  bottom: 3%;
+  min-width: 120px;
+  max-width: 640px;
+  position: fixed;
   color: #fff;
   outline: none;
+  height: fit-content;
 }
 
 .VideoPlayerFullscreen {
@@ -235,15 +279,10 @@ export default {
 }
 
 .BotBar {
-  max-height: 25px;
-  opacity: 0.8;
+  position: relative;
+  left: 5px;
+  bottom: 40px;
   background-color: rgba(200, 200, 200, 0);
-  text-align: left;
-  position: absolute;
-  padding-top: 5px;
-  bottom: 27%;
-  left: 15px;
-  opacity: 0.5;
 }
 
 .BotBarFullscreen {
@@ -301,13 +340,23 @@ span {
   z-index: 10;
   cursor: pointer;
   opacity: 1;
-  color: rgba(15, 89, 250, 0.8);
+  color: rgba(15, 89, 250, 1);
+}
+
+.time-status {
+  position: relative;
+  color: rgb(83, 138, 255);
+}
+
+.time-status-fullscreen {
+  position: relative;
+  bottom: 0px;
 }
 
 .progress {
   position: absolute;
   z-index: 2147483647;
-  bottom: 22%;
+  bottom: 20px;
   left: 0px;
   width: 100%;
   background-color: rgba(48, 48, 233, 0.411);
@@ -350,61 +399,10 @@ span {
   width: 0%;
   padding-bottom: 10px;
   background-color: blue;
+  opacity: 0;
 }
-@media (max-width: 500px) and (max-height: 751px){
-  .VideoPlayer{
-    height: 35%;
-  }
+
+.progress-barFullscreen:hover{
+  opacity: 1;
 }
-@media (max-width: 750px) and (max-height: 400px){
-  .VideoPlayer{
-    width: 60%;
-    height: 75%;
-  }
-
-}
-/*
-@media (max-width: 675px) and (-height: 475px) {
-  .VideoPlayer{
-    position: absolute;
-    width: 80%;
-    left: 0px;
-    bottom: -50px;
-  }
-  .video {
-    width: 100%;
-  }
-  .progress {
-    position: absolute;
-    z-index: 2147483647;
-    bottom: 30%;
-    left: 0px;
-    width: 100%;
-    background-color: rgba(48, 48, 233, 0.411);
-    cursor: pointer;
-  }
-
-  .BotBar {
-    max-height: 25px;
-    opacity: 0.8;
-    background-color: rgba(200, 200, 200, 0);
-    text-align: left;
-    position: absolute;
-    padding-top: 5px;
-    bottom: 35%;
-    left: 8%;
-    opacity: 0.5;
-  }
-
-  .TopBar {
-    text-align: right;
-    opacity: 0.5;
-    display: block;
-    position: absolute;
-    top: 33%;
-    right: 6%;
-
-  }
-}
-*/
 </style>
