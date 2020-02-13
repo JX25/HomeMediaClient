@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-modal id="ImageDetail" title="Szczegóły pliku graficznego">
-      <img class="thumbnail" :src="streamImage(image.slug)" alt="miniatura albumu" />
       <table class="table table-border table-responsive">
         <tbody>
           <tr>
@@ -41,6 +40,7 @@
           </tr>
         </tbody>
       </table>
+      <img class="thumbnail" :src="streamImage(image.slug)" alt="miniatura albumu" />
     </b-modal>
   </div>
 </template>
@@ -62,20 +62,10 @@ export default {
 </script>
 
 <style scoped>
-
-img{
-  float: right;
-}
-
-table{
-  float: left;
-}
-
 div >>> .modal-dialog {
-  margin: auto !important;
-  min-width: 80%;
+  width: 100% !important;
+  margin: 0;
   max-height: 100%;
-  top: 15%;
   transform: translateY(-25%);
   background-color: rgba(211, 32, 52, 0.6);
   display: block;
@@ -98,8 +88,9 @@ div >>> footer .btn-secondary {
   visibility: hidden;
 }
 
-table{
-  width: 50%!important;
+div>>>img{
+  width: 100%!important;
+  opacity:0.3;
 }
 
 div >>> td {
@@ -114,5 +105,4 @@ div >>> .thumbnail {
   width: 50%;
   max-height: 100%;
 }
-
 </style>

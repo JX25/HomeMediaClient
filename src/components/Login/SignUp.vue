@@ -20,7 +20,7 @@
         <b-form-input type="password" v-model="password2" placeholder="Powtórz hasło..."> </b-form-input>
      </b-form-group>
       <b-form-group>
-        <b-form-input type="date" v-model="birthDay" placeholder="Data urodzenia..."> </b-form-input>
+        <b-form-input type="date" v-model="birthDay"> </b-form-input>
      </b-form-group>
       <b-form-group>
         <b-button variant="success" type="submit">Zarejestruj się</b-button>

@@ -197,7 +197,7 @@ export default {
 }
 .volume-slider {
   position: absolute;
-  left: -40px;
+  left: -45px;
   bottom: 40px;
   -webkit-appearance: slider-vertical;
   outline: none;
@@ -240,8 +240,8 @@ export default {
 .VideoPlayer {
   z-index: 5;
   bottom: 3%;
-  min-width: 120px;
-  max-width: 640px;
+  min-width: 300px;
+  width: 50%;
   position: fixed;
   color: #fff;
   outline: none;

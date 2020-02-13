@@ -89,9 +89,9 @@ export default {
                 })
             })
         },
-        allVideos: ({commit}) => {
+        allVideos: ({commit}, age) => {
             return new Promise( (res, rej) => {
-                videoApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.get('/with-age-rate/all/' + age,{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
                         console.log(result.data.response)
                         commit('setVideos', result.data.response)

@@ -14,14 +14,12 @@
                 v-b-toggle.accordion-1
                 variant="dark info"
                 class="filterButton"
-              ><i class="far fa-caret-square-down fa-2x"></i><span>Wyszukiwarka</span></b-button>
+              >
+                <i class="far fa-caret-square-down fa-2x"></i>
+                <span>Wyszukiwarka</span>
+              </b-button>
             </b-card-header>
-            <b-collapse
-              id="accordion-1"
-              hide
-              accordion="accordion-body collapse"
-              role="tabpanel"
-            >
+            <b-collapse id="accordion-1" hide accordion="accordion-body collapse" role="tabpanel">
               <b-card-body>
                 <b-form
                   class="form-inline col-md-12 col-lg-12 col-xl-12 table-responsive"
@@ -262,17 +260,22 @@ export default {
       } else return "";
     },
     deleteAudio: function(audioSlug, audioTitle) {
-      if (confirm("Czy na pewno chcesz usunąć ten utwór " + audioTitle + "?")) {
-        this.$store
-          .dispatch("audio/deleteAudio", audioSlug)
-          .then(result => {
-            console.log(result);
-            this.audioList = this.audioList.filter(x => x.slug != audioSlug);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+      this.$dialog
+        .confirm("Czy na pewno chcesz usunąć ten utwór " + audioTitle + "?")
+        .then(() => {
+          this.$store
+            .dispatch("audio/deleteAudio", audioSlug)
+            .then(result => {
+              console.log(result);
+              this.audioList = this.audioList.filter(x => x.slug != audioSlug);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     audioInfo: function(audio) {
       this.audioDetail(audio);
@@ -309,10 +312,11 @@ export default {
   },
   computed: {
     ...mapGetters("audio", ["audios", "infoVisibility", "audio"]),
-    ...mapGetters("audioPlayer", ["audioPlayer", "getPlaylist"])
+    ...mapGetters("audioPlayer", ["audioPlayer", "getPlaylist"]),
+    ...mapGetters("user", ["age"])
   },
   created() {
-    this.getAllAudio().then(result => {
+    this.getAllAudio(this.age).then(result => {
       console.log(result);
       this.audioList = result.data.response;
       this.listLoaded = true;
@@ -322,8 +326,8 @@ export default {
 </script>
 
 <style scoped>
-#audios{
-  width: 100vw!important;
+#audios {
+  width: 100vw !important;
 }
 .table tr {
   border: none;
@@ -336,12 +340,12 @@ center {
 }
 .table {
   width: 100% !important;
-    margin-top: 25px;
+  margin-top: 25px;
 }
 form {
   width: 100%;
   margin: auto;
-  text-align:center;
+  text-align: center;
   position: relative;
 }
 
@@ -365,22 +369,22 @@ img:hover {
   transition: 0.3s ease-in;
   border-radius: 10px;
 }
-@media (max-width: 768px){
-  form{
+@media (max-width: 768px) {
+  form {
     width: 80%;
   }
-  table{
+  table {
     position: relative;
-    width: 100%!important;
+    width: 100% !important;
   }
 }
 
-@media (max-width: 360px){
-  table{
-    left: -1.0em;
-    width: 100%!important
+@media (max-width: 360px) {
+  table {
+    left: -1em;
+    width: 100% !important;
   }
-  td{
+  td {
     position: relative;
   }
 }
@@ -416,12 +420,11 @@ button:hover {
   width: 250px;
 }
 
-
 .filterButton {
   width: fit-content;
 }
 
-.filterButton span{
+.filterButton span {
   position: relative;
   left: 5px;
   top: -5px;

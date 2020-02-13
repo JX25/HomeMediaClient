@@ -88,9 +88,9 @@ export default {
                     })
             })
         },
-        allImages: ({commit}) => {
+        allImages: ({commit}, age) => {
             return new Promise((res, rej) => {
-                imageApi.get('all', authHeader())
+                imageApi.get('/with-age-rate/all/' + age, authHeader())
                     .then(result => {
                         console.log(result.data.response)
                         commit('setImages', result.data.response)

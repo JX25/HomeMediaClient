@@ -97,9 +97,9 @@ export default {
                 })
             })
         },
-        getAllAudio: ({commit}) => {
+        getAllAudio: ({commit},age) => {
             return new Promise( (res, rej) => {
-                audioApi.get('all',{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                audioApi.get('/with-age-rate/all/' + age,{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
                         console.log(result.data.response)
                         commit('setAudios', result.data.response)

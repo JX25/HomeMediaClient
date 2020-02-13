@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-modal id="AudioDetail" title="Szczegóły pliku audio">
-      <img class="thumbnail" :src="image(audio.thumbnail)" alt="miniatura albumu" />
       <table class="table table-border table-responsive">
         <tbody>
           <tr>
@@ -53,6 +52,7 @@
           </tr>
         </tbody>
       </table>
+      <img class="thumbnail" :src="image(audio.thumbnail)" alt="miniatura albumu" />
     </b-modal>
   </div>
 </template>
@@ -69,33 +69,34 @@ export default {
         console.log(thumbnailPath, "2");
         let parts = thumbnailPath.split("/");
         let slug = parts[parts.length - 1];
-        return address + "/api/v1/audio/stream-thumbnail/" + slug
-      } else return ""
-    },
+        return address + "/api/v1/audio/stream-thumbnail/" + slug;
+      } else return "";
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-#AudioDetail{
-  width: fit-content;
-}
-
-img{
-  float: right;
+img {
   height: 100%;
 }
 
-table{
-  float: left;
+table {
+  overflow-y: hidden !important;
 }
-
 
 div >>> .modal-dialog {
-  margin: auto !important;
-  max-width: 90% !important;
+  margin: 0;
+  max-width: 100% !important;
   background-color: rgba(211, 32, 52, 0.6);
 }
+
+
+div>>>img{
+  width: 100%!important;
+  opacity:0.2;
+}
+
 div >>> header {
   background-color: #6f42c1 !important;
 }

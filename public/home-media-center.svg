@@ -1,0 +1,27 @@
+<svg width="640" height="640" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#6363a5" id="canvas_background" height="642" width="642" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_1" height="328" width="43" y="123.453125" x="17.5" stroke-width="1.5" stroke="#000" fill="#ff0000"/>
+  <rect transform="rotate(90 135.99999999999997,288.45312500000006) " id="svg_5" height="150" width="43" y="213.453125" x="114.5" stroke-width="1.5" stroke="#000" fill="#ff0000"/>
+  <rect id="svg_6" height="328" width="43" y="123" x="155.5" stroke-width="1.5" stroke="#000" fill="#ff0000"/>
+  <rect id="svg_7" height="328" width="43" y="123.881687" x="242.5" stroke-width="1.5" stroke="#000" fill="#ff7f00"/>
+  <rect id="svg_8" height="328" width="43" y="123.881687" x="401.357124" stroke-width="1.5" stroke="#000" fill="#ff7f00"/>
+  <rect transform="rotate(90 554.0000000000001,144.45312500000006) " id="svg_9" height="150" width="43" y="69.453125" x="532.5" stroke-width="1.5" stroke="#000" fill="#ffff00"/>
+  <rect id="svg_10" height="328" width="43" y="122.453125" x="479.5" stroke-width="1.5" stroke="#000" fill="#ffff00"/>
+  <rect transform="rotate(90 555.0000000000001,428.6197814941407) " id="svg_11" height="175" width="43" y="341.119791" x="533.5" stroke-width="1.5" stroke="#000" fill="#ffff00"/>
+  <rect transform="rotate(-45 310.57928466796864,251.28634643554685) " id="svg_12" height="150" width="43" y="176.28638" x="289.078829" stroke-width="1.5" stroke="#000" fill="#ff7f00"/>
+  <rect transform="rotate(45 376.219696044922,250.3339996337891) " id="svg_13" height="150" width="43" y="175.333997" x="354.719627" stroke-width="1.5" stroke="#000" fill="#ff7f00"/>
+  <path id="svg_16" d="m98.5,60.453125" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <path id="svg_18" d="m35.5,537.453125" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <rect transform="rotate(90 135.99999999999997,288.45312500000006) " id="svg_20" height="150" width="43" y="213.453125" x="114.5" stroke-width="1.5" stroke="#000" fill="#ff0000"/>
+  <text font-style="normal" stroke="#000" transform="matrix(2.1474385261535645,0,0,3.1997251510620117,-686.1503099128604,-1272.059810012579) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="26" id="svg_21" y="574.83774" x="324.01995" stroke-opacity="null" fill="#ffffff">𝓗𝓸𝓶𝓮 𝓜𝓮𝓭𝓲𝓪 𝓒𝓮𝓷𝓽𝓮𝓻</text>
+ </g>
+</svg>

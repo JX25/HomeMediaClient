@@ -80,7 +80,7 @@ export default {
 
 <style scoped>
 div{
-  overflow: hidden;
+  overflow-y: hidden!important;
 }
 
 div::-webkit-scrollbar{
@@ -91,6 +91,11 @@ div >>> .modal-dialog {
   margin: auto!important;
   max-width: 100% !important;
   background-color: rgba(211, 32, 52, 0.6);
+}
+
+div>>>img{
+  width: 100%!important;
+  opacity:0.3;
 }
 div >>> header {
   background-color: #6f42c1 !important;

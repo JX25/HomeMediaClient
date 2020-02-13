@@ -14,14 +14,12 @@
                 v-b-toggle.accordion-1
                 variant="dark info"
                 class="filterButton"
-              ><i class="far fa-caret-square-down fa-2x"></i><span>Wyszukiwarka</span></b-button>
+              >
+                <i class="far fa-caret-square-down fa-2x"></i>
+                <span>Wyszukiwarka</span>
+              </b-button>
             </b-card-header>
-            <b-collapse
-              id="accordion-1"
-              hide
-              accordion="accordion-body collapse"
-              role="tabpanel"
-            >
+            <b-collapse id="accordion-1" hide accordion="accordion-body collapse" role="tabpanel">
               <b-card-body>
                 <b-form
                   class="form-inline col-md-12 col-lg-12 col-xl-12 table-responsive"
@@ -181,17 +179,22 @@ export default {
     ...mapActions("video", ["allVideos", "videoToEdit"]),
     ...mapActions("videoPlayer", ["showVideoPlayer", "hideVideoPlayer"]),
     deleteVideo: function(videoSlug, videoTitle) {
-      if (confirm("Czy na pewno chcesz usunąć film " + videoTitle + "?")) {
-        this.$store
-          .dispatch("video/deleteVideo", videoSlug)
-          .then(result => {
-            this.videoList = this.videoList.filter(x => x.slug != videoSlug);
-            console.log(videoSlug, this.videoList, result);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+      this.$dialog
+        .confirm("Czy na pewno chcesz usunąć film " + videoTitle + "?")
+        .then(() => {
+          this.$store
+            .dispatch("video/deleteVideo", videoSlug)
+            .then(result => {
+              this.videoList = this.videoList.filter(x => x.slug != videoSlug);
+              console.log(videoSlug, this.videoList, result);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     reset: function() {
       this.params = {
@@ -224,11 +227,9 @@ export default {
       else this.videoLimit += 25;
     },
     image: function(slug) {
-      console.log(address);
       return address + "/api/v1/video/stream-thumbnail/" + slug;
     },
     srcStream: function(slug) {
-      console.log("XD", address);
       return address + "/api/v1/video/stream/" + slug;
     },
     editVideo: function(video) {
@@ -244,7 +245,7 @@ export default {
     }
   },
   created() {
-    this.allVideos().then(result => {
+    this.allVideos(this.age).then(result => {
       console.log("load", result.data.response);
       this.videoList = result.data.response;
       this.listLoaded = true;
@@ -252,15 +253,16 @@ export default {
   },
   computed: {
     ...mapGetters("video", ["videos", "infoVisibility"]),
+    ...mapGetters("user", ["age"]),
     ...mapGetters("videoPlayer", ["getSrc", "getShow"])
   }
 };
 </script>
 
 <style scoped>
-#videos{
-  width: 100%!important;
-  position:realtive;
+#videos {
+  width: 100% !important;
+  position: realtive;
 }
 
 center {
@@ -268,23 +270,29 @@ center {
 }
 .table {
   margin-top: 25px;
+  text-align: center;
   position: relative;
-  width: 100%!important;
+  width: 100% !important;
 }
 form {
   width: 100%;
   margin: auto;
-  text-align:center;
+  text-align: center;
   position: relative;
 }
 
 .table td {
+  position: relative;
+  left: 0.5em;
+  width: fit-content;
+  text-align: center;
+  word-wrap: normal;
   vertical-align: middle;
 }
 
 .table tr {
   border: none;
-  width: 100%;
+  left: 15px;
   height: fit-content;
 }
 
@@ -307,42 +315,48 @@ img:hover {
   transition: 0.3s ease-in;
   border-radius: 10px;
 }
-@media (max-width: 768px){
-  form{
-    width: 80%;
-  }
-  table{
-    position: relative;
-    width: 100%!important;
-  }
-}
-
-@media (max-width: 360px){
-  table{
-    left: -1.0em;
-    width: 100%!important
-  }
-  td{
-    position: relative;
-  }
-}
 
 
 @media (max-width: 1350px) {
   tr {
     display: grid;
-    grid-template-columns: 5fr 5fr;
+    grid-template-columns: 3fr 3fr;
+  }
+  td{
+    width:48vw!important;
   }
 }
-@media (max-width: 1091px) {
+
+@media (max-width: 768px) {
   tr {
     display: grid;
     grid-template-columns: 3fr 3fr;
   }
+  form {
+    width: 80%;
+  }
+  table {
+    position: relative;
+    width: 100% !important;
+  }
+    td{
+    width:50vw;
+  }
+}
+
+@media (max-width: 360px) {
+  table {
+    left: -1em;
+    width: 100% !important;
+  }
+  td {
+    text-align: center;
+    position: relative;
+    width: 95% !important;
+  }
 }
 
 tr {
-  text-align: center;
   border: rgba(200, 200, 200, 1) 2px solid;
 }
 
@@ -362,12 +376,11 @@ button:hover {
   width: fit-content;
 }
 
-.filterButton span{
+.filterButton span {
   position: relative;
   left: 5px;
   top: -5px;
 }
-
 
 .mb-1 {
   border: none;

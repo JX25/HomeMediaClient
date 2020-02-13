@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <div class="editImage col-12 col-xs-12 col-sm-12 col-md-12 col-xl-12">
+    <div class="header">
+      <h2>Edycja danych pliku graficznego</h2>
+    </div>
     <form @submit.prevent="validateAndUpdate">
-      <h1>Edycja danych pliku graficznego</h1>
-      <table class="table">
+      <table class="table table-hover">
         <tbody>
           <tr>
             <th>Tytuł</th>
             <td>
-              <input type="text" v-model="editImage.title" />
+              <b-form-input type="text" v-model="editImage.title"></b-form-input>
             </td>
           </tr>
           <tr>
@@ -19,62 +21,67 @@
           <tr>
             <th>Kolekcja</th>
             <td>
-              <input type="text" v-model="editImage.collections" />
+              <b-form-input type="text" v-model="editImage.collections"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Opis</th>
             <td>
-              <textarea type="text" v-model="editImage.description"></textarea>
+              <b-form-textarea type="text" v-model="editImage.description"></b-form-textarea>
             </td>
           </tr>
           <tr>
             <th>Słowa Kluczowe</th>
             <td>
-              <input type="text" v-model="editImage.tags" />
+              <b-form-input type="text" v-model="editImage.tags"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Ograniczenie wiekowe</th>
             <td>
-              <select type="text" v-model="editImage.age_rate">
+              <b-form-select type="text" v-model="editImage.age_rate">
                 <option value="0">Familijny</option>
                 <option value="1">do 16lat</option>
                 <option value="2">powyżej 16lat</option>
-              </select>
+              </b-form-select>
             </td>
           </tr>
           <tr>
             <th>Szerokość</th>
             <td>
-              <input type="text" v-model="editImage.width" />
+              <b-form-input type="text" v-model="editImage.width"></b-form-input>
             </td>
           </tr>
 
           <tr>
             <th>Wysokość</th>
             <td>
-              <input type="text" v-model="editImage.height" />
+              <b-form-input type="text" v-model="editImage.height"></b-form-input>
             </td>
           </tr>
           <tr>
             <th>Plik</th>
             <td>
-              <input type="file" accept="image/*" @change="fileHandle()" id="image" ref="image" />
+              <b-form-file
+                accept=".jpeg, .jpg"
+                ref="image"
+                @change="fileHandle()"
+                placeholder="nowa grafika..."
+                drop-placeholder="Upuść plik tutaj..."
+              ></b-form-file>
             </td>
           </tr>
           <tr>
-            <td>
-              <input
-                type="button"
-                @click="validateAndUpdate"
-                class="btn btn-primary"
-                value="Zakutalizuj"
-              />
-            </td>
+            <td></td>
           </tr>
         </tbody>
       </table>
+      <input
+        type="button"
+        @click="validateAndUpdate"
+        class="btn btn-primary submit"
+        value="Zakutalizuj"
+      />
     </form>
     <img :src="currentSrc" alt />
   </div>
@@ -98,7 +105,7 @@ export default {
       result: [],
       imageFile: "",
       indexOfAudio: 0,
-      date: "",
+      date: ""
     };
   },
   methods: {
@@ -119,12 +126,12 @@ export default {
       metadata.tags = this.editImage.tags[0].split(",").map(obj => obj.trim());
       metadata.title = this.editImage.title;
       metadata.description = this.editImage.description;
-      metadata.timestamp = this.date.getTime()/1000;
+      metadata.timestamp = this.date.getTime() / 1000;
       metadata.width = this.editImage.width;
       metadata.height = this.editImage.height;
       metadata.collection = this.editImage.collection;
       metadata.age_rate = this.editImage.age_rate;
-      console.log(this.imageFile)
+      console.log(this.imageFile);
       // files
       let files = {};
       files.file = this.imageFile;
@@ -151,11 +158,11 @@ export default {
         .then(result => {
           this.result.push(result);
           this.setInfo("Dane pliku: " + result[0]);
-          console.log(files)
+          console.log(files);
           if (files.file != undefined) {
             this.$store.dispatch("image/uploadImage", files).then(result => {
               this.setInfo("Plik graficzny: " + result.data.response);
-            })
+            });
           }
         })
         .catch(error => {
@@ -167,7 +174,7 @@ export default {
       this.$router.push("/admin/image");
     },
     fileHandle: function() {
-      this.imageFile = this.$refs.image.files[0];
+      this.imageFile = this.$refs.image.$refs.input.files[0];
       this.tmpFile = URL.createObjectURL(this.imageFile);
       console.log(this.tmpFile);
       this.currentSrc = this.tmpFile;
@@ -204,6 +211,17 @@ export default {
 
 <style scoped>
 img {
-  max-width: 80%;
+  position:relative;
+  top: 10px;
+  width: 100%;
+}
+.editImage{
+  margin: 0;
+}
+.submit {
+  position: relative;
+  left: 0.2em;
+  top: 0.5em;
+  width: 85vw !important;
 }
 </style>

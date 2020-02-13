@@ -27,7 +27,7 @@
                   type="file"
                   class="custom-file-input"
                   ref="imageFiles"
-                  accept=".png, .jpeg, .jpg, .tiff"
+                  accept=".jpeg, .jpg, .tiff"
                   @change="handleImageFiles"
                   multiple
                 />

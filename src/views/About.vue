@@ -1,6 +1,10 @@
 <template>
   <div class="about">
     <h1>O wykonanych aplikacjach</h1>
+    <center>
+    <img src="../../public/home-media-center.svg" alt="">
+    </center>
+
     <p>
       Pellentesque habitant morbi tristique senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor

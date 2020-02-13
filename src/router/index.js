@@ -18,6 +18,8 @@ import EditImage from '../components/Image/EditImage.vue'
 import UserSettings from '../components/User/UserSettings.vue'
 import SignIn from '../components/Login/SignIn.vue'
 import SignUp from '../components/Login/SignUp.vue'
+import UserList from '../components/User/UserList.vue'
+import AdminList from '../components/User/AdminList.vue'
 //SERVER
 import ServerInfo from '../components/Server/ServerInfo.vue'
 Vue.use(VueRouter)
@@ -40,6 +42,16 @@ const routes = [
     component: UserSettings
   },
   {
+    path: '/admin/users',
+    name: 'UserList',
+    component: UserList
+  },
+  {
+    path: '/admin/admins',
+    name: 'AdminList',
+    component: AdminList
+  },
+  {
     path: '/sign_in',
     name: 'SignIn',
     component: SignIn
@@ -49,6 +61,7 @@ const routes = [
     name: 'SignUp',
     component: SignUp
   },
+
   //VIDEO
   {
     path: '/admin/video',

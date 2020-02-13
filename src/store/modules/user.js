@@ -1,5 +1,5 @@
 import {
-    userApi
+    userApi, authHeader
 } from '../api';
 
 
@@ -12,6 +12,7 @@ export default {
         token: '',
         type: '',
         age: '',
+        active: '',
         users: [],
         admins: [],
     },
@@ -39,6 +40,9 @@ export default {
         setAdmins(state, admins) {
             state.admins = admins
         },
+        setActive(state, active){
+            state.active = active
+        },
         clear(state){
             state.login = ''
             state.email = ''
@@ -47,7 +51,11 @@ export default {
             state.admins = []
             state.token = ''
             state.type = ''
-        }
+            state.active = ''
+        },
+        pass(){
+            return
+        },
     },
     getters: {
         login: state => {
@@ -65,8 +73,14 @@ export default {
         type: state => {
             return state.type
         },
-        user: state => {
-            return state.user
+        users: state => {
+            return state.users
+        },
+        admins: state => {
+            return state.admins
+        },
+        active: state => {
+            return state.active
         }
     },
     actions: {
@@ -84,30 +98,30 @@ export default {
                         let data = result.data.response
                         const token = data.token
                         const type = data.type
-                        const login = data.login
+                        const login = data.username
                         const email = data.email
                         const age = data.age
+                        const active = data.active
                         commit('setToken', token)
                         commit('setType', type)
                         commit('setLogin', login)
                         commit('setEmail', email)
                         commit('setAge', age)
-                        res(result.data.response)
+                        commit('setActive', active)
+                        res(data)
                     })
                     .catch(error => {
                         rej(error)
                     })
             })
         },
-        register: (userData) => {
+        register: ({commit}, data) => {
+            console.log(data)
             return new Promise((res, rej) => {
-                userApi.post('', userData, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
+                userApi.post('', data)
                     .then(result => {
                         res(result)
+                        commit('clear')
                     })
                     .catch(error => {
                         console.log(error)
@@ -120,6 +134,66 @@ export default {
         }) => {
             commit('clear')
 
+        },
+
+        getAllAdmins: ({commit}) =>{
+            return new Promise((res, rej) => {
+                userApi.get('all/admins', authHeader()).then((result) =>{
+                    console.log("SADASD", result.data.response)
+                    commit('setAdmins', result.data.response)
+                }).catch(error => {
+                    console.log(error)
+                    rej(error)
+                })
+            })
+        },
+        getAllUsers: ({commit}) => {
+            return new Promise((res, rej) =>{
+                userApi.get('all', authHeader()).then(result =>{
+                    commit('setUsers', result.data.response)
+                    res("Users downloaded")
+                }).catch(error => {
+                    console.log(error)
+                    rej(error)
+                })
+            })
+        },
+        deleteUser: ({commit, getters}, login) => {
+            console.log("Z", login)
+            return new Promise((res, rej) => {
+                userApi.delete('login/' + login + '/' + getters.type, authHeader()).then(result =>{
+                    console.log(result)
+                    commit('pass')
+                    res(result)
+                }).catch(error => {
+                    console.log(error)
+                    rej(error)
+                })
+            })
+        },
+        editUser: ({commit, getters}, data) => {
+            console.log("Z", data)
+            return new Promise((res, rej) => {
+                userApi.patch('login/' + data.nickname + '/' + getters.type, data, authHeader()).then(result =>{
+                    console.log(result)
+                    commit('pass')
+                    res(result)
+                }).catch(error => {
+                    console.log(error)
+                    rej(error)
+                })
+            })
+        },
+        changePassword: (login, data) => {
+            return new Promise((res, rej) => {
+                userApi.patch('password/' + login, data, authHeader()).then(result =>{
+                    console.log(result)
+                    res(result)
+                }).catch(error => {
+                    console.log(error)
+                    rej(error)
+                })
+            })
         }
     }
 }

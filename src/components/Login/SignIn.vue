@@ -46,6 +46,7 @@ export default {
           }, 100)
         })
         .catch(error => {
+          console.log(error)
           let code = error.response.status
           this.error = true
           switch(code){

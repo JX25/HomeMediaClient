@@ -15,14 +15,12 @@
                 v-b-toggle.accordion-1
                 variant="dark info"
                 class="filterButton"
-              ><i class="far fa-caret-square-down fa-2x"></i><span>Wyszukiwarka</span></b-button>
+              >
+                <i class="far fa-caret-square-down fa-2x"></i>
+                <span>Wyszukiwarka</span>
+              </b-button>
             </b-card-header>
-            <b-collapse
-              id="accordion-1"
-              hide
-              accordion="accordion-body collapse"
-              role="tabpanel"
-            >
+            <b-collapse id="accordion-1" hide accordion="accordion-body collapse" role="tabpanel">
               <b-card-body>
                 <form class="form-inline col-md-12 table-responsive">
                   <input
@@ -32,12 +30,8 @@
                     placeholder="Kolekcja..."
                     v-model="params.collection"
                   />
-                  <date-picker v-model="params.dateFrom" :placeholder="`Data od...`"
-      
-                  ></date-picker>
-                  <date-picker v-model="params.dateTo" :placeholder="`Data do...`"
-     
-                  ></date-picker>
+                  <date-picker v-model="params.dateFrom" :placeholder="`Data od...`"></date-picker>
+                  <date-picker v-model="params.dateTo" :placeholder="`Data do...`"></date-picker>
                   <input
                     type="text"
                     class="form-control mb-3 mr-sm-3 col-12 col-sm-12 col-sx-12 col-md-2"
@@ -129,7 +123,6 @@
           @click="swipe(1)"
           @keyup.escape="showGallery=false"
         ></i>
-
       </div>
       <div class="flex-container col-md-12 justify-content-center" v-if="listLoaded">
         <template>
@@ -288,7 +281,7 @@ export default {
       this.$bvModal.show("ImageDetail");
     },
     deleteImage: function(index, slug) {
-      if (confirm("Czy na pewno chcesz usunąć ten plik?")) {
+      this.$dialog.confirm("Czy na pewno chcesz usunąć ten plik?").then(() => {
         this.$store
           .dispatch("image/deleteImage", this.imageList[index])
           .then(result => {
@@ -299,7 +292,7 @@ export default {
           });
         this.imageList = this.imageList.filter(x => x.slug != slug);
         this.showMenu[index] = false;
-      }
+      });
     },
     filterImage: function() {
       console.log("2", this.params);
@@ -330,11 +323,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("image", ["images", "infoVisibility", "image"])
+    ...mapGetters("image", ["images", "infoVisibility", "image"]),
+    ...mapGetters("user", ["age"])
   },
   created() {
     this.$forceUpdate();
-    this.allImages().then(result => {
+    this.allImages(this.age).then(result => {
       this.imageList = result.data.response;
       for (let i = 0; i < this.imageList.length; ++i) {
         this.showMenu[i] = false;
@@ -507,23 +501,21 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.mx-datepicker{
+.mx-datepicker {
   width: 340px;
   padding-bottom: 15px;
   padding-right: 20px;
 }
 
-
 .filterButton {
   width: fit-content;
 }
 
-.filterButton span{
+.filterButton span {
   position: relative;
   left: 5px;
   top: -5px;
 }
-
 
 .mb-1 {
   border: none;

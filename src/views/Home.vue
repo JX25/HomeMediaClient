@@ -59,7 +59,7 @@ export default {
       },
     },
     computed: {
-      ...mapGetters("user",["user"])
+      ...mapGetters("user",["login", "email", "age", "type"])
     },
    created() {
    },
