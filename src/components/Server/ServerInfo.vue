@@ -15,6 +15,7 @@
       <center>
         <h3>Obciążenie poszczególnych rdzeni</h3>
       </center>
+      <center>
       <div class="col-md6 cpu-core-usage">
         <vue-easy-pie-chart
           v-for="(cpu, index) in cpu.current.cpus"
@@ -22,9 +23,11 @@
           :key="index"
           class="core"
         >
+        
           <small>#{{index}} Core: {{round(cpu)}}%</small>
         </vue-easy-pie-chart>
       </div>
+      </center>
     </div>
     <center>
       <h3>Zajętość dysku twardego</h3>
@@ -120,11 +123,10 @@ center {
 }
 .cpu-core-usage {
   position: relative;
-  left: 50%;
-  transform: translate(-25%);
-  display: flex;
+   display: flex;
   flex-flow: row wrap;
   height: fit-content;
+  width: fit-content;
 }
 .core {
   padding: 5px;

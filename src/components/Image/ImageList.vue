@@ -129,10 +129,7 @@
           @click="swipe(1)"
           @keyup.escape="showGallery=false"
         ></i>
-        <div class="rotate-image">
-          <i class="fas fa-undo" @click="rotateLeft"></i>
-          <i class="fas fa-redo" @click="rotateRight"></i>
-        </div>
+
       </div>
       <div class="flex-container col-md-12 justify-content-center" v-if="listLoaded">
         <template>

@@ -2,6 +2,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import VueLocalStorage from 'vue-localstorage'
 Vue.use(VueLocalStorage)
+import store from './index'
 
 export const address = 'http://192.168.0.81:8000'
 //export const address = 'https://localhost:8000'
@@ -27,17 +28,10 @@ export const serverApi = axios.create({
     baseURL: address + '/api/v1/server/'
 });
 
-export function setToken(jwt) {
-    console.log(jwt)
-    applicationCache.defaults.headers.common["Authorization"] = `Bearer ${jwt}`
-}
 
-export function clearToken() {
-    delete applicationCache.defaults.headers.common["Authorization"]
-    Vue.localStorage.clear()
-}
 
 export function authHeader(){
-    return {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}}
+    console.log("662",store)
+    return {headers: {'Authorization': 'Bearer '+store.state.user.token}}
 }
 

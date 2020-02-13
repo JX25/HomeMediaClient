@@ -31,9 +31,6 @@
 </template>
 
 <script>
-import TYPES from '../../plugins/bootstrapTypes'
-
-
 export default {
   name: "SignUp",
   data: () => ({
@@ -42,7 +39,6 @@ export default {
       password1: '',
       password2: '',
       birthDay: '',
-      types: TYPES,
       YEARS13: 315569260,
       YEARS16: 504910816,
       error: '',

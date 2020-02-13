@@ -15,6 +15,21 @@
       <div class="top-control">
         <b>{{audios[getAudioIndex].title}}</b>
         - {{audios[getAudioIndex].album}} by {{audios[getAudioIndex].author}} ({{audios[getAudioIndex].year}})
+        <span
+          class="toRight"
+        >
+          <i
+            class="fas fa-random fa-2x"
+            :class="audioPlayer.random ? 'clicked':'notclicked'"
+            @click="shuffle()"
+          ></i>
+          <i
+            class="fas fa-infinity fa-2x"
+            :class="audioPlayer.loop ? 'clicked':'notclicked'"
+            @click="loop()"
+          ></i>
+          <i class="fas fa-window-close fa-2x" @click="close()"></i>
+        </span>
       </div>
       <div class="mid-control">
         <i class="fas fa-play-circle fa-2x" v-if="!audioPlayer.play" @click="play()"></i>
@@ -48,17 +63,9 @@
         <i class="fas fa-stop-circle fa-2x" @click="stop()"></i>
 
         <span class="toRight">
-          <i
-            class="fas fa-random fa-2x"
-            :class="audioPlayer.random ? 'clicked':'notclicked'"
-            @click="shuffle()"
-          ></i>
-          <i
-            class="fas fa-infinity fa-2x"
-            :class="audioPlayer.loop ? 'clicked':'notclicked'"
-            @click="loop()"
-          ></i>
-          <i class="fas fa-window-close fa-2x" @click="close()"></i>
+          <button class="button">wczytaj</button>
+          <button class="button">zapisz</button>
+          <button class="button">modyfikuj</button>
         </span>
       </div>
       <div class="bot-control">
@@ -67,11 +74,6 @@
           <div class="progress" ref="audioTime" @click="changeAudioTime($event)">
             <div class="currentProgress" :style="{width: getProgress + '%'}"></div>
           </div>
-        </span>
-        <span class="toRight">
-          <button class="button">wczytaj</button>
-          <button class="button">zapisz</button>
-          <button class="button">modyfikuj</button>
         </span>
       </div>
     </div>
@@ -224,7 +226,7 @@ export default {
     try {
       this.$refs.audio.volume = this.audioPlayer.volume / 100;
     } catch (error) {
-      console.log('waiting for setting up audio');
+      console.log("waiting for setting up audio");
     }
   }
 };
@@ -232,23 +234,27 @@ export default {
 
 <style scoped>
 .audioPlayer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100% !important;
   height: 100px;
   background-color: rgba(0, 0, 0, 0.8);
 }
 .cover {
-  float: left;
-  width: 100px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
   height: 100px;
-  position: fixed;
-  left: 0px;
-  z-index: 1000;
+  width: 100px;
 }
 .cover:hover {
   transform: scale(2) translate(15%, -23%);
   transition: 0.2s ease-in;
+  z-index: 200;
 }
 .audio-controls {
-  width: 100%;
+  width: 100vw !important;
   left: 100px;
   bottom: 0px;
   position: fixed;
@@ -256,13 +262,15 @@ export default {
   z-index: 11;
 }
 .top-control {
+  white-space:nowrap;
   padding-left: 25px;
   text-align: left;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
 }
+
 .mid-control {
-  background-color: rgba(0, 0, 0, 0.7);
+
   text-align: left;
   padding-left: 25px;
   color: white;
@@ -284,7 +292,7 @@ export default {
 .bot-control {
   height: 25px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.8);
+
 }
 
 .bot-control .toRight {
@@ -316,14 +324,36 @@ export default {
   color: rgba(255, 255, 255, 1) !important;
 }
 .toRight {
-  position: fixed;
-  right: 15px;
+  float: right;
+  position: relative;
+  right: 120px;
   padding-top: 5px;
   bottom: 10px;
+  z-index: 100;
 }
+.toRight i {
+  padding-top: 10px;
+  padding-left: 15px;
+}
+
+.button {
+  position: relative;
+  bottom: -30px;
+  right: -110px;
+}
+
+.top-control .toRight{
+  position: absolute;
+  top: -10px;
+  right: 105px;
+}
+
 .mid-control .toRight {
-  bottom: 75px;
+  position: absolute;
+  right: 210px;
+  top: 10px;
 }
+
 .toLeft {
   position: relative;
   left: 10px;
@@ -332,7 +362,7 @@ export default {
   bottom: 5px;
 }
 .progress {
-  width: 100%;
+  width: 84vw!important;
   height: 5px;
   cursor: pointer;
 }
@@ -389,5 +419,72 @@ export default {
   border-radius: 50%;
   background: rgb(90, 90, 241);
   cursor: pointer;
+}
+
+@media (max-width: 675px) {
+  img {
+    display: none !important;
+    visibility: hidden;
+  }
+  .top-control {
+    position: relative;
+    width: 100% !important;
+    left: -120px;
+  }
+
+  .top-control .toRight {
+    right: 0px;
+  }
+
+  .toLeft {
+    left: -90px;
+    text-align: center;
+  }
+
+  .mid-control {
+    position: relative;
+    left: -120px;
+  }
+
+  .mid-control .toRight {
+    right: 100px;
+    top: -15px;
+  }
+}
+
+@media (max-width: 475px){
+  .top-control .toRight{
+    right: -15px;
+  }
+  .button{
+    font-size: 9pt;
+    width: fit-content;
+    right: -115px;
+  }
+}
+
+@media (max-width: 400px){
+  .audio-controls{
+    font-size: 10pt;
+  }
+  .top-control{
+    white-space: nowrap;
+  }
+  .progress{
+    width: 95vw!important;
+  }
+  .mid-control .toRight{
+    top: -15px;
+    right: 95px;
+  }
+  .button{
+    font-size: 8pt;
+  }
+}
+
+@media(max-width: 350px){
+  .button{
+    display: none;
+  }
 }
 </style>
