@@ -20,6 +20,6 @@ footer {
   bottom: 0px;
   text-align: justify;
   color: #fff !important;
-  background-color: #ff3547 !important;
+  background-color: #110f0f !important;
 }
 </style>

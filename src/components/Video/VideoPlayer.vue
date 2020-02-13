@@ -241,11 +241,26 @@ export default {
   z-index: 5;
   bottom: 3%;
   min-width: 300px;
-  width: 50%;
+  max-width: 650px;
+  max-height: 800px;
   position: fixed;
   color: #fff;
   outline: none;
   height: fit-content;
+}
+
+@media (max-height:400px){
+  .VideoPlayer{
+    max-height: 350px;
+    max-width: 500px;
+  }
+}
+
+.VideoPlayer video{
+  background-color: rgba(0,0,0,0.8);
+  padding: 10px;
+  max-width: 800px;
+  max-height: 700px;
 }
 
 .VideoPlayerFullscreen {
@@ -258,20 +273,23 @@ export default {
 
 .TopBar {
   text-align: right;
-  opacity: 0.5;
+  opacity: 1;
   display: block;
   position: absolute;
-  top: 0px;
-  right: 30px;
+  top: 10px;
+  right: 35px;
 }
 
 .TopBarFullscreen {
   position: absolute;
   width: 100%;
-  right: -45%;
+  text-align: right;
+  right: 10px;
   top: 0;
   width: 100%;
-  opacity: 0;
+  opacity: 0.8;
+  outline: none;
+  
 }
 
 .TopBarFullscreen:hover {
@@ -280,7 +298,7 @@ export default {
 
 .BotBar {
   position: relative;
-  left: 5px;
+  left: 15px;
   bottom: 40px;
   background-color: rgba(200, 200, 200, 0);
 }

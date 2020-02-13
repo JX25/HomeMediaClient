@@ -69,6 +69,11 @@ const routes = [
     component: VideoList
   },
   {
+    path: '/video',
+    name: 'VideoList',
+    component: VideoList
+  },
+  {
     path: '/admin/video/add',
     name: 'AddVideo',
     component: AddVideo
@@ -85,6 +90,11 @@ const routes = [
     component: AudioList
   },
   {
+    path: '/audio',
+    name: 'AudioList',
+    component: AudioList
+  },
+  {
     path: '/admin/audio/add',
     name: 'AddAudio',
     component: AddAudio
@@ -97,6 +107,11 @@ const routes = [
   //IMAGE
   {
     path: '/admin/image',
+    name: 'ImageList',
+    component: ImageList
+  },
+  {
+    path: '/image',
     name: 'ImageList',
     component: ImageList
   },

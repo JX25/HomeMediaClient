@@ -137,9 +137,9 @@
               :key="image.thumbnail_path"
             />
             <div class="image-menu" v-if="showMenu[index]" :key="index">
-              <b-button variant="blue darken-4" @click="editImage(index)">Edytuj dane</b-button>
+              <b-button v-if="type" variant="blue darken-4" @click="editImage(index)">Edytuj dane</b-button>
               <br />
-              <b-button variant="red darken-4" @click="deleteImage(index, image.slug)">Usuń</b-button>
+              <b-button v-if="type" variant="red darken-4" @click="deleteImage(index, image.slug)">Usuń</b-button>
               <br />
               <b-button variant="green darken-4" @click="previewImage(index)">Podgląd</b-button>
             </div>
@@ -324,7 +324,7 @@ export default {
   },
   computed: {
     ...mapGetters("image", ["images", "infoVisibility", "image"]),
-    ...mapGetters("user", ["age"])
+    ...mapGetters("user", ["age", "type"])
   },
   created() {
     this.$forceUpdate();

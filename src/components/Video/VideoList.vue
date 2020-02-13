@@ -101,7 +101,9 @@
             <th scope="col col-sm-2">Język</th>
             <th scope="col col-sm-2">Gatunek</th>
             <th scope="col col-sm-2">Długość (min)</th>
-            <th scope="col" colspan="2"></th>
+            <th scope="col col-sm-2">Reżyser</th>
+            <th scope="col col-sm-2">Tagi</th>
+            <th v-if="type" scope="col" colspan="2"></th>
             <th scope="col" colspan="2"></th>
           </tr>
         </thead>
@@ -115,6 +117,8 @@
             <td>{{video.language}}</td>
             <td>{{video.genre.toUpperCase()}}</td>
             <td>{{Math.round(video.length/60,0)}}:{{(video.length%60)>=10 ? video.length%60 : "0"+video.length%60}}</td>
+            <td>{{video.director[0]}}</td>
+            <td>{{video.tags[0]}}</td>
             <td>
               <button type="button" class="btn btn-success" @click="runPlayer(video.slug)">Oglądaj</button>
             </td>
@@ -122,10 +126,16 @@
               <b-button v-b-modal.VideoDetail @click="videoInfo(video)">Podgląd</b-button>
             </td>
             <td>
-              <button type="button" class="btn btn-primary" @click="editVideo(video)">Edycja</button>
+              <button
+                v-if="type"
+                type="button"
+                class="btn btn-primary"
+                @click="editVideo(video)"
+              >Edycja</button>
             </td>
             <td>
               <button
+                v-if="type"
                 type="button"
                 class="btn btn-danger"
                 @click="deleteVideo(video.slug, video.title)"
@@ -316,14 +326,13 @@ img:hover {
   border-radius: 10px;
 }
 
-
 @media (max-width: 1350px) {
   tr {
     display: grid;
     grid-template-columns: 3fr 3fr;
   }
-  td{
-    width:48vw!important;
+  td {
+    width: 48vw !important;
   }
 }
 
@@ -339,8 +348,8 @@ img:hover {
     position: relative;
     width: 100% !important;
   }
-    td{
-    width:50vw;
+  td {
+    width: 50vw;
   }
 }
 

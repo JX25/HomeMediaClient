@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" type="dark" variant="success">
       <b-navbar-brand href="#">HomeMedia</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -28,7 +28,7 @@
           </b-nav-item>
 
           <b-nav-item>
-            <router-link to="/image">
+            <router-link to="/settings">
               <i class="fas fa-cog fa-2x"></i>
               <div class="navi-title">Ustawienia</div>
             </router-link>
@@ -50,7 +50,6 @@ export default {
   components: {},
   methods: {
     logout: function() {
-      localStorage.clear();
       this.$store.dispatch("user/clear");
       this.$router.push("/home");
     }

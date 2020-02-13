@@ -37,7 +37,7 @@
         <span
           class="volume-control"
           @mouseenter="audioPlayer.showVolume = true"
-          @click="audioPlayer.showVolume = truew"
+          @click="audioPlayer.showVolume = !audioPlayer.showVolume"
         >
           <i class="fas fa-volume-up fa-2x" v-if="audioPlayer.volume > 50"></i>
           <i
@@ -451,6 +451,11 @@ export default {
     top: -15px;
   }
 }
+@media(max-width: 1000px){
+    .mid-control .toRight{
+    display: none;
+  }
+}
 
 @media (max-width: 475px){
   .top-control .toRight{
@@ -460,6 +465,9 @@ export default {
     font-size: 9pt;
     width: fit-content;
     right: -115px;
+  }
+  .mid-control .toRight{
+    display: none;
   }
 }
 
@@ -474,8 +482,7 @@ export default {
     width: 95vw!important;
   }
   .mid-control .toRight{
-    top: -15px;
-    right: 95px;
+    display: none;
   }
   .button{
     font-size: 8pt;
@@ -483,7 +490,7 @@ export default {
 }
 
 @media(max-width: 350px){
-  .button{
+  .mid-control .toRight{
     display: none;
   }
 }

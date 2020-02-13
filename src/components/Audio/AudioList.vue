@@ -118,6 +118,7 @@
             <th scope="col-1 col-sm-2">Gatunek</th>
             <th scope="col-1 col-sm-2">Autor</th>
             <th scope="col-1 col-sm-2">Rok</th>
+
             <th scope="col-1 col-sm-2">Długość (min:s)</th>
             <th scope="col-12" colspan="3"></th>
             <th scope="col-12" colspan="2"></th>
@@ -132,8 +133,8 @@
             <td title="Album utworu">{{audio.album}}</td>
             <td title="Gatunek muzyczny">{{audio.genre}}</td>
             <td title="Zespół/Autor">{{audio.author}}</td>
-
             <td title="Rok wydania">{{audio.year}}</td>
+
             <td
               title="Czas (min)"
             >{{Math.round(audio.length/60,0)}}:{{(audio.length%60)>=10 ? audio.length%60 : "0"+audio.length%60}}</td>
@@ -155,10 +156,16 @@
               <b-button v-b-modal.AudioDetail @click="audioInfo(audio)">Podgląd</b-button>
             </td>
             <td>
-              <button type="button" class="btn btn-primary" @click="editAudio(audio)">Edycja</button>
+              <button
+                v-if="type"
+                type="button"
+                class="btn btn-primary"
+                @click="editAudio(audio)"
+              >Edycja</button>
             </td>
             <td>
               <button
+                v-if="type"
                 type="button"
                 class="btn btn-danger"
                 @click="deleteAudio(audio.slug, audio.title)"
@@ -313,7 +320,7 @@ export default {
   computed: {
     ...mapGetters("audio", ["audios", "infoVisibility", "audio"]),
     ...mapGetters("audioPlayer", ["audioPlayer", "getPlaylist"]),
-    ...mapGetters("user", ["age"])
+    ...mapGetters("user", ["age", "type"])
   },
   created() {
     this.getAllAudio(this.age).then(result => {
