@@ -263,7 +263,7 @@ export default {
   },
   computed: {
     ...mapGetters("video", ["videos", "infoVisibility"]),
-    ...mapGetters("user", ["age"]),
+    ...mapGetters("user", ["age", "type"]),
     ...mapGetters("videoPlayer", ["getSrc", "getShow"])
   }
 };
