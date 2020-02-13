@@ -18,6 +18,7 @@ require('dotenv').config('.env')
 
 import VuejsDialog from 'vuejs-dialog';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+import './registerServiceWorker'
 
 
 Vue.use(VuejsDialog)

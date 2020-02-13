@@ -14,7 +14,7 @@ export default {
     name: 'Error401',
     data() {
         return {
-            message: req.params.message,
+            message: this.$router.params.message,
         }
     },
 }

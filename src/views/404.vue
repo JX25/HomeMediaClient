@@ -13,7 +13,7 @@ export default {
     name: 'Error404',
     data() {
         return {
-            message: req.params.message
+            message: this.$router.params.message
         }
     },
 }
