@@ -127,7 +127,7 @@ export default {
         age_rate: this.age_rate
       };
       this.$store.dispatch("image/uploadMetaData", data).then(result => {
-        console.log("333", result);
+        ////console.log("333", result);
         this.setInfo("Dane pliku: " + result.msg);
         const slug = result.slg;
         this.$store
@@ -143,7 +143,7 @@ export default {
             this.$router.push("/admin/image");
           })
           .catch(error => {
-            console.log(error);
+          //  //console.log(error);
             this.setInfo(
               "Błąd w wysyłaniu pliku i danych " + error.response.status
             );
@@ -154,7 +154,7 @@ export default {
     },
     handleImageFile: function() {
       this.file = this.$refs.imageFile.files[0];
-      console.log("1", this.file);
+      //console.log("1", this.file);
       this.img = new Image();
       this.img.src = URL.createObjectURL(this.file);
       this.img.onload = () => {
@@ -165,8 +165,8 @@ export default {
       this.timestamp = this.file.lastModifiedDate.toString().slice(0, 24);
       this.title = this.file.name.split(".")[0];
       EXIF.getData(this.file, () => {
-        //console.log("image info", this);
-        //console.log("exif data", this.exifdata);
+        ////console.log("image info", this);
+        ////console.log("exif data", this.exifdata);
       });
     }
   }

@@ -63,9 +63,9 @@
         <i class="fas fa-stop-circle fa-2x" @click="stop()"></i>
 
         <span class="toRight">
-          <button class="button">wczytaj</button>
-          <button class="button">zapisz</button>
-          <button class="button">modyfikuj</button>
+          <!--<button class="button">wczytaj</button>-->
+         <!-- <button class="button">zapisz</button>-->
+          <button class="button" @click="clearPlaylist">wyczyść</button>
         </span>
       </div>
       <div class="bot-control">
@@ -115,9 +115,13 @@ export default {
       "shufflePlaylist",
       "copyPlaylist",
       "changeVolume",
-      "showVolume"
+      "showVolume",
+      "removePlaylist"
     ]),
     ...mapActions("audio", []),
+    clearPlaylist: function(){
+      this.removePlaylist()
+    },
     play: function() {
       if (!this.audioPlayer.play) {
         this.startAudio();
@@ -128,7 +132,7 @@ export default {
       }
     },
     loop: function() {
-      console.log("X56D", this.audioPlayer.loop);
+      ////console.log("X56D", this.audioPlayer.loop);
       this.changeLoop(!this.audioPlayer.loop);
     },
     updateVolume: function(volume) {
@@ -186,7 +190,7 @@ export default {
             : "0" + Math.floor(full % 60, 0));
         this.updateProgress((currTime * 100) / this.$refs.audio.duration);
       } catch (error) {
-        console.log(error);
+        ////console.log(error);
         return 0;
       }
     },
@@ -198,7 +202,7 @@ export default {
       this.$refs.audio.currentTime = currentTime;
     },
     shuffle: function() {
-      console.log(this.audioPlayer.random);
+      ////console.log(this.audioPlayer.random);
       if (this.audioPlayer.random) {
         this.unshufflePlaylist();
       } else {
@@ -226,7 +230,7 @@ export default {
     try {
       this.$refs.audio.volume = this.audioPlayer.volume / 100;
     } catch (error) {
-      console.log("waiting for setting up audio");
+      ////console.log("waiting for setting up audio");
     }
   }
 };

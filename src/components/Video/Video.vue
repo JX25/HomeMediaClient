@@ -68,7 +68,7 @@ export default {
   name: "Video",
   props: ["video"],
   created() {
-    console.log(this.video);
+    //console.log(this.video);
   },
   methods: {
     image: function(slug) {

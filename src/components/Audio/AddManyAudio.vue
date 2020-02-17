@@ -133,7 +133,7 @@ export default {
   methods: {
     ...mapActions("audio", ["clearInfo", "setInfo", "showInfo"]),
     validateAndSendAlbum: function() {
-      console.log("ACS", this.audioFiles);
+      ////console.log("ACS", this.audioFiles);
       for (let i = 0; i < this.audioFiles.length; ++i) {
         this.validateAndSend(i);
       }
@@ -148,12 +148,12 @@ export default {
       this.filesDetails = true;
     },
     handleAudioFile: function(file, i) {
-      console.log("P", file, i);
+      ////console.log("P", file, i);
       let fileURL = URL.createObjectURL(file);
       getBlobDuration(fileURL).then(duration => {
         let minutes = Math.floor(duration / 60);
         let seconds = Math.floor(duration - minutes * 60);
-        console.log(minutes + "min " + seconds + "s");
+        ////console.log(minutes + "min " + seconds + "s");
         this.length[i] = minutes + "min " + seconds + "s";
       });
     },
@@ -170,7 +170,7 @@ export default {
       }
       lengthInSeconds =
         Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
-      console.log(lengthInSeconds);
+      ////console.log(lengthInSeconds);
       this.clearInfo();
       let data = {
         title: this.title[i],
@@ -187,7 +187,7 @@ export default {
       this.$store
         .dispatch("audio/uploadMetaData", data)
         .then(result => {
-          console.log("1", result);
+          ////console.log("1", result);
           this.setInfo("Dane pliku audio#" + i + ": " + result.msg);
           const slugThumbnail = result.thmb;
           const slug = result.slg;
@@ -197,7 +197,7 @@ export default {
               thumbnail: this.thumbnail
             })
             .then(result2 => {
-              console.log("2", result2);
+              ////console.log("2", result2);
               this.setInfo(
                 "Okładka pliku audio#" + i + ": " + result2.data.response
               );
@@ -212,16 +212,16 @@ export default {
                   );
                   this.isSuccess = true;
                   this.success = "final";
-                  console.log("3", finalResult);
+                  ////console.log("3", finalResult);
                 })
-                .finally(res => {
+                .finally(() => {
                   this.isSuccess = false;
-                  console.log("4", res);
+                  ////console.log("4", res);
                 });
             });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          ////console.log(error);
         });
     }
   }

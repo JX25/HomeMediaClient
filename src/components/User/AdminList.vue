@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(user, index) in admins" :key="index">
+        <tr v-for="(user, index) in admins" :key="index" v-bind:style="user.nickname ==='administrator' ? 'background-color: rgba(130,0,0,.4);' : '' ">
           <td class="userIndex">{{index+1}}</td>
           <td>{{user.nickname}}</td>
           <td>{{user.email}}</td>
@@ -89,42 +89,54 @@ export default {
           age_rate: value
         };
         this.editUser(updateData)
-          .then(result => {
-            console.log(result);
-            this.users[index].age_rate = value;
+          .then(() => {
+           // //console.log(result);
+            this.admins[index].age_rate = value;
           })
-          .catch(error => {
-            console.log(error);
+          .catch(() => {
+       //     //console.log(error);
           });
       }
+    },
+    changeType: function(nickname, index){
+      let updateData = {
+        nickname: nickname,
+        is_admin: false
+      }
+      this.editUser(updateData).then(() =>{
+   //     //console.log(result)
+        this.admins.splice(index, 1)
+      }).catch(() => {
+  //      //console.log(error)
+      })
     },
     removeUser: function(nickname, index) {
       this.$dialog
         .confirm("Czy na pewno chcesz usunąć użytkownika " + nickname)
         .then(() => {
           this.deleteUser(nickname, this.type)
-            .then(result => {
-              console.log(result);
-              this.users.splice(index, 1);
+            .then(() => {
+          //    //console.log(result);
+              this.admins.splice(index, 1);
             })
-            .catch(error => {
-              console.log(error);
+            .catch(() => {
+           //   //console.log(error);
             });
         });
     },
     changeActive: function(nickname, index) {
       let updateData = {
         nickname: nickname,
-        active: !this.users[index].active
+        active: !this.admins[index].active
       };
-      console.log(nickname, index);
+      ////console.log(nickname, index);
       this.editUser(updateData)
-        .then(result => {
-          console.log(result);
-          this.users[index].active = updateData.active;
+        .then(() => {
+          ////console.log(result);
+          this.admins[index].active = updateData.active;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+         // //console.log(error);
         });
     }
   },
@@ -132,11 +144,11 @@ export default {
     ...mapGetters("user", ["age", "admins", "type"])
   },
   created() {
-    console.log("XD");
+   // //console.log("XD");
     this.getAllAdmins().then(() => {
-      console.log("Downloaded all users");
+     // //console.log("Downloaded all users");
     });
-    console.log("#", this.users);
+  //  //console.log("#", this.users);
   }
 };
 </script>
@@ -172,4 +184,5 @@ td {
 .off-delete{
   display: flex;
 }
+
 </style>

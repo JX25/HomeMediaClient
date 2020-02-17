@@ -1,5 +1,5 @@
 export function filterVideoList(list, params){
-    console.log("welcome", list, params)
+    //console.log("welcome", list, params)
     let tmpList =list
     .filter(x => inArray(x.title.toUpperCase(), params.title.toUpperCase()))
     .filter(x => inArray(x.tags, params.keyword))
@@ -26,7 +26,7 @@ export function filterAudioList(list, params){
 }
 
 export function filterImageList(list, params){
-    console.log(params)
+    //console.log(params)
     let from = 0
     let to = 0
     if(params.dateFrom != ""){
@@ -35,7 +35,7 @@ export function filterImageList(list, params){
     if(params.dateTo != ""){
         to = params.dateFrom.getTime()/1000
     }
-    console.log(from, to)
+    //console.log(from, to)
     let tmpList = list
     .filter(x => inArray(x.collections.toUpperCase(), params.collection.toUpperCase()))
     .filter(x => inArray(x.tags, params.keyword))
@@ -50,26 +50,26 @@ export function filterImageList(list, params){
 
 
 function greaterThan(videoVal, paramVal) {
-  console.log("1", videoVal >= paramVal, videoVal, paramVal)
+  //console.log("1", videoVal >= paramVal, videoVal, paramVal)
     if(paramVal === 0) return true
     return videoVal >= paramVal
 }
 
 function lowerThan(videoVal, paramVal) {
-//    console.log(paramVal)
-   console.log("2", videoVal <= paramVal, videoVal, paramVal)
+//    //console.log(paramVal)
+   //console.log("2", videoVal <= paramVal, videoVal, paramVal)
     if(paramVal == 0) return true
     return videoVal <= paramVal
 }
 
 /*function equalValue(videoVal, paramVal) {
-//    console.log(paramVal === '')
+//    //console.log(paramVal === '')
     if(paramVal === '') return true
     return paramVal.toUpperCase() === videoVal.toUpperCase()
 }*/
 
 function inArray(obj, paramVal) {
-    //console.log(objArr, paramVal, objArr.includes(paramVal))
+    ////console.log(objArr, paramVal, objArr.includes(paramVal))
     if(paramVal === '') return true
     if(Array.isArray(obj)){
         for(let i of obj){

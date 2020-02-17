@@ -118,11 +118,11 @@ export default {
       "updateImageList"
     ]),
     validateAndUpdate: function() {
-      //console.log(this.$refs.video.files[0] === undefined)
+      ////console.log(this.$refs.video.files[0] === undefined)
       //validate();
       //if(!validate) {}
       let metadata = {};
-      console.log("DBD", this.editImage.tags);
+      ////console.log("DBD", this.editImage.tags);
       metadata.tags = this.editImage.tags[0].split(",").map(obj => obj.trim());
       metadata.title = this.editImage.title;
       metadata.description = this.editImage.description;
@@ -131,7 +131,7 @@ export default {
       metadata.height = this.editImage.height;
       metadata.collection = this.editImage.collection;
       metadata.age_rate = this.editImage.age_rate;
-      console.log(this.imageFile);
+     // //console.log(this.imageFile);
       // files
       let files = {};
       files.file = this.imageFile;
@@ -146,7 +146,7 @@ export default {
       try {
         this.tags = this.image.tags.join(", ");
       } catch (error) {
-        console.log(error);
+       // //console.log(error);
       }
     },
     updateImage: function(meta, files) {
@@ -158,7 +158,7 @@ export default {
         .then(result => {
           this.result.push(result);
           this.setInfo("Dane pliku: " + result[0]);
-          console.log(files);
+       //   //console.log(files);
           if (files.file != undefined) {
             this.$store.dispatch("image/uploadImage", files).then(result => {
               this.setInfo("Plik graficzny: " + result.data.response);
@@ -166,7 +166,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+        //  //console.log(error);
           this.setInfo("Błąd: " + error);
         });
 
@@ -176,13 +176,13 @@ export default {
     fileHandle: function() {
       this.imageFile = this.$refs.image.$refs.input.files[0];
       this.tmpFile = URL.createObjectURL(this.imageFile);
-      console.log(this.tmpFile);
+     // //console.log(this.tmpFile);
       this.currentSrc = this.tmpFile;
     },
     imageToStream: function(path, thmb = "") {
-      //console.log(path, "1");
+      ////console.log(path, "1");
       if (typeof path !== "undefined") {
-        //console.log(path, "2");
+        ////console.log(path, "2");
         let parts = path.split("/");
         let slug = parts[parts.length - 1];
         return address + "/api/v1/image/stream" + thmb + "/" + slug;

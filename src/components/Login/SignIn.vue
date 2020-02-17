@@ -6,10 +6,12 @@
     <form @submit.prevent="login()">
       <div>
       <b-form-group>
-        <b-form-input v-model="nickname" placeholder="Login..."> </b-form-input>
+        <b-form-input v-model="nickname" name='login' v-validate="'required|min:4|'" placeholder="Login..."> </b-form-input>
+        <span class='error'>{{ errors.first('login')}}</span>
      </b-form-group>
       <b-form-group>
-        <b-form-input type="password" v-model="password" placeholder="Hasło..."> </b-form-input>
+        <b-form-input type="password" v-model="password" name='password' v-validate="'required|min:6'" placeholder="Hasło..."> </b-form-input>
+        <span class='error'>{{ errors.first('password')}}</span>
       </b-form-group>
       <b-form-group>
         <b-button variant="primary"  type="submit" :disabled="allowSend">Zaloguj się</b-button>
@@ -39,14 +41,14 @@ export default {
           password: this.password
         })
         .then(result => {
-          console.log(result)
+         // //console.log(result)
           this.successContent = result.message
           setTimeout( () => {
             this.$router.push('Home?status=login')
           }, 100)
         })
         .catch(error => {
-          console.log(error)
+        //  //console.log(error)
           let code = error.response.status
           this.error = true
           switch(code){
@@ -106,5 +108,10 @@ button{
   width: 100%;
   text-align: center;
   color: green;
+}
+
+.error{
+  font-size:8pt;
+  color:red;
 }
 </style>

@@ -101,7 +101,7 @@ export default {
             return new Promise( (res, rej) => {
                 audioApi.get('/with-age-rate/all/' + age,{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        console.log(result.data.response)
+                        //console.log(result.data.response)
                         commit('setAudios', result.data.response)
                         res(result)
                     })
@@ -166,7 +166,7 @@ export default {
             return new Promise( (res, rej) => {
                 audioApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    console.log(result)
+                    //console.log(result)
                     commit('removeAudio', slug)
                     res(result)
                 })

@@ -4,7 +4,7 @@ import VueLocalStorage from 'vue-localstorage'
 Vue.use(VueLocalStorage)
 import store from './index'
 
-export const address = 'http://192.168.0.81:8000'
+export const address = 'http://192.168.0.254:8000'
 //export const address = 'https://localhost:8000'
 
 
@@ -31,7 +31,7 @@ export const serverApi = axios.create({
 
 
 export function authHeader(){
-    console.log("662",store)
+    //console.log("662",store)
     return {headers: {'Authorization': 'Bearer '+store.state.user.token}}
 }
 

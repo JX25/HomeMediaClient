@@ -130,7 +130,7 @@ export default {
             commit('setPlay', false)
         },
         changeLoop: ({commit}, value) =>{
-            console.log("X5D")
+            //console.log("X5D")
             commit('setLoop', value)
         },
         changeVolume: ({commit}, volume) =>{

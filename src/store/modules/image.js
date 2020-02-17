@@ -10,6 +10,7 @@ export default {
         uploadMetaData: {},
         info: [],
         showInfo: [],
+        showGallery: false,
     },
     mutations:{
         setImages(state, images){
@@ -44,9 +45,13 @@ export default {
         },
         clearInfo(state){
             state.info = []
+        },
+        setShowGallery(state, value){
+            state.showGallery = value
         }
     },
     getters:{
+        showGallery: state =>{return state.showGallery},
         editImage: state => {return state.imageToEdit},
         image: state => {return state.image},
         images: state => {return state.images},
@@ -57,6 +62,9 @@ export default {
         imageInfo: state => {return state.info}
     },
     actions:{
+        changeShowGallery({commit}, value){
+            commit('setShowGallery', value)
+        },
         hideInfo : ({commit}) => {
             commit("infoVisible", false)
         },
@@ -79,7 +87,7 @@ export default {
             return new Promise((res, rej) => {
                 imageApi.get(slug + '/detail', authHeader())
                     .then(result => {
-                        console.log(result.data.response)
+                        //console.log(result.data.response)
                         commit('setImage', result.data.response)
                         res(result)
                     })
@@ -92,7 +100,7 @@ export default {
             return new Promise((res, rej) => {
                 imageApi.get('/with-age-rate/all/' + age, authHeader())
                     .then(result => {
-                        console.log(result.data.response)
+                        //console.log(result.data.response)
                         commit('setImages', result.data.response)
                         res(result)
                     })
@@ -105,7 +113,7 @@ export default {
             return new Promise((res, rej) => {
                 imageApi.post("", payload, authHeader())
                     .then(result => {
-                        console.log("ZZZZ", result)
+                        //console.log("ZZZZ", result)
                         commit('setUploadMetaData', result)
                         res(result.data.response)
                     })
@@ -119,7 +127,7 @@ export default {
             return new Promise( (res, rej) => {
                 imageApi.put(payload.OLDslug, payload, authHeader())
                     .then(result => {
-                        console.log(result)
+                        //console.log(result)
                         commit('setImageMetaData', result)
                         res(result.data.response)
                     })
@@ -146,7 +154,7 @@ export default {
             return new Promise((res, rej) => {
                 imageApi.delete(image.slug, authHeader())
                     .then(result => {
-                        console.log(result)
+                        //console.log(result)
                         commit('removeImage', image)
                         res(result)
                     })

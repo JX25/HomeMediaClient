@@ -52,7 +52,7 @@ export default {
   props: ["image"],
   methods: {
     streamImage: function(slug) {
-      console.log(slug);
+      //console.log(slug);
       if (typeof slug !== "undefined") {
         return address + "/api/v1/image/stream/" + slug;
       } else return "";

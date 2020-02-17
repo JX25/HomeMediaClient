@@ -64,9 +64,9 @@ export default {
   props: ["audio"],
   methods: {
     image: function(thumbnailPath) {
-      console.log(thumbnailPath, "1");
+      ////console.log(thumbnailPath, "1");
       if (typeof thumbnailPath !== "undefined") {
-        console.log(thumbnailPath, "2");
+        ////console.log(thumbnailPath, "2");
         let parts = thumbnailPath.split("/");
         let slug = parts[parts.length - 1];
         return address + "/api/v1/audio/stream-thumbnail/" + slug;

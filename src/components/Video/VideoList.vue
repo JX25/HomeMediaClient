@@ -149,7 +149,7 @@
       <VideoInfo v-if="infoVisibility" />
     </div>
     <b-button @click="loadMore" v-if="videoLimit < videoList.length">Więcej</b-button>
-    <router-link to="video/add">
+    <router-link to="video/add" v-if="type">
       <i id="addVideo" class="fas fa-plus fa-3x"></i>
     </router-link>
   </div>
@@ -194,16 +194,16 @@ export default {
         .then(() => {
           this.$store
             .dispatch("video/deleteVideo", videoSlug)
-            .then(result => {
+            .then(() => {
               this.videoList = this.videoList.filter(x => x.slug != videoSlug);
-              console.log(videoSlug, this.videoList, result);
+              //console.log(videoSlug, this.videoList, result);
             })
-            .catch(error => {
-              console.log(error);
+            .catch(() => {
+              //console.log(error);
             });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          //console.log(error);
         });
     },
     reset: function() {
@@ -256,7 +256,7 @@ export default {
   },
   created() {
     this.allVideos(this.age).then(result => {
-      console.log("load", result.data.response);
+      //console.log("load", result.data.response);
       this.videoList = result.data.response;
       this.listLoaded = true;
     });

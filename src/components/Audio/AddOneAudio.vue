@@ -136,9 +136,9 @@ export default {
       }
       lengthInSeconds =
         Number(lengthInSeconds[0] * 60) + Number(lengthInSeconds[1]);
-      console.log(lengthInSeconds);
+      ////console.log(lengthInSeconds);
       this.clearInfo();
-      console.log("agerate", this.age_rate);
+      ////console.log("agerate", this.age_rate);
       let data = {
         title: this.title,
         author: this.author,
@@ -154,7 +154,7 @@ export default {
       this.$store
         .dispatch("audio/uploadMetaData", data)
         .then(result => {
-          console.log("1", result);
+          ////console.log("1", result);
           this.setInfo("Dane pliku: " + result.msg);
           const slugThumbnail = result.thmb;
           const slug = result.slg;
@@ -164,7 +164,7 @@ export default {
               thumbnail: this.thumbnail
             })
             .then(result2 => {
-              console.log("2", result2);
+              ////console.log("2", result2);
               this.setInfo("Okładka utworu: " + result2.data.response);
               this.$store
                 .dispatch("audio/uploadAudio", {
@@ -175,19 +175,16 @@ export default {
                   this.setInfo("Plik audio: " + finalResult.data.response);
                   this.isSuccess = true;
                   this.success = "final";
-                  console.log("3", finalResult);
+                  ////console.log("3", finalResult);
                 })
-                .finally(res => {
+                .finally(() => {
                   this.isSuccess = false;
-                  console.log("4", res);
+                  ////console.log("4", res);
                   this.showInfo();
                   this.$router.push("/admin/audio");
                 });
             });
         })
-        .catch(error => {
-          console.log(error);
-        });
     },
     handleAudioFile: function() {
       this.audioFile = this.$refs.audio.$refs.input.files[0];

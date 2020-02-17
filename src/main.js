@@ -19,10 +19,10 @@ require('dotenv').config('.env')
 import VuejsDialog from 'vuejs-dialog';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 import './registerServiceWorker'
-
+import VeeValidate from 'vee-validate'
 
 Vue.use(VuejsDialog)
-
+Vue.use(VeeValidate)
 Vue.use(BootstrapVue)
 Vue.use(VueLocalStorage)
 Vue.use(VModal)

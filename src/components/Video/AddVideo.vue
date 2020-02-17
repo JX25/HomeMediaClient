@@ -170,7 +170,7 @@ export default {
       this.$store
         .dispatch("video/uploadMetaData", data)
         .then(result => {
-          console.log(result);
+          //console.log(result);
           this.setInfo("Dane pliku: " + result.msg);
           const slug = result.slg;
           this.$store
@@ -179,7 +179,7 @@ export default {
               thumbnail: this.thumbnail
             })
             .then(result2 => {
-              console.log("2", result2);
+              //console.log("2", result2);
               this.setInfo("Miniatura wideo: " + result2.data.response);
               this.$store
                 .dispatch("video/uploadVideo", { slug: slug, file: this.file })
@@ -187,7 +187,7 @@ export default {
                   this.setInfo("Plik wideo: " + finalResult.data.response);
                   this.isStatus = true;
                   this.success = "Przesyłanie pliku wideo i danych proszę czekać...";
-                  console.log("3", finalResult);
+                  //console.log("3", finalResult);
                 })
                 .finally(() => {
                   this.showInfo();
@@ -195,15 +195,15 @@ export default {
                 });
             });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          //console.log(error);
         });
     },
     handleVideoFile: function() {
       this.file = this.$refs.video.$refs.input.files[0];
       let fileURL = URL.createObjectURL(this.file);
       getBlobDuration(fileURL).then(duration => {
-        console.log(duration);
+        //console.log(duration);
         let minutes = Math.floor(duration / 60);
         let seconds = Math.floor(duration - minutes * 60);
         this.length = minutes + "min " + seconds + "s";
@@ -213,8 +213,8 @@ export default {
       this.thumbnail = this.$refs.thumbnail.$refs.input.files[0];
     },
     loaded: function() {
-      console.log("XD");
-      console.log(this.tmpURL);
+      //console.log("XD");
+      //console.log(this.tmpURL);
     }
   },
   created() {

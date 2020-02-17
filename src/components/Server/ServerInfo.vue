@@ -94,7 +94,7 @@ export default {
     this.updateData();
     /*setInterval(function(){
             this.loadData().then(result =>{
-                console.log(result)
+                //console.log(result)
             })
         }, 5000)*/
   }

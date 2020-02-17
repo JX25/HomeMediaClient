@@ -119,12 +119,12 @@ export default {
             : "0" + Math.floor(full % 60, 0));
         this.updateProgress((currTime * 100) / this.$refs.video.duration);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return 0;
       }
     },
     changeVideoVolume: function(newVolume) {
-      console.log("vol", newVolume);
+      //console.log("vol", newVolume);
       this.$refs.video.volume = newVolume / 100.0;
       this.changeVolume(newVolume);
     },
@@ -155,7 +155,7 @@ export default {
     },
     openFullscreen: function() {
       this.showFullscreen();
-      console.log(this.$refs.videoContainer);
+      //console.log(this.$refs.videoContainer);
       if (this.$refs.videoContainer.requestFullScreen) {
         this.$refs.videoContainer.requestFullscreen();
       } else if (this.$refs.videoContainer.webkitRequestFullScreen) {
@@ -167,7 +167,7 @@ export default {
       }
     },
     fullScreenChange: function() {
-      console.log("ASDDSADAS");
+      //console.log("ASDDSADAS");
       this.videoPlayer.fullscreen = false;
       this.minimizeFullscreen();
     }
@@ -299,14 +299,15 @@ export default {
 .BotBar {
   position: relative;
   left: 15px;
-  bottom: 40px;
+  bottom: 55px;
+  opacity: 0.8;
   background-color: rgba(200, 200, 200, 0);
 }
 
 .BotBarFullscreen {
   position: absolute;
   left: 10px;
-  bottom: 5px;
+  bottom: 15px;
   width: 100%;
   opacity: 0;
 }
@@ -374,7 +375,7 @@ span {
 .progress {
   position: absolute;
   z-index: 2147483647;
-  bottom: 20px;
+  bottom: 40px;
   left: 0px;
   width: 100%;
   background-color: rgba(48, 48, 233, 0.411);
@@ -387,7 +388,8 @@ span {
   bottom: 0px;
   left: 0px;
   width: 100%;
-  height: 5px;
+  height: 15px;
+  opacity: 0.3;
   background-color: rgba(48, 48, 233, 0.411);
   cursor: pointer;
 }
@@ -411,13 +413,14 @@ span {
 .progress-barFullscreen {
   position: relative;
   z-index: 2147483647;
-  padding-bottom: 3px;
+  
   bottom: 0px;
   left: 0px;
+  height:12px;
   width: 0%;
   padding-bottom: 10px;
   background-color: blue;
-  opacity: 0;
+  opacity: .3;
 }
 
 .progress-barFullscreen:hover{

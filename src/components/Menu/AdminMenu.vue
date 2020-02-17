@@ -47,7 +47,7 @@
             </router-link>
           </b-nav-item>
           <b-nav-item>
-            <router-link to="/myaccount">
+            <router-link to="/settings">
               <i class="fas fa-user-edit fa-2x"></i>
               <div class="navi-title">Konto</div>
             </router-link>

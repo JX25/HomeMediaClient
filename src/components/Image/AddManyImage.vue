@@ -144,7 +144,7 @@ export default {
       this.$store.dispatch("image/uploadMetaData", data)
         .then(result => {
           this.setInfo("Dane pliku #" + index + ":" + result.msg)
-          console.log(result)
+          ////console.log(result)
           const slug = result.slg
           this.$store.dispatch("image/uploadImage",{
             slug: slug,
@@ -162,13 +162,13 @@ export default {
       this.filesDetails = true;
     },
     handleImageFile: function(image, index) {
-      console.log(image, index, image.name);
+     // //console.log(image, index, image.name);
       this.title[index] = image.name;
       this.timestamp[index] = image.lastModifiedDate.toString().slice(0, 24);
       this.imgs[index] = new Image();
       this.imgs[index].src = URL.createObjectURL(image);
       this.imgs[index].onload = () => {
-        console.log(this.imgs[index].width);
+       // //console.log(this.imgs[index].width);
         this.width[index] = this.imgs[index].width;
         this.height[index] = this.imgs[index].height;
       };

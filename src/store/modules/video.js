@@ -80,7 +80,7 @@ export default {
             return new Promise( (res, rej) => {
                 videoApi.get(slug + '/detail', authHeader())
                 .then(result => {
-                    console.log(result.data.response)
+                    //console.log(result.data.response)
                     commit('setVideo', result.data.response)
                     res(result)
                 })
@@ -93,7 +93,7 @@ export default {
             return new Promise( (res, rej) => {
                 videoApi.get('/with-age-rate/all/' + age,{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        console.log(result.data.response)
+                        //console.log(result.data.response)
                         commit('setVideos', result.data.response)
                         res(result)
                     })
@@ -118,7 +118,7 @@ export default {
             return new Promise( (res, rej) => {
                 videoApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                     .then(result => {
-                        console.log(result)
+                        //console.log(result)
                         commit('setVideoMetaData', result)
                         res(result.data.response)
                     })
@@ -159,7 +159,7 @@ export default {
             return new Promise( (res, rej) => {
                 videoApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
                 .then(result => {
-                    console.log(result)
+                    //console.log(result)
                     commit('removeVideo', slug)
                     res(result)
                 })

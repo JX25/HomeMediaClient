@@ -131,11 +131,11 @@ export default {
       "updateAudioList"
     ]),
     validateAndUpdate: function() {
-      //console.log(this.$refs.video.files[0] === undefined)
+      ////console.log(this.$refs.video.files[0] === undefined)
       //validate();
       //if(!validate) {}
       let metadata = {};
-      console.log("DBD", this.editAudio.tags);
+      ////console.log("DBD", this.editAudio.tags);
       metadata.tags = this.tags.split(",").map(obj => obj.trim());
       metadata.title = this.editAudio.title;
       metadata.description = this.editAudio.description;
@@ -167,11 +167,11 @@ export default {
       try {
         this.tags = this.audio.tags.join(", ");
       } catch (error) {
-        console.log(error);
+        ////console.log(error);
       }
     },
     updateAudio: function(meta, files) {
-      console.log(files);
+      ////console.log(files);
       meta.slug = slug(meta.title + "_" + meta.year + "_" + meta.album);
       meta.OLDslug = this.slug;
       this.clearInfo();
@@ -195,7 +195,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          ////console.log(error);
           this.setInfo("Błąd: " + error);
         });
 

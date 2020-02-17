@@ -180,7 +180,7 @@
     </div>
     <b-button @click="loadMore" v-if="audioLimit < audioList.length">Więcej</b-button>
 
-    <router-link to="/admin/audio/add">
+    <router-link to="/admin/audio/add" v-if="type">
       <i id="addAudio" class="fas fa-plus fa-3x"></i>
     </router-link>
   </div>
@@ -258,9 +258,9 @@ export default {
     },
 
     image: function(thumbnailPath) {
-      console.log(thumbnailPath, "1");
+      ////console.log(thumbnailPath, "1");
       if (typeof thumbnailPath !== "undefined") {
-        console.log(thumbnailPath, "2");
+        ////console.log(thumbnailPath, "2");
         let parts = thumbnailPath.split("/");
         let slug = parts[parts.length - 1];
         return address + "/api/v1/audio/stream-thumbnail/" + slug;
@@ -272,16 +272,16 @@ export default {
         .then(() => {
           this.$store
             .dispatch("audio/deleteAudio", audioSlug)
-            .then(result => {
-              console.log(result);
+            .then(() => {
+              ////console.log(result);
               this.audioList = this.audioList.filter(x => x.slug != audioSlug);
             })
-            .catch(error => {
-              console.log(error);
+            .catch(() => {
+              ////console.log(error);
             });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+ //         //console.log(error);
         });
     },
     audioInfo: function(audio) {
@@ -324,7 +324,7 @@ export default {
   },
   created() {
     this.getAllAudio(this.age).then(result => {
-      console.log(result);
+      //console.log(result);
       this.audioList = result.data.response;
       this.listLoaded = true;
     });

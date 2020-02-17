@@ -51,7 +51,7 @@
               <b-button variant="warning" v-else>NIEAKTYWNE</b-button>
             </div>
             <div v-if="login === 'administrator'">
-              <b-button variant="dark" @click="removeUser(user.nickname, index)">Promuj na admina</b-button>
+              <b-button variant="dark" @click="promoteToAdmin(user.nickname)">Promuj na admina</b-button>
             </div>
             <div>
               <b-button variant="danger" @click="removeUser(user.nickname, index)">USUŃ</b-button>
@@ -90,12 +90,12 @@ export default {
           age_rate: value
         };
         this.editUser(updateData)
-          .then(result => {
-            console.log(result);
+          .then(() => {
+            //console.log(result);
             this.users[index].age_rate = value;
           })
-          .catch(error => {
-            console.log(error);
+          .catch(() => {
+            //console.log(error);
           });
       }
     },
@@ -104,28 +104,38 @@ export default {
         .confirm("Czy na pewno chcesz usunąć użytkownika " + nickname)
         .then(() => {
           this.deleteUser(nickname, this.type)
-            .then(result => {
-              console.log(result);
+            .then(() => {
+              //console.log(result);
               this.users.splice(index, 1);
             })
-            .catch(error => {
-              console.log(error);
+            .catch(() => {
+              //console.log(error);
             });
         });
+    },
+    promoteToAdmin: function(nickname, index){
+      let updateData = {
+        nickname: nickname,
+        is_admin: true
+      }
+      this.editUser(updateData).then(() => {
+        this.users.splice(index, 1)
+      }).catch(() => {
+        //console.log(error)
+      })
     },
     changeActive: function(nickname, index) {
       let updateData = {
         nickname: nickname,
         active: !this.users[index].active
       };
-      console.log(nickname, index);
       this.editUser(updateData)
-        .then(result => {
-          console.log(result);
+        .then(() => {
+          //console.log(result);
           this.users[index].active = updateData.active;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          //console.log(error);
         });
     }
   },
@@ -133,18 +143,18 @@ export default {
     ...mapGetters("user", ["age", "users", "type", "login"])
   },
   created() {
-    console.log("XD");
+    //console.log("XD");
     this.getAllUsers().then(() => {
-      console.log("Downloaded all users");
+      //console.log("Downloaded all users");
     });
-    console.log("#", this.users);
+    //console.log("#", this.users);
   }
 };
 </script>
 
 <style scoped>
 table {
-  width: 100% !important;
+  width: 95vw!important;
   text-align: center;
 }
 .buttons {

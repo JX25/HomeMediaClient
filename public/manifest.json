@@ -1,38 +1,38 @@
 {
     "name": "Home Media Center",
     "short_name": "HMC-Client",
-    "start_url": "#/home?pwa=1",
+    "start_url": "index.html",
     "display": "standalone",
     "theme_color": "#0476F2",
     "background_color": "#000",
     "icons": [
       {
-        "src": "./icons/hmc32.png",
+        "src": "./img/icons/hmc32",
         "sizes": "32x32",
         "type": "image/png"
       },
       {
-        "src": "./icons/hmc64.png",
+        "src": "./img/icons/hmc64.png",
         "sizes": "64x64",
         "type": "image/png"
       },
       {
-        "src": "./icons/hmc128.png",
+        "src": "./img/icons/hmc128.png",
         "sizes": "128x128",
         "type": "image/png"
       },
       {
-        "src": "./icons/hmc192.png",
+        "src": "./img/icons/hmc192.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "./icons/hmc256.png",
+        "src": "./img/icons/hmc256.png",
         "sizes": "256x256",
         "type": "image/png"
       },
       {
-        "src": "./icons/home-media-center512.png",
+        "src": "./img/icons/hmc512.png",
         "sizes": "512x512",
         "type": "image/png"
       }
