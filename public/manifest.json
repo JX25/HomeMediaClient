@@ -2,9 +2,10 @@
     "name": "Home Media Center",
     "short_name": "HMC-Client",
     "start_url": "index.html",
-    "display": "standalone",
-    "theme_color": "#0476F2",
-    "background_color": "#000",
+    "scope": "/",
+    "display": "fullscreen",
+    "theme_color": "#000",
+    "background_color": "#6363A5",
     "icons": [
       {
         "src": "./img/icons/hmc32",
