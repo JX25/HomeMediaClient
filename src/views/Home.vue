@@ -117,12 +117,6 @@ h1, h2, p{
   z-index: 2;
 }
 
-.fullscreen{
-  max-width: 100vh;
-  min-height: 90vh;
-  max-height: 100vh;
-}
-
 .logout{
    width: 100vh;
   height: 100vh; 
@@ -131,8 +125,5 @@ h1, h2, p{
   width: 100vh;
   height: 100vh;
 }
-.home-page{
-  width: 100vh;
-  height: 100vh;
-}
+
 </style>

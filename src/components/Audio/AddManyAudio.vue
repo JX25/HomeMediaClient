@@ -52,7 +52,7 @@
           <th>Pliki</th>
           <td>
             <b-form-file
-              accept="audio/*"
+              accept="audio/aac audio/*"
               ref="audios"
               @change="handleAudioFiles"
               placeholder="nowe audio..."

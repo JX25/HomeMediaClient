@@ -4,7 +4,7 @@ import VueLocalStorage from 'vue-localstorage'
 Vue.use(VueLocalStorage)
 import store from './index'
 
-export const address = 'http://192.168.0.254:8000'
+export const address = 'http://192.168.0.225:8000'
 //export const address = 'https://localhost:8000'
 
 

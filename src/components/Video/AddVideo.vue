@@ -163,7 +163,7 @@ export default {
         tags: this.tags,
         language: this.language,
         length: lengthInSeconds,
-        age_rate: this.pegi,
+        age_rate: this.age_rate,
         director: this.directors,
         actors: this.actors
       };

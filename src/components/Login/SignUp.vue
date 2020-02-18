@@ -54,7 +54,7 @@
         </b-form-group>
         <b-form-group>
           <b-button variant="success" type="submit" :disabled="ifError">Zarejestruj się</b-button>
-          <span class="error" v-if="ifError()">{{error}}</span>
+          <span class="error" v-if="ifError">{{error}}</span>
         </b-form-group>
       </div>
     </form>

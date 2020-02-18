@@ -91,9 +91,9 @@ export default {
         },
         allVideos: ({commit}, age) => {
             return new Promise( (res, rej) => {
-                videoApi.get('/with-age-rate/all/' + age,{headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.get('/with-age-rate/all/' + age, authHeader())
                     .then(result => {
-                        //console.log(result.data.response)
+                        console.log(result.data.response)
                         commit('setVideos', result.data.response)
                         res(result)
                     })
@@ -104,7 +104,7 @@ export default {
         },
         uploadMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                videoApi.post("", payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.post("", payload, authHeader())
                     .then(result => {
                         commit('setVideoMetaData', result)
                         res(result.data.response)
@@ -116,7 +116,7 @@ export default {
         },
         updateMetaData: ({commit}, payload)=>{
             return new Promise( (res, rej) => {
-                videoApi.put(payload.OLDslug, payload, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.put(payload.OLDslug, payload, authHeader())
                     .then(result => {
                         //console.log(result)
                         commit('setVideoMetaData', result)
@@ -131,7 +131,7 @@ export default {
             let formData = new FormData()
             formData.append("thumbnail", payload.thumbnail)
             return new Promise( (res, rej) => {
-                videoApi.patch('upload-thumbnail/'+payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.patch('upload-thumbnail/'+payload.slug, formData, authHeader())
                 .then(result => {
                     commit('setVideoThumbnailToUpload', result)
                     res(result)
@@ -145,7 +145,7 @@ export default {
             let formData = new FormData()
             formData.append("file", payload.file)
             return new Promise( (res, rej) => {
-                videoApi.patch('upload/'+ payload.slug, formData, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.patch('upload/'+ payload.slug, formData, authHeader())
                 .then(result => {
                     commit('setVideoToUpload', result)
                     res(result)
@@ -157,7 +157,7 @@ export default {
         },
         deleteVideo: ({commit}, slug) => {
             return new Promise( (res, rej) => {
-                videoApi.delete(slug, {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}})
+                videoApi.delete(slug, authHeader())
                 .then(result => {
                     //console.log(result)
                     commit('removeVideo', slug)

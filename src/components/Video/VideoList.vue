@@ -256,7 +256,7 @@ export default {
   },
   created() {
     this.allVideos(this.age).then(result => {
-      //console.log("load", result.data.response);
+      console.log("load", this.age, result.data.response);
       this.videoList = result.data.response;
       this.listLoaded = true;
     });
